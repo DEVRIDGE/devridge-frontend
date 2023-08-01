@@ -16,6 +16,7 @@ function Header() {
           fill="#272727"
         />
       </svg>
+      <h1>asdasd</h1>
       <LoginButton />
     </Nav>
   );
