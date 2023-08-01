@@ -4,6 +4,8 @@ export const Wrapper = styled.form`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  margin-left: 15vw;
+  margin-right: 15vw;
   padding: 30px 10px;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
 `;
