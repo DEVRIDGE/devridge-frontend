@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   Option,
   Select,
@@ -22,7 +23,9 @@ function MainForm() {
           <Option>선택</Option>
         </Select>
       </WrapperSelect>
-      <SubmitButton>바로가기</SubmitButton>
+      <Link to="/roadmap">
+        <SubmitButton>바로가기</SubmitButton>
+      </Link>
     </Wrapper>
   );
 }

@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
-import MainTitle from "../../components/main/mainTitle/MainTitle";
-import MainForm from "../../components/main/mainForm/MainForm";
+import RoadmapTitle from "../../components/roadmap/roadmapTitle/RoadmapTitle";
+import Road from "../../components/roadmap/road/Road";
 import Footer from "../../components/common/footer/Footer";
 
 const Wrapper = styled.div`
@@ -9,17 +9,17 @@ const Wrapper = styled.div`
   position: relative;
   flex-direction: column;
   padding-top: 50px;
-  height: 100%;
+  padding-bottom: 100px;
 `;
 
-function MainPage() {
+function RoadmapPage() {
   return (
     <Wrapper>
-      <MainTitle />
-      <MainForm />
+      <RoadmapTitle />
+      <Road />
       <Footer />
     </Wrapper>
   );
 }
 
-export default MainPage;
+export default RoadmapPage;
