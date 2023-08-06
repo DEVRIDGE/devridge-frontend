@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px 20vw;
+  margin: 5vh 20vw;
   padding: 20px;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
 `;

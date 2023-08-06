@@ -2,10 +2,16 @@ import { styled } from "styled-components";
 
 export const Nav = styled.nav`
   display: flex;
+  position: fixed;
+  top: 0;
   justify-content: space-between;
   align-items: center;
   padding: 30px;
+  width: 100%;
   height: 50px;
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  z-index: 99;
 `;
 
 export const Col = styled.div`

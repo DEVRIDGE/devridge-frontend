@@ -5,6 +5,7 @@ export const darkTheme: DefaultTheme = {
   bgColor: "rgba(0, 0, 0, 1)",
   mainColor: "#FF5000",
   textGreyColor: "rgba(0, 0, 0, 0.5)",
+  greyColor: "rgba(0, 0, 0, 0.1)",
 };
 
 export const lightTheme: DefaultTheme = {
@@ -12,4 +13,5 @@ export const lightTheme: DefaultTheme = {
   bgColor: "rgba(255, 255, 255, 1)",
   mainColor: "#FF5000",
   textGreyColor: "rgba(0, 0, 0, 0.5)",
+  greyColor: "rgba(0, 0, 0, 0.1)",
 };

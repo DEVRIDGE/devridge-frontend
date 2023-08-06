@@ -5,6 +5,7 @@ import Router from "./Router";
 import { isDarkState } from "./recoil/darkMode/atom";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import { darkTheme, lightTheme } from "./styles/theme";
+import useDynamicScroll from "./hooks/useDynamicScroll";
 
 function App() {
   const isDark = useRecoilValue(isDarkState);

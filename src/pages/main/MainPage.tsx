@@ -3,18 +3,18 @@ import { styled } from "styled-components";
 import MainTitle from "../../components/main/mainTitle/MainTitle";
 import MainForm from "../../components/main/mainForm/MainForm";
 import Footer from "../../components/common/footer/Footer";
-import Header from "../../components/common/header/Header";
 
 const Wrapper = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
-  height: 100vh;
+  padding-top: 50px;
+  height: 100%;
 `;
 
 function MainPage() {
   return (
     <Wrapper>
-      <Header />
       <MainTitle />
       <MainForm />
       <Footer />

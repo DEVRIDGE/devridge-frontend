@@ -34,7 +34,11 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+html {
+	height: 100%;
+}
 body {
+	height: 100%;
 	background-color: ${(props) => props.theme.bgColor};
 	line-height: 1;
 }
