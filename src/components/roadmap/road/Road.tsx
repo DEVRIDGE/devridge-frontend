@@ -1,8 +1,11 @@
+import { useRouteMatch } from "react-router-dom";
 import CSList from "../CSList/CSList";
 import Tech from "../tech/Tech";
 import { ProgressBar, Rope, Wrapper, WrapperItem } from "./styles";
+import RoadmapTechPage from "../../../pages/roadmapTech/RoadmapTechPage";
 
 function Road() {
+  const techPageMatch = useRouteMatch("/roadmap/tmp");
   const col = 9;
   const data: (number | null)[] = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -92,6 +95,7 @@ function Road() {
           </WrapperItem>
         );
       })}
+      {techPageMatch ? <RoadmapTechPage /> : null}
     </Wrapper>
   );
 }

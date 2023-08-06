@@ -6,6 +6,12 @@ export const Wrapper = styled.div`
   align-items: center;
   margin-bottom: 5px;
   z-index: 2;
+
+  a {
+    text-decoration: none;
+    font-weight: 600;
+    color: ${(props) => props.theme.textColor};
+  }
 `;
 
 export const TechName = styled.span`
