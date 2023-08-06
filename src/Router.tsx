@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import MainPage from "./pages/main/MainPage";
 import RoadmapPage from "./pages/roadmap/RoadmapPage";
 import Header from "./components/common/header/Header";
+import RoadmapTechPage from "./pages/roadmapTech/RoadmapTechPage";
 
 function Router() {
   return (
@@ -12,7 +13,7 @@ function Router() {
         <Route path="/roadmap">
           <RoadmapPage />
         </Route>
-        <Route path="/">
+        <Route path={["/", "/roadmap/tmp"]}>
           <MainPage />
         </Route>
       </Switch>
