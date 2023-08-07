@@ -1,21 +1,14 @@
 import { styled } from "styled-components";
 import TechButton from "../../components/roadmapTech/techButton/TechButton";
 import TechHeader from "../../components/roadmapTech/techHeader/TechHeader";
+import { Link } from "react-router-dom";
+import Overlay from "../../components/common/overlay/Overlay";
 
 const Wrapper = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
   z-index: 3;
-`;
-
-const Overlay = styled.div`
-  position: fixed;
-  top: 50px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: ${(props) => props.theme.textGreyColor};
 `;
 
 const TechMenuWrapper = styled.div`
@@ -38,6 +31,10 @@ const GridButtons = styled.div`
   justify-items: center;
   gap: 10px;
   margin-top: 50px;
+
+  a {
+    width: 100%;
+  }
 `;
 
 function RoadmapTechPage() {
@@ -47,7 +44,9 @@ function RoadmapTechPage() {
       <TechMenuWrapper>
         <TechHeader />
         <GridButtons>
-          <TechButton />
+          <Link to="/roadmap/tmp/tmp2">
+            <TechButton />
+          </Link>
           <TechButton />
           <TechButton />
           <TechButton />

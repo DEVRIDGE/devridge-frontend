@@ -3,9 +3,11 @@ import CSList from "../CSList/CSList";
 import Tech from "../tech/Tech";
 import { ProgressBar, Rope, Wrapper, WrapperItem } from "./styles";
 import RoadmapTechPage from "../../../pages/roadmapTech/RoadmapTechPage";
+import RoadmapCoursePage from "../../../pages/roadmapCourse/RoadmapCoursePage";
 
 function Road() {
   const techPageMatch = useRouteMatch("/roadmap/tmp");
+  const coursePageMatch = useRouteMatch("/roadmap/tmp/tmp2");
   const col = 9;
   const data: (number | null)[] = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -18,7 +20,6 @@ function Road() {
   }
 
   //TODO - 마지막 row 덜 채워져서 오른쪽 정렬 안되는거 해결하자
-
   return (
     <Wrapper>
       {data.map((i, index) => {
@@ -95,7 +96,8 @@ function Road() {
           </WrapperItem>
         );
       })}
-      {techPageMatch ? <RoadmapTechPage /> : null}
+      {techPageMatch?.isExact ? <RoadmapTechPage /> : null}
+      {coursePageMatch?.isExact ? <RoadmapCoursePage /> : null}
     </Wrapper>
   );
 }

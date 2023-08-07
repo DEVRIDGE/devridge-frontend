@@ -1,23 +1,27 @@
 import { Link } from "react-router-dom";
 
+import BackButton from "../../common/backButton/BackButton";
 import CloseButton from "../../common/closeButton/CloseButton";
 import StudyState from "../../common/studyState/StudyState";
-import { TechTitle, WrapperClose, WrapperTitleAndState } from "./styles";
+import { CoursePageTitle, WrapperClose, WrapperTitleAndState } from "./styles";
 
-function TechHeader() {
+function CourseHeader() {
   return (
     <>
       <WrapperClose>
+        <Link to="/roadmap/tmp">
+          <BackButton />
+        </Link>
         <Link to="/roadmap">
           <CloseButton />
         </Link>
       </WrapperClose>
       <WrapperTitleAndState>
-        <TechTitle>언어</TechTitle>
+        <CoursePageTitle>{"언어 > Python"}</CoursePageTitle>
         <StudyState />
       </WrapperTitleAndState>
     </>
   );
 }
 
-export default TechHeader;
+export default CourseHeader;
