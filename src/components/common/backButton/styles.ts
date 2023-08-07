@@ -1,13 +1,13 @@
 import { styled } from "styled-components";
 
-export const CloseBtn = styled.button`
+export const BackBtn = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
 `;
 
-export const CloseSvg = styled.svg`
+export const BackSvg = styled.svg`
   padding: 3px;
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
 `;

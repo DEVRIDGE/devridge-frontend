@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const WrapperClose = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
 `;
 
@@ -14,7 +14,7 @@ export const WrapperTitleAndState = styled.div`
   padding: 10px;
 `;
 
-export const TechTitle = styled.h1`
+export const CoursePageTitle = styled.h1`
   font-size: 18px;
   font-weight: 600;
   color: ${(props) => props.theme.mainColor};

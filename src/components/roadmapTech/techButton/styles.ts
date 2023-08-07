@@ -9,4 +9,5 @@ export const Button = styled.button`
   box-shadow: 1px 1px 3px 1px ${(props) => props.theme.greyColor};
   font-size: 18px;
   font-weight: 600;
+  cursor: pointer;
 `;
