@@ -12,8 +12,10 @@ export const Wrapper = styled.div`
 export const Job = styled.h1`
   margin-right: 10px;
   font-size: 24px;
+  font-weight: 600;
 `;
 
 export const Company = styled.h1`
   font-size: 24px;
+  font-weight: 600;
 `;
