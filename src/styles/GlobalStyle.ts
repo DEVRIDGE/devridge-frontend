@@ -5,8 +5,6 @@ export const GlobalStyle = createGlobalStyle`
    v2.0 | 20110126
    License: none (public domain)
 */
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -41,6 +39,7 @@ body {
 	height: 100%;
 	background-color: ${(props) => props.theme.bgColor};
 	line-height: 1;
+	font-family: ${(props) => props.theme.contentFont};
 }
 ol, ul {
 	list-style: none;

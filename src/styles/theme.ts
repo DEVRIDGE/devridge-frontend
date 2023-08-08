@@ -6,6 +6,8 @@ export const darkTheme: DefaultTheme = {
   mainColor: "#FF5000",
   textGreyColor: "rgba(0, 0, 0, 0.5)",
   greyColor: "rgba(0, 0, 0, 0.1)",
+  contentFont: "'Noto Sans KR', sans-serif",
+  titleFont: "'Montserrat', sans-serif",
 };
 
 export const lightTheme: DefaultTheme = {
@@ -14,4 +16,6 @@ export const lightTheme: DefaultTheme = {
   mainColor: "#FF5000",
   textGreyColor: "rgba(0, 0, 0, 0.5)",
   greyColor: "rgba(0, 0, 0, 0.1)",
+  contentFont: "'Noto Sans KR', sans-serif",
+  titleFont: "'Montserrat', sans-serif",
 };

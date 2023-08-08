@@ -18,7 +18,7 @@ export const Col = styled.div`
 export const Title = styled.h1`
   margin-bottom: 5vh;
   font-size: 30px;
-  font-weight: 600;
+  font-family: ${(props) => props.theme.titleFont};
 `;
 
 export const Description = styled.h3`
