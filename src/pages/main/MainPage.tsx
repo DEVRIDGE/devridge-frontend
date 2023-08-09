@@ -3,6 +3,9 @@ import { styled } from "styled-components";
 import MainTitle from "../../components/main/mainTitle/MainTitle";
 import MainForm from "../../components/main/mainForm/MainForm";
 import Footer from "../../components/common/footer/Footer";
+import { useQuery } from "react-query";
+import { getJobs } from "../../services/apis";
+import { IJobs } from "../../services/types";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,6 +16,11 @@ const Wrapper = styled.div`
 `;
 
 function MainPage() {
+  const { isLoading, data } = useQuery<IJobs>("jobs", getJobs);
+  if (!isLoading) {
+    console.log(data?.data.jobs);
+  }
+
   return (
     <Wrapper>
       <MainTitle />
