@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Wrapper = styled.form`
+export const Form = styled.form`
   display: flex;
   justify-content: space-evenly;
   align-items: center;

@@ -9,10 +9,10 @@ function Router() {
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Header />
       <Switch>
-        <Route path="/roadmap">
+        <Route path={["/roadmap"]}>
           <RoadmapPage />
         </Route>
-        <Route path={["/", "/roadmap/tmp", "/roadmap/tmp/tmp2"]}>
+        <Route path="/">
           <MainPage />
         </Route>
       </Switch>
