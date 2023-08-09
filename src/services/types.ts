@@ -10,3 +10,16 @@ export interface IJobs {
     jobs: IJob[];
   };
 }
+
+export interface ICompany {
+  id: number;
+  name: string;
+}
+
+export interface ICompanies {
+  status: string;
+  message: string;
+  data: {
+    companies: ICompany[];
+  };
+}

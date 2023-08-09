@@ -5,5 +5,5 @@ export function getJobs() {
 }
 
 export function getCompanies() {
-  return axios.get("/api/company").then((response) => response.data);
+  return axios.get("/api/companies").then((response) => response.data);
 }
