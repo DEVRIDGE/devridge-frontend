@@ -79,7 +79,8 @@ export const CSButton = styled.button`
 
 export const CSName = styled.span`
   display: -webkit-box;
+  overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  overflow: hidden;
+  word-break: keep-all;
 `;

@@ -35,9 +35,15 @@ import { LoaderWrapper } from "../../common/loaderPageWrapper/styles";
 import Loader from "../../common/loader/Loader";
 import { isLoadingCoursePageState } from "../../../recoil/isLoadingCoursePage/atom";
 import Status from "../status/Status";
+import { selectedGridIndexState } from "../../../recoil/selectedGridIndex/atom";
 
 interface IRoad {
   roadmapApiData?: IRoadmap;
+}
+
+interface IOnClickTech {
+  selectedTechId: number;
+  index: number;
 }
 
 function Road({ roadmapApiData }: IRoad) {
@@ -45,6 +51,7 @@ function Road({ roadmapApiData }: IRoad) {
   const setSelectedTechState = useSetRecoilState(roadmapTechState);
   const setSelectedTechId = useSetRecoilState(selectedTechIdState);
   const setIsLoadingTechPage = useSetRecoilState(isLoadingTechPageState);
+  const setSelectedGridIndex = useSetRecoilState(selectedGridIndexState);
 
   const jobId = useRecoilValue(jobState);
   const companyId = useRecoilValue(companyState);
@@ -69,8 +76,12 @@ function Road({ roadmapApiData }: IRoad) {
     return [tmp, row_tmp];
   }, []);
 
-  const onClickTech = async (selectedTechId: number) => {
+  const onClickTech = async ({
+    selectedTechId,
+    index: gridIndex,
+  }: IOnClickTech) => {
     setSelectedTechId(selectedTechId);
+    setSelectedGridIndex(gridIndex);
     setIsLoadingTechPage(true);
     setSwitchDetail(SwitchDetail.TECH);
     const data: IRoadmapTechDetail = await getRoadmapTechDetail({
@@ -149,7 +160,12 @@ function Road({ roadmapApiData }: IRoad) {
                 {courseCol.index % 2 !== 0 ? (
                   <>
                     <TechButton
-                      onClick={() => onClickTech(courseCol.courses[0].id)}
+                      onClick={() =>
+                        onClickTech({
+                          selectedTechId: courseCol.courses[0].id,
+                          index,
+                        })
+                      }
                     >
                       <Tech
                         techName={courseCol.courses[0].name}
@@ -169,7 +185,7 @@ function Road({ roadmapApiData }: IRoad) {
                           <CSButton
                             key={cs.id}
                             onClick={() => {
-                              onClickTech(cs.id);
+                              onClickTech({ selectedTechId: cs.id, index });
                             }}
                           >
                             <Status width="20px" height="20px" />
@@ -190,7 +206,9 @@ function Road({ roadmapApiData }: IRoad) {
                         {courseCol.courses.map((cs) => (
                           <CSButton
                             key={cs.id}
-                            onClick={() => onClickTech(cs.id)}
+                            onClick={() =>
+                              onClickTech({ selectedTechId: cs.id, index })
+                            }
                           >
                             <Status width="20px" height="20px" />
                             <CSName>{cs.name}</CSName>

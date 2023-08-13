@@ -51,7 +51,12 @@ function RoadmapPage() {
 
   return (
     <Wrapper>
-      <RoadmapTitle />
+      {!isRoadmapLoading ? (
+        <RoadmapTitle
+          $jobName={roadmapApiData?.data.jobName ?? "error"}
+          $companyName={roadmapApiData?.data.companyName ?? "error"}
+        />
+      ) : null}
       {!isRoadmapLoading ? (
         <>
           <Road roadmapApiData={roadmapApiData} />

@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  IGetRoadmap,
-  IGetRoadmapCourseDetail,
-  IGetRoadmapTechDetail,
-} from "./types";
+import { IGetRoadmapCourseDetail, IGetRoadmapTechDetail } from "./types";
 
 export function getJobs() {
   return axios.get("/api/jobs").then((response) => response.data);

@@ -44,6 +44,9 @@ export interface IRoadmap {
   status: string;
   message: string;
   data: {
+    companyName: string;
+    companyLogo: string;
+    jobName: string;
     courseList: [ICourses | null];
   };
 }
