@@ -15,11 +15,9 @@ rootStyle!.style.height = "100%";
 const queryClient = new QueryClient();
 
 root.render(
-  <StrictMode>
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
-    </RecoilRoot>
-  </StrictMode>
+  <RecoilRoot>
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
+  </RecoilRoot>
 );

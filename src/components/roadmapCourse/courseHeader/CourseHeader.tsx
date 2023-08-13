@@ -1,23 +1,52 @@
-import { Link } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
-import BackButton from "../../common/backButton/BackButton";
-import CloseButton from "../../common/closeButton/CloseButton";
+import BackBtnSvg from "../../common/backBtnSvg/BackBtnSvg";
 import StudyState from "../../common/studyState/StudyState";
-import { CoursePageTitle, WrapperClose, WrapperTitleAndState } from "./styles";
+import {
+  BackButton,
+  CloseButton,
+  CoursePageTitle,
+  WrapperClose,
+  WrapperTitleAndState,
+} from "./styles";
+import CloseBtnSvg from "../../common/closeBtnSvg/CloseBtnSvg";
+import {
+  SwitchDetail,
+  switchRoadmapDetailState,
+} from "../../../recoil/swtichRoadmapDetail/atom";
+import { courseTitleState } from "../../../recoil/courseTitle/atom";
+import { techTitleState } from "../../../recoil/techTitle/atom";
 
 function CourseHeader() {
+  const selectedCourseTitle = useRecoilValue(courseTitleState);
+  const selectedTechTitle = useRecoilValue(techTitleState);
+
+  const setSwitchRoadmapDetail = useSetRecoilState(switchRoadmapDetailState);
+
+  const onClickBackButton = () => {
+    setSwitchRoadmapDetail(SwitchDetail.TECH);
+  };
+
+  const onClickCloseButton = () => {
+    setSwitchRoadmapDetail(SwitchDetail.BLIND);
+  };
+
   return (
     <>
       <WrapperClose>
-        <Link to="/roadmap/tmp">
-          <BackButton />
-        </Link>
-        <Link to="/roadmap">
-          <CloseButton />
-        </Link>
+        <BackButton onClick={onClickBackButton}>
+          <BackBtnSvg />
+        </BackButton>
+        <CloseButton onClick={onClickCloseButton}>
+          <CloseBtnSvg />
+        </CloseButton>
       </WrapperClose>
       <WrapperTitleAndState>
-        <CoursePageTitle>{"언어 > Python"}</CoursePageTitle>
+        <CoursePageTitle>
+          {selectedTechTitle}
+          <br />
+          {`> ${selectedCourseTitle}`}
+        </CoursePageTitle>
         <StudyState />
       </WrapperTitleAndState>
     </>

@@ -17,6 +17,7 @@ export const CourseWrapper = styled.div`
 
 export const CourseThumbnailWrapper = styled.div`
   height: 50%;
+  box-shadow: 0 0 1px 1px ${(props) => props.theme.greyColor};
 `;
 
 export const CourseThumbnail = styled.img`
@@ -28,10 +29,13 @@ export const CourseThumbnail = styled.img`
 export const CourseTitleWrapper = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: center;
 `;
 
 export const CourseLogoWrapper = styled.div`
-  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const CourseLogo = styled.svg`
@@ -70,4 +74,10 @@ export const CourseLikeSvg = styled.svg`
 export const CourseLikeLabel = styled.span`
   font-size: 12px;
   color: ${(props) => props.theme.textGreyColor};
+`;
+
+export const AnchorWrapper = styled.a`
+  display: contents;
+  color: ${(props) => props.theme.textColor};
+  cursor: pointer;
 `;

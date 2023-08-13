@@ -19,3 +19,9 @@ export const TechTitle = styled.h1`
   font-weight: 600;
   color: ${(props) => props.theme.mainColor};
 `;
+
+export const CloseButton = styled.button`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+`;

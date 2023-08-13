@@ -1,5 +1,5 @@
-import { Link, useHistory } from "react-router-dom";
-import { Oval } from "react-loader-spinner";
+import { useHistory } from "react-router-dom";
+import { useForm, useWatch } from "react-hook-form";
 
 import {
   Form,
@@ -9,9 +9,8 @@ import {
   SubmitButton,
   WrapperSelect,
 } from "./styles";
-import { useTheme } from "styled-components";
 import { ICompanies, IJobs } from "../../../services/types";
-import { useForm, useWatch } from "react-hook-form";
+import Loader from "../../common/loader/Loader";
 
 interface IMainForm {
   isLoading: boolean;
@@ -26,7 +25,6 @@ interface IForm {
 
 function MainForm({ isLoading, jobsApiData, companiesApiData }: IMainForm) {
   const { register, handleSubmit, control } = useForm<IForm>();
-  const theme = useTheme();
   const history = useHistory();
   const watchJob = useWatch({ control, name: "job", defaultValue: -1 });
   const watchCompany = useWatch({
@@ -45,17 +43,11 @@ function MainForm({ isLoading, jobsApiData, companiesApiData }: IMainForm) {
       history.push(`/roadmap?job=${job}&company=${company}`);
     }
   };
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       {isLoading ? (
-        <Oval
-          color={theme.mainColor}
-          secondaryColor={theme.greyColor}
-          strokeWidth={5}
-          strokeWidthSecondary={5}
-          height={30}
-          width={30}
-        />
+        <Loader />
       ) : (
         <>
           <WrapperSelect>

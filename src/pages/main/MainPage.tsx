@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
+import { useQuery } from "react-query";
 
 import MainTitle from "../../components/main/mainTitle/MainTitle";
 import MainForm from "../../components/main/mainForm/MainForm";
 import Footer from "../../components/common/footer/Footer";
-import { useQuery } from "react-query";
 import { getCompanies, getJobs } from "../../services/apis";
 import { ICompanies, IJobs } from "../../services/types";
 
@@ -16,12 +16,14 @@ const Wrapper = styled.div`
 `;
 
 function MainPage() {
+  //NOTE - job, company 드롭다운 api 호출
   const { isLoading: isJobsLoading, data: jobsApiData } = useQuery<IJobs>(
     "jobs",
     getJobs
   );
   const { isLoading: isCompaniesLoading, data: companiesApiData } =
     useQuery<ICompanies>("companies", getCompanies);
+
   const isLoading = isJobsLoading || isCompaniesLoading;
 
   return (

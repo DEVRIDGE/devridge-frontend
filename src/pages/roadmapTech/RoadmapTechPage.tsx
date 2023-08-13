@@ -1,8 +1,25 @@
 import { styled } from "styled-components";
-import TechButton from "../../components/roadmapTech/techButton/TechButton";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+
 import TechHeader from "../../components/roadmapTech/techHeader/TechHeader";
-import { Link } from "react-router-dom";
 import Overlay from "../../components/common/overlay/Overlay";
+import { roadmapTechState } from "../../recoil/roadmapTechDetail/atom";
+import { selectedTechIdState } from "../../recoil/selectedTechId/atom";
+import { getRoadmapCourseDetail } from "../../services/apis";
+import { jobState } from "../../recoil/jobId/atom";
+import { companyState } from "../../recoil/companyId/atom";
+import { roadmapCourseState } from "../../recoil/roadmapCourseDetail/atom";
+import {
+  SwitchDetail,
+  switchRoadmapDetailState,
+} from "../../recoil/swtichRoadmapDetail/atom";
+import { courseTitleState } from "../../recoil/courseTitle/atom";
+import { isLoadingCoursePageState } from "../../recoil/isLoadingCoursePage/atom";
+
+interface IOnClickTechButton {
+  selectedCourseId: number;
+  selectedCourseTitle: string;
+}
 
 const Wrapper = styled.div`
   position: fixed;
@@ -37,21 +54,65 @@ const GridButtons = styled.div`
   }
 `;
 
+const TechButton = styled.button`
+  width: 100%;
+  height: 100px;
+  border: 1px solid ${(props) => props.theme.greyColor};
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.bgColor};
+  box-shadow: 1px 1px 3px 1px ${(props) => props.theme.greyColor};
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+`;
+
 function RoadmapTechPage() {
+  const setSwitchRoadmapDetail = useSetRecoilState(switchRoadmapDetailState);
+  const setSelectedCourseTitle = useSetRecoilState(courseTitleState);
+  const setRoadmapCourseState = useSetRecoilState(roadmapCourseState);
+  const setIsLoadingCoursePage = useSetRecoilState(isLoadingCoursePageState);
+
+  const selectedTechState = useRecoilValue(roadmapTechState);
+  const selectedTechId = useRecoilValue(selectedTechIdState);
+  const jobId = useRecoilValue(jobState);
+  const companyId = useRecoilValue(companyState);
+
+  const onClickTechButton = async ({
+    selectedCourseId,
+    selectedCourseTitle,
+  }: IOnClickTechButton) => {
+    setIsLoadingCoursePage(true);
+    setSwitchRoadmapDetail(SwitchDetail.COURSE);
+    const data = await getRoadmapCourseDetail({
+      selectedTechId,
+      selectedCourseId,
+      jobId,
+      companyId,
+    });
+    setRoadmapCourseState(data);
+    setSelectedCourseTitle(selectedCourseTitle);
+    setIsLoadingCoursePage(false);
+  };
+
   return (
     <Wrapper>
       <Overlay />
       <TechMenuWrapper>
         <TechHeader />
         <GridButtons>
-          <Link to="/roadmap/tmp/tmp2">
-            <TechButton />
-          </Link>
-          <TechButton />
-          <TechButton />
-          <TechButton />
-          <TechButton />
-          <TechButton />
+          {selectedTechState.data.courseDetails.map((courseDetail) => (
+            <TechButton
+              onClick={() =>
+                onClickTechButton({
+                  selectedCourseId: courseDetail.id,
+                  selectedCourseTitle: courseDetail.name,
+                })
+              }
+              key={courseDetail.id}
+            >
+              {courseDetail.name}
+            </TechButton>
+          ))}
         </GridButtons>
       </TechMenuWrapper>
     </Wrapper>
