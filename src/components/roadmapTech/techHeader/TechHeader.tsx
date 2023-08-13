@@ -1,19 +1,37 @@
-import { Link } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
-import CloseButton from "../../common/closeButton/CloseButton";
 import StudyState from "../../common/studyState/StudyState";
-import { TechTitle, WrapperClose, WrapperTitleAndState } from "./styles";
+import {
+  CloseButton,
+  TechTitle,
+  WrapperClose,
+  WrapperTitleAndState,
+} from "./styles";
+import {
+  SwitchDetail,
+  switchRoadmapDetailState,
+} from "../../../recoil/swtichRoadmapDetail/atom";
+import CloseBtnSvg from "../../common/closeBtnSvg/CloseBtnSvg";
+import { techTitleState } from "../../../recoil/techTitle/atom";
 
 function TechHeader() {
+  const selectedTechTitle = useRecoilValue(techTitleState);
+
+  const setSwitchDetail = useSetRecoilState(switchRoadmapDetailState);
+
+  const onClickCloseBtn = () => {
+    setSwitchDetail(SwitchDetail.BLIND);
+  };
+
   return (
     <>
       <WrapperClose>
-        <Link to="/roadmap">
-          <CloseButton />
-        </Link>
+        <CloseButton onClick={onClickCloseBtn}>
+          <CloseBtnSvg />
+        </CloseButton>
       </WrapperClose>
       <WrapperTitleAndState>
-        <TechTitle>언어</TechTitle>
+        <TechTitle>{selectedTechTitle}</TechTitle>
         <StudyState />
       </WrapperTitleAndState>
     </>

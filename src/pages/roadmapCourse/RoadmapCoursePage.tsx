@@ -1,7 +1,10 @@
 import { styled } from "styled-components";
+import { useRecoilValue } from "recoil";
+
 import Overlay from "../../components/common/overlay/Overlay";
 import CourseHeader from "../../components/roadmapCourse/courseHeader/CourseHeader";
 import CourseBox from "../../components/roadmapCourse/courseBox/CourseBox";
+import { roadmapCourseState } from "../../recoil/roadmapCourseDetail/atom";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -33,18 +36,16 @@ const GridCourses = styled.div`
 `;
 
 function RoadmapCoursePage() {
+  const roadmapCourseDetail = useRecoilValue(roadmapCourseState);
   return (
     <Wrapper>
       <Overlay />
       <CourseMenuWrapper>
         <CourseHeader />
         <GridCourses>
-          <CourseBox />
-          <CourseBox />
-          <CourseBox />
-          <CourseBox />
-          <CourseBox />
-          <CourseBox />
+          {roadmapCourseDetail.data.courseVideos.map((courseVideo) => (
+            <CourseBox key={courseVideo.id} {...courseVideo} />
+          ))}
         </GridCourses>
       </CourseMenuWrapper>
     </Wrapper>

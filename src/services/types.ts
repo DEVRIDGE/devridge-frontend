@@ -23,3 +23,40 @@ export interface ICompanies {
     companies: ICompany[];
   };
 }
+
+export interface IGetRoadmap {
+  jobId: number;
+  companyId: number;
+}
+
+export interface ICourse {
+  id: number;
+  name: string;
+  type: string;
+}
+
+export interface ICourses {
+  index: number;
+  courses: ICourse[] | [];
+}
+
+export interface IRoadmap {
+  status: string;
+  message: string;
+  data: {
+    courseList: [ICourses | null];
+  };
+}
+
+export interface IGetRoadmapTechDetail {
+  selectedTechId: number;
+  jobId: number;
+  companyId: number;
+}
+
+export interface IGetRoadmapCourseDetail {
+  selectedTechId: number;
+  selectedCourseId: number;
+  jobId: number;
+  companyId: number;
+}
