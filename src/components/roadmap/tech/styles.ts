@@ -19,4 +19,5 @@ export const TechName = styled.span`
   color: ${(props) => props.theme.textColor};
   text-align: center;
   font-size: 14px;
+  word-break: keep-all;
 `;
