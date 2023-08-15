@@ -28,7 +28,7 @@ export const CourseThumbnail = styled.img`
 
 export const CourseTitleWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -38,22 +38,31 @@ export const CourseLogoWrapper = styled.div`
   align-items: center;
 `;
 
-export const CourseLogo = styled.svg`
-  width: 25px;
-  height: 25px;
-  fill: red;
+// export const CourseLogo = styled.svg`
+//   width: 25px;
+//   height: 25px;
+//   fill: red;
+// `;
+
+export const CourseLogo = styled.span`
+  font-size: 12px;
+  color: ${(props) => props.theme.textGreyColor};
 `;
 
 export const CourseTitle = styled.h3`
   display: -webkit-box;
   overflow: hidden;
-  padding-bottom: 1px;
+  padding-bottom: 2px;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   font-size: 13px;
+  word-break: break-all;
 `;
 
-export const CourseActions = styled.div``;
+export const CourseActions = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 export const CourseLikeWrapper = styled.div`
   display: flex;

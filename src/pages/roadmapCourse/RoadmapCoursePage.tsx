@@ -15,6 +15,7 @@ const Wrapper = styled.div`
 
 const CourseMenuWrapper = styled.div`
   position: fixed;
+  overflow: hidden;
   top: 50px;
   right: 20px;
   bottom: 0;
@@ -28,11 +29,19 @@ const CourseMenuWrapper = styled.div`
 
 const GridCourses = styled.div`
   display: grid;
+  position: relative;
+  overflow: auto;
   grid-template-columns: repeat(2, 1fr);
   justify-content: center;
   justify-items: center;
+  width: 100%;
+  height: 100%;
   gap: 10px;
-  margin-top: 50px;
+  margin-top: 30px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 function RoadmapCoursePage() {
