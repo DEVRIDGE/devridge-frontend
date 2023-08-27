@@ -1,3 +1,5 @@
+//TODO - 프록시 해제
+
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const BASE_PATH =
   "http://ec2-3-34-60-62.ap-northeast-2.compute.amazonaws.com:8081/";

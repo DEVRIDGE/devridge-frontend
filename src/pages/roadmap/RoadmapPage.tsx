@@ -23,6 +23,7 @@ interface IParams {
 const Wrapper = styled.div`
   display: flex;
   position: relative;
+  align-items: center;
   flex-direction: column;
   padding-top: 50px;
   padding-bottom: 100px;

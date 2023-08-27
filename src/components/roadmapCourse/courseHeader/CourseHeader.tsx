@@ -10,12 +10,10 @@ import {
   WrapperTitleAndState,
 } from "./styles";
 import CloseBtnSvg from "../../common/closeBtnSvg/CloseBtnSvg";
-import {
-  SwitchDetail,
-  switchRoadmapDetailState,
-} from "../../../recoil/swtichRoadmapDetail/atom";
+import { switchRoadmapDetailState } from "../../../recoil/swtichRoadmapDetail/atom";
 import { courseTitleState } from "../../../recoil/courseTitle/atom";
 import { techTitleState } from "../../../recoil/techTitle/atom";
+import { SwitchDetail } from "../../../constants/enums";
 
 function CourseHeader() {
   const selectedCourseTitle = useRecoilValue(courseTitleState);
