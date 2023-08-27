@@ -7,12 +7,10 @@ import {
   WrapperClose,
   WrapperTitleAndState,
 } from "./styles";
-import {
-  SwitchDetail,
-  switchRoadmapDetailState,
-} from "../../../recoil/swtichRoadmapDetail/atom";
+import { switchRoadmapDetailState } from "../../../recoil/swtichRoadmapDetail/atom";
 import CloseBtnSvg from "../../common/closeBtnSvg/CloseBtnSvg";
 import { techTitleState } from "../../../recoil/techTitle/atom";
+import { SwitchDetail } from "../../../constants/enums";
 
 function TechHeader() {
   const selectedTechTitle = useRecoilValue(techTitleState);

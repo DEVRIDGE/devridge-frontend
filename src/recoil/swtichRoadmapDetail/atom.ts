@@ -1,10 +1,5 @@
 import { atom } from "recoil";
-
-export enum SwitchDetail {
-  "BLIND" = "BLIND",
-  "TECH" = "TECH",
-  "COURSE" = "COURSE",
-}
+import { SwitchDetail } from "../../constants/enums";
 
 export const switchRoadmapDetailState = atom<SwitchDetail>({
   key: "switchRoadmap",

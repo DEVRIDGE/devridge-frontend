@@ -1,18 +1,25 @@
 import { styled } from "styled-components";
 
 import { StatusCircle } from "../status/styles";
+import { MediaType } from "../../../constants/enums";
 
 interface IWrapper {
   $col: number;
   $row: number;
 }
 
+interface IProgressBar {
+  $isDone?: boolean;
+  $mediaType?: string; // null 불인정으로 바꾸자
+}
+
 export const Wrapper = styled.div<IWrapper>`
   display: grid;
   grid-template-columns: repeat(${(props) => props.$col}, minmax(50px, 1fr));
-  grid-template-rows: repeat(${(props) => props.$row}, minmax(200px, 1fr));
+  grid-template-rows: repeat(${(props) => props.$row}, minmax(250px, 1fr));
+  width: 1024px;
   gap: 100px 20px;
-  padding: 3vh 5vw;
+  padding: 50px;
 `;
 
 export const WrapperItem = styled.div`
@@ -27,17 +34,6 @@ export const Rope = styled.div<{ $marginTop?: string }>`
   width: 1px;
   height: 50px;
   border: 1px dashed ${(props) => props.theme.greyColor};
-`;
-
-export const ProgressBar = styled.div<{ $isDone?: boolean }>`
-  position: absolute;
-  top: 1vh;
-  left: -15vw;
-  width: 20vw;
-  height: 15px;
-  border: none;
-  background-color: ${(props) =>
-    props.$isDone ? props.theme.mainColor : props.theme.greyColor};
 `;
 
 export const TechButton = styled.button`
@@ -83,4 +79,65 @@ export const CSName = styled.span`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   word-break: keep-all;
+`;
+
+export const ProgressBar = styled.div<IProgressBar>`
+  position: absolute;
+  border: none;
+  top: 10px;
+  left: ${(props) => {
+    if (props.$mediaType === MediaType.normal) {
+      return "-160px";
+    } else if (
+      props.$mediaType === MediaType.rightTop ||
+      props.$mediaType === MediaType.rightBot
+    ) {
+      return "-53px";
+    } else if (
+      props.$mediaType === MediaType.leftTop ||
+      props.$mediaType === MediaType.leftBot
+    ) {
+      return "-31px";
+    } else if (props.$mediaType === MediaType.leftMid) {
+      return "-46px";
+    }
+  }};
+  right: ${(props) => {
+    if (props.$mediaType === MediaType.rightMid) {
+      return "-47px";
+    }
+  }};
+  width: ${(props) => {
+    if (props.$mediaType === MediaType.normal) {
+      return "210px";
+    } else if (
+      props.$mediaType === MediaType.rightTop ||
+      props.$mediaType === MediaType.rightBot
+    ) {
+      return "170px";
+    } else if (
+      props.$mediaType === MediaType.rightMid ||
+      props.$mediaType === MediaType.leftMid
+    ) {
+      return "15px";
+    } else if (
+      props.$mediaType === MediaType.leftTop ||
+      props.$mediaType === MediaType.leftBot
+    ) {
+      return "170px";
+    }
+  }};
+  height: ${(props) => {
+    if (
+      props.$mediaType === MediaType.rightMid ||
+      props.$mediaType === MediaType.leftMid
+    ) {
+      return "365px";
+    } else {
+      return "15px";
+    }
+  }};
+
+  background-color: ${(props) =>
+    props.$isDone ? props.theme.mainColor : props.theme.greyColor};
 `;

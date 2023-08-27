@@ -16,10 +16,7 @@ import {
 import RoadmapTechPage from "../../../pages/roadmapTech/RoadmapTechPage";
 import RoadmapCoursePage from "../../../pages/roadmapCourse/RoadmapCoursePage";
 import { IRoadmap } from "../../../services/types";
-import {
-  SwitchDetail,
-  switchRoadmapDetailState,
-} from "../../../recoil/swtichRoadmapDetail/atom";
+import { switchRoadmapDetailState } from "../../../recoil/swtichRoadmapDetail/atom";
 import {
   IRoadmapTechDetail,
   roadmapTechState,
@@ -36,6 +33,7 @@ import Loader from "../../common/loader/Loader";
 import { isLoadingCoursePageState } from "../../../recoil/isLoadingCoursePage/atom";
 import Status from "../status/Status";
 import { selectedGridIndexState } from "../../../recoil/selectedGridIndex/atom";
+import { SwitchDetail } from "../../../constants/enums";
 
 interface IRoad {
   roadmapApiData?: IRoadmap;
@@ -45,6 +43,8 @@ interface IOnClickTech {
   selectedTechId: number;
   index: number;
 }
+
+//NOTE - 모바일 320px~767px, 태블릿 768px~1023px, 데스크탑 1024px~
 
 function Road({ roadmapApiData }: IRoad) {
   const setSelectedTechTitleState = useSetRecoilState(techTitleState);
@@ -67,12 +67,16 @@ function Road({ roadmapApiData }: IRoad) {
   const col = 9;
 
   //NOTE - 그리드 레이아웃을 위한 null 값 추가
-  const [courseList, row] = useMemo(() => {
+  const [courseList, rowAll] = useMemo(() => {
     const tmp = roadmapApiData?.data.courseList || [];
     for (let i = col; i < tmp.length; i += col) {
       tmp.splice(i, 0, null);
     }
     const row_tmp = Math.ceil(tmp.length / col);
+    const mustFillCnt = col * row_tmp - tmp.length;
+    for (let i = 0; i < mustFillCnt; i++) {
+      tmp.splice(tmp.length, 0, null);
+    }
     return [tmp, row_tmp];
   }, []);
 
@@ -94,9 +98,8 @@ function Road({ roadmapApiData }: IRoad) {
     setIsLoadingTechPage(false);
   };
 
-  //TODO - 마지막 row 덜 채워져서 오른쪽 정렬 안되는거 해결하자
   return (
-    <Wrapper $col={col} $row={row}>
+    <Wrapper $col={col} $row={rowAll}>
       {courseList.map((courseCol, index) => {
         const row = Math.floor(index / col);
         const orderFlipped = col * (row + 2) - (col + 1) - (index % col); // NOTE - 역순 row에 있는 아이템에 order 지정
@@ -108,43 +111,34 @@ function Road({ roadmapApiData }: IRoad) {
             }}
           >
             {/* 맨 처음 progress bar 따로 추가 */}
-            {index === 1 ? <ProgressBar $isDone={true} /> : null}
+            {index === 1 ? (
+              <ProgressBar $isDone={true} $mediaType="normal" />
+            ) : null}
 
             {/* //TODO - 뷰포트 단위 대신 픽셀로 하드코딩하고, 화면 크기 별로 레이아웃을 여러 개 구현한 뒤, 미디어쿼리로 기기에 맞게 정해진 레이아웃을 띄우는 방식으로 구현하자 */}
 
             {/* 오른쪽 ㄷ자 progress bar */}
-            {(index + 10) % (col * 2) === 0 ? (
+            {Math.floor(index / col) + 1 !== rowAll &&
+            (index + 10) % (col * 2) === 0 ? (
               <>
-                <ProgressBar style={{ left: "-5vw", width: "15vw" }} />
-                <ProgressBar
-                  style={{
-                    width: "15px",
-                    height: "34.4vh",
-                    left: "auto",
-                    right: "-3.6vw",
-                  }}
-                />
+                <ProgressBar $mediaType="rightTop" />
+                <ProgressBar $mediaType="rightMid" />
               </>
             ) : null}
             {(index + 9) % (col * 2) === 0 ? (
-              <ProgressBar style={{ left: "-5vw", width: "15vw" }} />
+              <ProgressBar $mediaType="rightBot" />
             ) : null}
 
             {/* 왼쪽 ㄷ자 progress bar */}
-            {(index + 1) % (col * 2) === 0 ? (
+            {Math.floor(index / col) + 1 !== rowAll &&
+            (index + 1) % (col * 2) === 0 ? (
               <>
-                <ProgressBar style={{ left: "-2vw", width: "17vw" }} />
-                <ProgressBar
-                  style={{
-                    width: "15px",
-                    height: "34.4vh",
-                    left: "-3.5vw",
-                  }}
-                />
+                <ProgressBar $mediaType="leftTop" />
+                <ProgressBar $mediaType="leftMid" />
               </>
             ) : null}
-            {index % (col * 2) === 0 ? (
-              <ProgressBar style={{ left: "-2vw", width: "17vw" }} />
+            {index !== 0 && index % (col * 2) === 0 ? (
+              <ProgressBar $mediaType="leftBot" />
             ) : null}
 
             {courseCol !== null ? (
@@ -153,7 +147,10 @@ function Road({ roadmapApiData }: IRoad) {
                 {courseCol.index % 2 !== 0 &&
                 (index + 2) % (col * 2) !== 0 &&
                 (index - 1) % (col * 2) !== 0 ? (
-                  <ProgressBar $isDone={courseCol.index <= 3} />
+                  <ProgressBar
+                    $isDone={courseCol.index <= 3}
+                    $mediaType="normal"
+                  />
                 ) : null}
 
                 {/* 서버에서 받은 인덱스가 홀수면 기술과 CS, 짝수면 CS 단독 리스트임 */}

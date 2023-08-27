@@ -9,12 +9,10 @@ import { getRoadmapCourseDetail } from "../../services/apis";
 import { jobState } from "../../recoil/jobId/atom";
 import { companyState } from "../../recoil/companyId/atom";
 import { roadmapCourseState } from "../../recoil/roadmapCourseDetail/atom";
-import {
-  SwitchDetail,
-  switchRoadmapDetailState,
-} from "../../recoil/swtichRoadmapDetail/atom";
+import { switchRoadmapDetailState } from "../../recoil/swtichRoadmapDetail/atom";
 import { courseTitleState } from "../../recoil/courseTitle/atom";
 import { isLoadingCoursePageState } from "../../recoil/isLoadingCoursePage/atom";
+import { SwitchDetail } from "../../constants/enums";
 
 interface IOnClickTechButton {
   selectedCourseId: number;
