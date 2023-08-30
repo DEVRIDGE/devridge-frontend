@@ -29,6 +29,8 @@ const Wrapper = styled.div`
   padding-bottom: 100px;
 `;
 
+// TODO - 데브옵스, 안드로이드, ios name undefined 오류 해결하자
+
 function RoadmapPage() {
   //NOTE - 쿼리스트링 파라미터 가져오는 부분
   const qs = require("querystring");
