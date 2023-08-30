@@ -20,6 +20,9 @@ export const Wrapper = styled.div<IWrapper>`
   width: 1024px;
   gap: 100px 20px;
   padding: 50px;
+
+  @media screen and (max-width: 1023px) {
+  }
 `;
 
 export const WrapperItem = styled.div`
@@ -140,4 +143,7 @@ export const ProgressBar = styled.div<IProgressBar>`
 
   background-color: ${(props) =>
     props.$isDone ? props.theme.mainColor : props.theme.greyColor};
+
+  @media screen and (max-width: 1023px) {
+  }
 `;

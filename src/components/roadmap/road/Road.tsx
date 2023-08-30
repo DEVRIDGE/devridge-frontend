@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Tech from "../tech/Tech";
 import {
@@ -34,6 +34,7 @@ import { isLoadingCoursePageState } from "../../../recoil/isLoadingCoursePage/at
 import Status from "../status/Status";
 import { selectedGridIndexState } from "../../../recoil/selectedGridIndex/atom";
 import { SwitchDetail } from "../../../constants/enums";
+import useAdaptiveWidth from "../../../hooks/useAdaptiveWtdth";
 
 interface IRoad {
   roadmapApiData?: IRoadmap;
@@ -63,22 +64,48 @@ function Road({ roadmapApiData }: IRoad) {
     switchRoadmapDetailState
   );
 
-  // NOTE - 그리드 컬럼 수
-  const col = 9;
+  //NOTE - 윈도우 창 가로 크기 state
+  const currentWidth = useAdaptiveWidth();
+  console.log(currentWidth);
 
-  //NOTE - 그리드 레이아웃을 위한 null 값 추가
-  const [courseList, rowAll] = useMemo(() => {
-    const tmp = roadmapApiData?.data.courseList || [];
+  // NOTE - 그리드 컬럼 수
+  const [col, setCol] = useState(0);
+  useEffect(() => {
+    setCol(currentWidth >= 1024 ? 9 : currentWidth >= 768 ? 7 : 3);
+  }, [currentWidth]);
+
+  const [courseList, setCourseList] = useState(
+    roadmapApiData?.data.courseList || []
+  );
+  const [rowAll, setRowAll] = useState(Math.ceil(courseList.length / col));
+
+  useEffect(() => {
+    const tmp = courseList;
     for (let i = col; i < tmp.length; i += col) {
       tmp.splice(i, 0, null);
     }
     const row_tmp = Math.ceil(tmp.length / col);
+    setRowAll(row_tmp);
     const mustFillCnt = col * row_tmp - tmp.length;
     for (let i = 0; i < mustFillCnt; i++) {
       tmp.splice(tmp.length, 0, null);
     }
-    return [tmp, row_tmp];
-  }, []);
+    setCourseList(tmp);
+  }, [col, roadmapApiData?.data.courseList]);
+
+  //NOTE - 그리드 레이아웃을 위한 null 값 추가
+  // const [courseList, rowAll] = useMemo(() => {
+  //   const tmp = roadmapApiData?.data.courseList || [];
+  //   for (let i = col; i < tmp.length; i += col) {
+  //     tmp.splice(i, 0, null);
+  //   }
+  //   const row_tmp = Math.ceil(tmp.length / col);
+  //   const mustFillCnt = col * row_tmp - tmp.length;
+  //   for (let i = 0; i < mustFillCnt; i++) {
+  //     tmp.splice(tmp.length, 0, null);
+  //   }
+  //   return [tmp, row_tmp];
+  // }, [col, roadmapApiData?.data.courseList]);
 
   const onClickTech = async ({
     selectedTechId,
