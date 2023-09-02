@@ -53,7 +53,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://minsu-cnu.github.io/devridge",
+  "homepage": "https://minsu-cnu.github.io/devridge/",
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26"
