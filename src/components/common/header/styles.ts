@@ -41,4 +41,16 @@ export const LoginButton = styled.button`
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.mainColor};
   cursor: pointer;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+`;
+
+export const MenuBars = styled.svg`
+  display: none;
+
+  @media screen and (max-width: 767px) {
+    display: block;
+  }
 `;

@@ -34,9 +34,16 @@ const TechMenuWrapper = styled.div`
   margin: auto auto;
   padding: 20px;
   width: 40vw;
-  height: 90vh;
+  max-width: 450px;
+  min-width: 320px;
+  height: 80vh;
   border-radius: 10px;
   background-color: ${(props) => props.theme.bgColor};
+
+  @media screen and (max-width: 767px) {
+    left: 0;
+    right: 0;
+  }
 `;
 
 const GridButtons = styled.div`

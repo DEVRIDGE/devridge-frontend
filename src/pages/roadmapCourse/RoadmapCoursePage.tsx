@@ -21,10 +21,17 @@ const CourseMenuWrapper = styled.div`
   bottom: 0;
   margin: auto auto;
   padding: 20px;
+  max-width: 450px;
+  min-width: 320px;
   width: 40vw;
   height: 90vh;
   border-radius: 10px;
   background-color: ${(props) => props.theme.bgColor};
+
+  @media screen and (max-width: 767px) {
+    left: 0;
+    right: 0;
+  }
 `;
 
 const GridCourses = styled.div`
@@ -41,6 +48,10 @@ const GridCourses = styled.div`
 
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  @media screen and (max-width: 767px) {
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 

@@ -13,11 +13,19 @@ export const CourseWrapper = styled.div`
   box-shadow: 1px 1px 3px 1px ${(props) => props.theme.greyColor};
   font-size: 18px;
   font-weight: 600;
+
+  @media screen and (max-width: 767px) {
+    height: 270px;
+  }
 `;
 
 export const CourseThumbnailWrapper = styled.div`
   height: 50%;
   box-shadow: 0 0 1px 1px ${(props) => props.theme.greyColor};
+
+  @media screen and (max-width: 767px) {
+    height: 60%;
+  }
 `;
 
 export const CourseThumbnail = styled.img`
