@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/devridge/static/js/main.cc8ba9fb.js",
+    "main.js": "/devridge/static/js/main.4b7a9399.js",
     "index.html": "/devridge/index.html",
-    "main.cc8ba9fb.js.map": "/devridge/static/js/main.cc8ba9fb.js.map"
+    "main.4b7a9399.js.map": "/devridge/static/js/main.4b7a9399.js.map"
   },
   "entrypoints": [
-    "static/js/main.cc8ba9fb.js"
+    "static/js/main.4b7a9399.js"
   ]
 }
