@@ -15,7 +15,7 @@ import {
 } from "./styles";
 import RoadmapTechPage from "../../../pages/roadmapTech/RoadmapTechPage";
 import RoadmapCoursePage from "../../../pages/roadmapCourse/RoadmapCoursePage";
-import { IRoadmap } from "../../../services/types";
+import { ICourses, IRoadmap } from "../../../services/types";
 import { switchRoadmapDetailState } from "../../../recoil/swtichRoadmapDetail/atom";
 import {
   IRoadmapTechDetail,
@@ -66,46 +66,46 @@ function Road({ roadmapApiData }: IRoad) {
 
   //NOTE - 윈도우 창 가로 크기 state
   const currentWidth = useAdaptiveWidth();
-  console.log(currentWidth);
 
   // NOTE - 그리드 컬럼 수
-  const [col, setCol] = useState(0);
+  const [col, setCol] = useState(9);
   useEffect(() => {
     setCol(currentWidth >= 1024 ? 9 : currentWidth >= 768 ? 7 : 3);
   }, [currentWidth]);
 
-  const [courseList, setCourseList] = useState(
-    roadmapApiData?.data.courseList || []
-  );
-  const [rowAll, setRowAll] = useState(Math.ceil(courseList.length / col));
+  // const [courseList, setCourseList] = useState(
+  //   roadmapApiData?.data.courseList || []
+  // );
+  // const [rowAll, setRowAll] = useState(Math.ceil(courseList.length / col));
 
-  useEffect(() => {
-    const tmp = courseList;
-    for (let i = col; i < tmp.length; i += col) {
-      tmp.splice(i, 0, null);
-    }
-    const row_tmp = Math.ceil(tmp.length / col);
-    setRowAll(row_tmp);
-    const mustFillCnt = col * row_tmp - tmp.length;
-    for (let i = 0; i < mustFillCnt; i++) {
-      tmp.splice(tmp.length, 0, null);
-    }
-    setCourseList(tmp);
-  }, [col, roadmapApiData?.data.courseList]);
-
-  //NOTE - 그리드 레이아웃을 위한 null 값 추가
-  // const [courseList, rowAll] = useMemo(() => {
-  //   const tmp = roadmapApiData?.data.courseList || [];
+  // useEffect(() => {
+  //   const tmp = JSON.parse(JSON.stringify(roadmapApiData?.data.courseList));
   //   for (let i = col; i < tmp.length; i += col) {
   //     tmp.splice(i, 0, null);
   //   }
   //   const row_tmp = Math.ceil(tmp.length / col);
+  //   setRowAll(row_tmp);
   //   const mustFillCnt = col * row_tmp - tmp.length;
   //   for (let i = 0; i < mustFillCnt; i++) {
   //     tmp.splice(tmp.length, 0, null);
   //   }
-  //   return [tmp, row_tmp];
-  // }, [col, roadmapApiData?.data.courseList]);
+  //   setCourseList(tmp);
+  // }, [col]);
+
+  // NOTE - 그리드 레이아웃을 위한 null 값 추가 (window resize -> col 변화 -> 리렌더링)
+  const [courseList, rowAll] = useMemo(() => {
+    const tmp: [ICourses | null] =
+      JSON.parse(JSON.stringify(roadmapApiData?.data.courseList)) || [];
+    for (let i = col; i < tmp.length; i += col) {
+      tmp.splice(i, 0, null);
+    }
+    const row_tmp = Math.ceil(tmp.length / col);
+    const mustFillCnt = col * row_tmp - tmp.length;
+    for (let i = 0; i < mustFillCnt; i++) {
+      tmp.splice(tmp.length, 0, null);
+    }
+    return [tmp, row_tmp];
+  }, [col, roadmapApiData?.data.courseList]);
 
   const onClickTech = async ({
     selectedTechId,
@@ -145,7 +145,7 @@ function Road({ roadmapApiData }: IRoad) {
             {/* //TODO - 뷰포트 단위 대신 픽셀로 하드코딩하고, 화면 크기 별로 레이아웃을 여러 개 구현한 뒤, 미디어쿼리로 기기에 맞게 정해진 레이아웃을 띄우는 방식으로 구현하자 */}
 
             {/* 오른쪽 ㄷ자 progress bar */}
-            {Math.floor(index / col) + 1 !== rowAll &&
+            {/* {Math.floor(index / col) + 1 !== rowAll &&
             (index + 10) % (col * 2) === 0 ? (
               <>
                 <ProgressBar $mediaType="rightTop" />
@@ -153,6 +153,16 @@ function Road({ roadmapApiData }: IRoad) {
               </>
             ) : null}
             {(index + 9) % (col * 2) === 0 ? (
+              <ProgressBar $mediaType="rightBot" />
+            ) : null} */}
+            {Math.floor(index / col) + 1 !== rowAll &&
+            index % (col * 2) === col - 1 ? (
+              <>
+                <ProgressBar $mediaType="rightTop" />
+                <ProgressBar $mediaType="rightMid" />
+              </>
+            ) : null}
+            {index % (col * 2) === col ? (
               <ProgressBar $mediaType="rightBot" />
             ) : null}
 
@@ -212,7 +222,7 @@ function Road({ roadmapApiData }: IRoad) {
                               onClickTech({ selectedTechId: cs.id, index });
                             }}
                           >
-                            <Status width="20px" height="20px" />
+                            <Status width="15px" height="15px" />
                             <CSName>{cs.name}</CSName>
                           </CSButton>
                         ))}
@@ -234,7 +244,7 @@ function Road({ roadmapApiData }: IRoad) {
                               onClickTech({ selectedTechId: cs.id, index })
                             }
                           >
-                            <Status width="20px" height="20px" />
+                            <Status width="15px" height="15px" />
                             <CSName>{cs.name}</CSName>
                           </CSButton>
                         ))}

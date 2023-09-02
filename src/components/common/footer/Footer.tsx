@@ -1,5 +1,6 @@
 import { Col, Info, Item, Logo, Teams, Wrapper } from "./styles";
 
+//TODO - 세로 길이 줄어들 때 footer가 form 가리는거 해결
 function Footer() {
   return (
     <Wrapper>

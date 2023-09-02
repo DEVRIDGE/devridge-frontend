@@ -17,11 +17,20 @@ export const Wrapper = styled.div<IWrapper>`
   display: grid;
   grid-template-columns: repeat(${(props) => props.$col}, minmax(50px, 1fr));
   grid-template-rows: repeat(${(props) => props.$row}, minmax(250px, 1fr));
-  width: 1024px;
   gap: 100px 20px;
   padding: 50px;
+  width: 1024px;
 
   @media screen and (max-width: 1023px) {
+    gap: 100px 10px;
+    padding: 30px;
+    width: 768px;
+  }
+
+  @media screen and (max-width: 767px) {
+    gap: 100px 10px;
+    padding: 10px;
+    width: 320px;
   }
 `;
 
@@ -58,6 +67,7 @@ export const CSList = styled.div`
 export const CSButton = styled.button`
   position: relative;
   margin-top: 10px;
+  padding: 5px;
   width: 100px;
   height: 50px;
   border: 1px solid ${(props) => props.theme.greyColor};
@@ -65,14 +75,25 @@ export const CSButton = styled.button`
   background-color: white;
   color: black;
   font-size: 12px;
+  word-break: break-all;
   cursor: pointer;
 
   ${StatusCircle} {
     position: absolute;
     margin: auto;
-    top: 0;
-    bottom: 0;
-    left: -10px;
+    top: -8px;
+    left: -8px;
+  }
+
+  @media screen and (max-width: 1023px) {
+    width: 85px;
+    height: 45px;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 70px;
+    height: 40px;
+    font-size: 10px;
   }
 `;
 
@@ -100,14 +121,14 @@ export const ProgressBar = styled.div<IProgressBar>`
       props.$mediaType === MediaType.leftTop ||
       props.$mediaType === MediaType.leftBot
     ) {
-      return "-31px";
+      return "-20px";
     } else if (props.$mediaType === MediaType.leftMid) {
-      return "-46px";
+      return "-35px";
     }
   }};
   right: ${(props) => {
     if (props.$mediaType === MediaType.rightMid) {
-      return "-47px";
+      return "-37px";
     }
   }};
   width: ${(props) => {
@@ -117,7 +138,7 @@ export const ProgressBar = styled.div<IProgressBar>`
       props.$mediaType === MediaType.rightTop ||
       props.$mediaType === MediaType.rightBot
     ) {
-      return "170px";
+      return "160px";
     } else if (
       props.$mediaType === MediaType.rightMid ||
       props.$mediaType === MediaType.leftMid
@@ -127,7 +148,7 @@ export const ProgressBar = styled.div<IProgressBar>`
       props.$mediaType === MediaType.leftTop ||
       props.$mediaType === MediaType.leftBot
     ) {
-      return "170px";
+      return "160px";
     }
   }};
   height: ${(props) => {
@@ -144,6 +165,115 @@ export const ProgressBar = styled.div<IProgressBar>`
   background-color: ${(props) =>
     props.$isDone ? props.theme.mainColor : props.theme.greyColor};
 
+  /* 태블릿 미디어 쿼리 */
   @media screen and (max-width: 1023px) {
+    left: ${(props) => {
+      if (props.$mediaType === MediaType.normal) {
+        return "-150px";
+      } else if (
+        props.$mediaType === MediaType.rightTop ||
+        props.$mediaType === MediaType.rightBot
+      ) {
+        return "-55.5px";
+      } else if (
+        props.$mediaType === MediaType.leftTop ||
+        props.$mediaType === MediaType.leftBot
+      ) {
+        return "-5px";
+      } else if (props.$mediaType === MediaType.leftMid) {
+        return "-20px";
+      }
+    }};
+    right: ${(props) => {
+      if (props.$mediaType === MediaType.rightMid) {
+        return "-17px";
+      }
+    }};
+    width: ${(props) => {
+      if (props.$mediaType === MediaType.normal) {
+        return "180px";
+      } else if (
+        props.$mediaType === MediaType.rightTop ||
+        props.$mediaType === MediaType.rightBot
+      ) {
+        return "150px";
+      } else if (
+        props.$mediaType === MediaType.rightMid ||
+        props.$mediaType === MediaType.leftMid
+      ) {
+        return "15px";
+      } else if (
+        props.$mediaType === MediaType.leftTop ||
+        props.$mediaType === MediaType.leftBot
+      ) {
+        return "150px";
+      }
+    }};
+    height: ${(props) => {
+      if (
+        props.$mediaType === MediaType.rightMid ||
+        props.$mediaType === MediaType.leftMid
+      ) {
+        return "365px";
+      } else {
+        return "15px";
+      }
+    }};
+  }
+
+  /* 모바일 미디어 쿼리 */
+  @media screen and (max-width: 767px) {
+    left: ${(props) => {
+      if (props.$mediaType === MediaType.normal) {
+        return "-110px";
+      } else if (
+        props.$mediaType === MediaType.rightTop ||
+        props.$mediaType === MediaType.rightBot
+      ) {
+        return "-60px";
+      } else if (
+        props.$mediaType === MediaType.leftTop ||
+        props.$mediaType === MediaType.leftBot
+      ) {
+        return "-6px";
+      } else if (props.$mediaType === MediaType.leftMid) {
+        return "-21px";
+      }
+    }};
+    right: ${(props) => {
+      if (props.$mediaType === MediaType.rightMid) {
+        return "-21.5px";
+      }
+    }};
+    width: ${(props) => {
+      if (props.$mediaType === MediaType.normal) {
+        return "160px";
+      } else if (
+        props.$mediaType === MediaType.rightTop ||
+        props.$mediaType === MediaType.rightBot
+      ) {
+        return "160px";
+      } else if (
+        props.$mediaType === MediaType.rightMid ||
+        props.$mediaType === MediaType.leftMid
+      ) {
+        return "15px";
+      } else if (
+        props.$mediaType === MediaType.leftTop ||
+        props.$mediaType === MediaType.leftBot
+      ) {
+        return "160px";
+      }
+    }};
+    height: ${(props) => {
+      if (
+        props.$mediaType === MediaType.rightMid ||
+        props.$mediaType === MediaType.leftMid
+      ) {
+        return "365px";
+      } else {
+        return "15px";
+      }
+    }};
   }
 `;
