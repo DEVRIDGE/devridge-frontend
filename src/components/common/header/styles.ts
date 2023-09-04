@@ -27,6 +27,10 @@ export const Logo = styled.svg`
 export const Items = styled.ul`
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export const Item = styled.li`

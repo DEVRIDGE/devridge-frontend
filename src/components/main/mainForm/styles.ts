@@ -12,7 +12,7 @@ export const Form = styled.form`
 
   @media screen and (max-width: 767px) {
     flex-direction: column;
-    padding: 10px 50px;
+    padding: 10px 20px;
   }
 `;
 
@@ -54,6 +54,7 @@ export const SelectName = styled.span`
   flex-basis: 20%;
   margin-right: 10px;
   font-size: 12px;
+  white-space: nowrap;
 `;
 
 export const Select = styled.select`

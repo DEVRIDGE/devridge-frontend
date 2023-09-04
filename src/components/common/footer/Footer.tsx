@@ -1,4 +1,4 @@
-import { Col, Info, Item, Logo, Teams, Wrapper } from "./styles";
+import { Col, Info, Item, Logo, TeamInfo, Teams, Wrapper } from "./styles";
 
 //TODO - 세로 길이 줄어들 때 footer가 form 가리는거 해결
 function Footer() {
@@ -18,7 +18,11 @@ function Footer() {
           />
         </Logo>
         <Teams>
-          <Item>CHAR EXIST | 개발자 배민수, 송하빈, 김우성</Item>
+          <TeamInfo>
+            <Item>CHAR EXIST</Item>
+            <Item>|</Item>
+            <Item>개발자 배민수, 송하빈, 김우성</Item>
+          </TeamInfo>
           <Item>@ ICHAREXIST.ALL RESERVED</Item>
         </Teams>
       </Col>
