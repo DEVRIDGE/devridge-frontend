@@ -35,7 +35,7 @@ const TechMenuWrapper = styled.div`
   padding: 20px;
   width: 40vw;
   max-width: 450px;
-  min-width: 320px;
+  min-width: 260px;
   height: 80vh;
   border-radius: 10px;
   background-color: ${(props) => props.theme.bgColor};
@@ -69,6 +69,10 @@ const TechButton = styled.button`
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
+
+  @media screen and (max-width: 400px) {
+    font-size: 16px;
+  }
 `;
 
 function RoadmapTechPage() {

@@ -16,7 +16,7 @@ interface IProgressBar {
 export const Wrapper = styled.div<IWrapper>`
   display: grid;
   grid-template-columns: repeat(${(props) => props.$col}, minmax(50px, 1fr));
-  grid-template-rows: repeat(${(props) => props.$row}, minmax(250px, 1fr));
+  grid-template-rows: repeat(${(props) => props.$row}, minmax(210px, 1fr));
   gap: 100px 20px;
   padding: 50px;
   width: 1024px;
@@ -32,6 +32,13 @@ export const Wrapper = styled.div<IWrapper>`
     padding: 10px;
     width: 320px;
   }
+
+  @media screen and (max-width: 400px) {
+    grid-template-rows: repeat(${(props) => props.$row}, minmax(180px, 1fr));
+    gap: 100px 10px;
+    padding: 20px;
+    width: 280px;
+  }
 `;
 
 export const WrapperItem = styled.div`
@@ -44,7 +51,7 @@ export const WrapperItem = styled.div`
 export const Rope = styled.div<{ $marginTop?: string }>`
   margin-top: ${(props) => props.$marginTop || "3px"};
   width: 1px;
-  height: 50px;
+  height: 30px;
   border: 1px dashed ${(props) => props.theme.greyColor};
 `;
 
@@ -66,6 +73,9 @@ export const CSList = styled.div`
 
 export const CSButton = styled.button`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 10px;
   padding: 5px;
   width: 100px;
@@ -75,7 +85,6 @@ export const CSButton = styled.button`
   background-color: white;
   color: black;
   font-size: 12px;
-  word-break: break-all;
   cursor: pointer;
 
   ${StatusCircle} {
@@ -95,6 +104,12 @@ export const CSButton = styled.button`
     height: 40px;
     font-size: 10px;
   }
+
+  @media screen and (max-width: 400px) {
+    width: 60px;
+    height: 35px;
+    font-size: 10px;
+  }
 `;
 
 export const CSName = styled.span`
@@ -102,13 +117,16 @@ export const CSName = styled.span`
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  word-break: keep-all;
+  word-break: break-all;
 `;
 
 export const ProgressBar = styled.div<IProgressBar>`
   position: absolute;
   border: none;
   top: 10px;
+  background-color: ${(props) =>
+    props.$isDone ? props.theme.mainColor : props.theme.greyColor};
+
   left: ${(props) => {
     if (props.$mediaType === MediaType.normal) {
       return "-160px";
@@ -156,14 +174,11 @@ export const ProgressBar = styled.div<IProgressBar>`
       props.$mediaType === MediaType.rightMid ||
       props.$mediaType === MediaType.leftMid
     ) {
-      return "365px";
+      return "325px";
     } else {
       return "15px";
     }
   }};
-
-  background-color: ${(props) =>
-    props.$isDone ? props.theme.mainColor : props.theme.greyColor};
 
   /* 태블릿 미디어 쿼리 */
   @media screen and (max-width: 1023px) {
@@ -186,7 +201,7 @@ export const ProgressBar = styled.div<IProgressBar>`
     }};
     right: ${(props) => {
       if (props.$mediaType === MediaType.rightMid) {
-        return "-17px";
+        return "-16.5px";
       }
     }};
     width: ${(props) => {
@@ -207,16 +222,6 @@ export const ProgressBar = styled.div<IProgressBar>`
         props.$mediaType === MediaType.leftBot
       ) {
         return "150px";
-      }
-    }};
-    height: ${(props) => {
-      if (
-        props.$mediaType === MediaType.rightMid ||
-        props.$mediaType === MediaType.leftMid
-      ) {
-        return "365px";
-      } else {
-        return "15px";
       }
     }};
   }
@@ -265,14 +270,60 @@ export const ProgressBar = styled.div<IProgressBar>`
         return "160px";
       }
     }};
+  }
+
+  /* 모바일(플립) 미디어 쿼리 */
+  @media screen and (max-width: 400px) {
+    left: ${(props) => {
+      if (props.$mediaType === MediaType.normal) {
+        return "-110px";
+      } else if (
+        props.$mediaType === MediaType.rightTop ||
+        props.$mediaType === MediaType.rightBot
+      ) {
+        return "-53px";
+      } else if (
+        props.$mediaType === MediaType.leftTop ||
+        props.$mediaType === MediaType.leftBot
+      ) {
+        return "-4px";
+      } else if (props.$mediaType === MediaType.leftMid) {
+        return "-16px";
+      }
+    }};
+    right: ${(props) => {
+      if (props.$mediaType === MediaType.rightMid) {
+        return "-16px";
+      }
+    }};
+    width: ${(props) => {
+      if (props.$mediaType === MediaType.normal) {
+        return "160px";
+      } else if (
+        props.$mediaType === MediaType.rightTop ||
+        props.$mediaType === MediaType.rightBot
+      ) {
+        return "130px";
+      } else if (
+        props.$mediaType === MediaType.rightMid ||
+        props.$mediaType === MediaType.leftMid
+      ) {
+        return "12px";
+      } else if (
+        props.$mediaType === MediaType.leftTop ||
+        props.$mediaType === MediaType.leftBot
+      ) {
+        return "130px";
+      }
+    }};
     height: ${(props) => {
       if (
         props.$mediaType === MediaType.rightMid ||
         props.$mediaType === MediaType.leftMid
       ) {
-        return "365px";
+        return "292px";
       } else {
-        return "15px";
+        return "12px";
       }
     }};
   }

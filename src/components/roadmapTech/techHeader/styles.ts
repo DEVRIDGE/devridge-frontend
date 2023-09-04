@@ -15,9 +15,14 @@ export const WrapperTitleAndState = styled.div`
 `;
 
 export const TechTitle = styled.h1`
+  margin-right: 10px;
   font-size: 18px;
   font-weight: 600;
   color: ${(props) => props.theme.mainColor};
+
+  @media screen and (max-width: 400px) {
+    font-size: 16px;
+  }
 `;
 
 export const CloseButton = styled.button`

@@ -22,7 +22,7 @@ const CourseMenuWrapper = styled.div`
   margin: auto auto;
   padding: 20px;
   max-width: 450px;
-  min-width: 320px;
+  min-width: 260px;
   width: 40vw;
   height: 90vh;
   border-radius: 10px;
