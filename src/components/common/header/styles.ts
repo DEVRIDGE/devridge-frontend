@@ -16,12 +16,10 @@ export const Nav = styled.nav`
 
 export const Col = styled.div`
   display: flex;
-`;
 
-export const Logo = styled.svg`
-  margin-right: 30px;
-  width: 100px;
-  height: 50px;
+  svg {
+    margin-right: 30px;
+  }
 `;
 
 export const Items = styled.ul`
