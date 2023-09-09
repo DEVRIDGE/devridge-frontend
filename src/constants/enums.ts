@@ -13,3 +13,9 @@ export enum SwitchDetail {
   "TECH" = "TECH",
   "COURSE" = "COURSE",
 }
+
+export enum LoginErrorMessage {
+  "UNMATCHED_EMAIL_AND_PROVIDER" = "unmatched_email_and_provider",
+  "UNSUPPORTED_PROVIDER" = "unsupported_provider",
+  "SERVER_ERROR" = "server_error",
+}

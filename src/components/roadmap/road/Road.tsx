@@ -35,6 +35,8 @@ import Status from "../status/Status";
 import { selectedGridIndexState } from "../../../recoil/selectedGridIndex/atom";
 import { SwitchDetail } from "../../../constants/enums";
 import useAdaptiveWidth from "../../../hooks/useAdaptiveWtdth";
+import { switchLoginState } from "../../../recoil/switchLogin/atom";
+import Login from "../../../pages/login/Login";
 
 interface IRoad {
   roadmapApiData?: IRoadmap;
@@ -64,8 +66,17 @@ function Road({ roadmapApiData }: IRoad) {
     switchRoadmapDetailState
   );
 
+  //NOTE - 로그인 스위칭 atom
+  const [switchLogin, setSwitchLogin] = useRecoilState(switchLoginState);
+
   //NOTE - 윈도우 창 가로 크기 state
   const currentWidth = useAdaptiveWidth();
+
+  //NOTE - switch atom 초기화
+  useEffect(() => {
+    setSwitchDetail(SwitchDetail.BLIND);
+    setSwitchLogin(false);
+  }, []);
 
   // NOTE - 그리드 컬럼 수
   const [col, setCol] = useState(9);
@@ -280,6 +291,9 @@ function Road({ roadmapApiData }: IRoad) {
         ) : (
           <RoadmapCoursePage />
         )
+      ) : null}
+      {switchLogin ? (
+        <Login beforeLoginPath={`/roadmap?job=${jobId}&company=${companyId}`} />
       ) : null}
     </Wrapper>
   );

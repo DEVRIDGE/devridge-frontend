@@ -2,6 +2,8 @@ import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 
 import CloseBtnSvg from "../../components/common/closeBtnSvg/CloseBtnSvg";
+import { useSetRecoilState } from "recoil";
+import { switchLoginState } from "../../recoil/switchLogin/atom";
 
 const WrapperPage = styled.div`
   display: flex;
@@ -71,6 +73,12 @@ const LoginButton = styled.button`
 `;
 
 function MenuMobile() {
+  const setSwitchLogin = useSetRecoilState(switchLoginState);
+
+  const onClickedLogin = () => {
+    setSwitchLogin(true);
+  };
+
   return (
     <WrapperPage>
       <WrapperContent>
@@ -90,7 +98,7 @@ function MenuMobile() {
             <Link to="/">이벤트</Link>
           </Item>
         </Items>
-        <LoginButton>Login</LoginButton>
+        <LoginButton onClick={onClickedLogin}>Login</LoginButton>
       </WrapperContent>
     </WrapperPage>
   );
