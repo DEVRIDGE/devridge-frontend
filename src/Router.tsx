@@ -9,7 +9,7 @@ import LoginFailRedirect from "./pages/login/LoginFailRedirect";
 
 function Router() {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <Switch>
         <Route path="/loginFailRedirectPage">
           <LoginFailRedirect />

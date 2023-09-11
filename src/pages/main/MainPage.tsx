@@ -35,7 +35,7 @@ function MainPage() {
 
   //NOTE - 로그인 모달 창 스위칭 atom
   const [switchLogin, setSwitchLogin] = useRecoilState(switchLoginState);
-
+  console.log(process.env.NODE_ENV);
   useEffect(() => {
     setSwitchLogin(false);
   }, []);
