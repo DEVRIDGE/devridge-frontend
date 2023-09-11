@@ -4,7 +4,9 @@ import { IGetRoadmapCourseDetail, IGetRoadmapTechDetail } from "./types";
 //TODO - try catch 예외처리도 하자
 
 const BASE_PATH =
-  "http://ec2-3-34-60-62.ap-northeast-2.compute.amazonaws.com:8081";
+  process.env.NODE_ENV === "development"
+    ? "http://ec2-3-34-60-62.ap-northeast-2.compute.amazonaws.com:8081"
+    : "https://api.devridge.dev";
 
 export function getJobs(accessToken: string) {
   if (accessToken) {
