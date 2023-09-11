@@ -42,7 +42,7 @@ function LoginRedirect() {
       localStorage.getItem(BEFORE_LOGIN_PATH) || "/";
     localStorage.setItem(BEFORE_LOGIN_PATH, "/");
     setAccessToken(accessToken);
-    console.log(accessToken);
+
     history.push(beforeLoginPathOrigin);
   }, []);
 
