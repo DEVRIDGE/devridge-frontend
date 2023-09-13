@@ -52,7 +52,7 @@ interface IOnClickTech {
 function Road({ roadmapApiData }: IRoad) {
   const setSelectedTechTitleState = useSetRecoilState(techTitleState);
   const setSelectedTechState = useSetRecoilState(roadmapTechState);
-  const setSelectedTechId = useSetRecoilState(selectedTechIdState);
+  const setSelectedTechId = useSetRecoilState(selectedTechIdState); // 로드맵 페이지에서 고른 기술의 아이디
   const setIsLoadingTechPage = useSetRecoilState(isLoadingTechPageState);
   const setSelectedGridIndex = useSetRecoilState(selectedGridIndexState);
 

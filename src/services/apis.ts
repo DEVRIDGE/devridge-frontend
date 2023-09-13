@@ -1,12 +1,21 @@
 import axios from "axios";
 
-import { IGetRoadmapCourseDetail, IGetRoadmapTechDetail } from "./types";
+import {
+  IGetDetailedPositions,
+  IGetRoadmapCourseDetail,
+  IGetRoadmapTechDetail,
+} from "./types";
 //TODO - try catch 예외처리도 하자
 
-const BASE_PATH =
-  process.env.NODE_ENV === "development"
-    ? "http://ec2-3-34-60-62.ap-northeast-2.compute.amazonaws.com:8081"
-    : "https://api.devridge.dev";
+export const BASE_PATH = "https://api.devridge.dev";
+
+axios.defaults.withCredentials = true;
+
+export function getApplyRefreshToken() {
+  return axios
+    .get(`${BASE_PATH}/token/apply/1`)
+    .then((response) => response.data);
+}
 
 export function getJobs(accessToken: string) {
   if (accessToken) {
@@ -43,14 +52,18 @@ export function getRoadmapTechDetail({
 }
 
 export function getRoadmapCourseDetail({
-  selectedTechId,
   selectedCourseId,
-  jobId,
-  companyId,
 }: IGetRoadmapCourseDetail) {
   return axios
-    .get(
-      `${BASE_PATH}/courses/${selectedTechId}/videos?company=${companyId}&job=${jobId}&coursedetail=${selectedCourseId}`
-    )
+    .get(`${BASE_PATH}/videos?courseDetail=${selectedCourseId}`)
     .then((response) => response.data);
+}
+
+export function getDetailedPositions({
+  jobId,
+  companyId,
+}: IGetDetailedPositions) {
+  return axios
+    .get(`${BASE_PATH}/detailedPositions?company=${companyId}&job=${jobId}`)
+    .then((response) => response);
 }

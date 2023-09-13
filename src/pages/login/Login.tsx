@@ -7,6 +7,7 @@ import Logo from "../../components/common/logo/Logo";
 import { useSetRecoilState } from "recoil";
 import { switchLoginState } from "../../recoil/switchLogin/atom";
 import { BEFORE_LOGIN_PATH } from "../../constants/constants";
+import { BASE_PATH } from "../../services/apis";
 
 interface ILogin {
   beforeLoginPath: string;
@@ -168,7 +169,7 @@ function Login({ beforeLoginPath }: ILogin) {
                 </g>
               </g>
             </GoogleLogo>
-            <GoogleText href="http://ec2-3-34-60-62.ap-northeast-2.compute.amazonaws.com:8081/oauth2/authorization/google">
+            <GoogleText href={`${BASE_PATH}/oauth2/authorization/google`}>
               Google 계정으로 로그인
             </GoogleText>
           </LoginGoogleButton>

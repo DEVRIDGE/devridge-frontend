@@ -82,21 +82,15 @@ function RoadmapTechPage() {
   const setIsLoadingCoursePage = useSetRecoilState(isLoadingCoursePageState);
 
   const selectedTechState = useRecoilValue(roadmapTechState);
-  const selectedTechId = useRecoilValue(selectedTechIdState);
-  const jobId = useRecoilValue(jobState);
-  const companyId = useRecoilValue(companyState);
 
   const onClickTechButton = async ({
-    selectedCourseId,
+    selectedCourseId, //NOTE - 세부 기술 선택 화면에서 고른 세부 기술
     selectedCourseTitle,
   }: IOnClickTechButton) => {
     setIsLoadingCoursePage(true);
     setSwitchRoadmapDetail(SwitchDetail.COURSE);
     const data = await getRoadmapCourseDetail({
-      selectedTechId,
       selectedCourseId,
-      jobId,
-      companyId,
     });
     setRoadmapCourseState(data);
     setSelectedCourseTitle(selectedCourseTitle);
