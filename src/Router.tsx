@@ -6,7 +6,6 @@ import Header from "./components/common/header/Header";
 import MenuMobile from "./pages/menuMobile/MenuMobile";
 import LoginRedirect from "./pages/login/LoginRedirect";
 import LoginFailRedirect from "./pages/login/LoginFailRedirect";
-import Test from "./pages/test/Test";
 
 function Router() {
   return (
@@ -32,7 +31,6 @@ function Router() {
         <Route path="/">
           <Header />
           <MainPage />
-          {/* <Test /> */}
         </Route>
       </Switch>
     </BrowserRouter>
