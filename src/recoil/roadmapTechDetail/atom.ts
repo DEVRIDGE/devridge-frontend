@@ -9,7 +9,7 @@ export interface IRoadmapTechDetail {
   status: string;
   message: string;
   data: {
-    title: string;
+    courseName: string;
     courseDetails: ICourseDetails[];
   };
 }

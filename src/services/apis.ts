@@ -2,6 +2,7 @@ import axios from "axios";
 
 import {
   IGetDetailedPositions,
+  IGetRoadmap,
   IGetRoadmapCourseDetail,
   IGetRoadmapTechDetail,
 } from "./types";
@@ -33,22 +34,37 @@ export function getCompanies() {
   return axios.get(`${BASE_PATH}/companies`).then((response) => response.data);
 }
 
-export function getRoadmap(jobId: number, companyId: number) {
+export function getRoadmap({
+  jobId,
+  companyId,
+  detailedPosition,
+}: IGetRoadmap) {
   return axios
-    .get(`${BASE_PATH}/courses?company=${companyId}&job=${jobId}`)
-    .then((response) => response.data);
+    .get(
+      `${BASE_PATH}/courses?company=${companyId}&job=${jobId}&detailedPosition=${detailedPosition}`
+    )
+    .then((response) => {
+      return response.data;
+    })
+    .catch((axiosError) => {
+      return axiosError.response.data;
+    });
 }
 
 export function getRoadmapTechDetail({
   selectedTechId,
   jobId,
   companyId,
+  selectedDetailedPosition,
 }: IGetRoadmapTechDetail) {
   return axios
     .get(
-      `${BASE_PATH}/courses/${selectedTechId}?company=${companyId}&job=${jobId}`
+      `${BASE_PATH}/courses/${selectedTechId}?company=${companyId}&job=${jobId}&detailedPosition=${selectedDetailedPosition}`
     )
-    .then((response) => response.data);
+    .then((response) => response.data)
+    .catch((axiosError) => {
+      return axiosError.response.data;
+    });
 }
 
 export function getRoadmapCourseDetail({
@@ -65,5 +81,8 @@ export function getDetailedPositions({
 }: IGetDetailedPositions) {
   return axios
     .get(`${BASE_PATH}/detailedPositions?company=${companyId}&job=${jobId}`)
-    .then((response) => response);
+    .then((response) => response.data)
+    .catch((axiosError) => {
+      return axiosError.response.data;
+    });
 }

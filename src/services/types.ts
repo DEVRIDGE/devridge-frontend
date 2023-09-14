@@ -27,12 +27,14 @@ export interface ICompanies {
 export interface IGetRoadmap {
   jobId: number;
   companyId: number;
+  detailedPosition: number;
 }
 
 export interface ICourse {
   id: number;
   name: string;
   type: string;
+  matchingFlag: string;
 }
 
 export interface ICourses {
@@ -48,13 +50,14 @@ export interface IRoadmap {
     companyLogo: string;
     jobName: string;
     courseList: [ICourses | null];
-  };
+  } | null;
 }
 
 export interface IGetRoadmapTechDetail {
   selectedTechId: number;
   jobId: number;
   companyId: number;
+  selectedDetailedPosition: number;
 }
 
 export interface IGetRoadmapCourseDetail {

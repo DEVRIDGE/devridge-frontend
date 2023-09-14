@@ -108,6 +108,10 @@ function Login({ beforeLoginPath }: ILogin) {
     setSwitchLogin(false);
   };
 
+  const onClickedLogin = () => {
+    setSwitchLogin(true);
+  };
+
   return (
     <Wrapper>
       <Overlay />
@@ -169,7 +173,10 @@ function Login({ beforeLoginPath }: ILogin) {
                 </g>
               </g>
             </GoogleLogo>
-            <GoogleText href={`${BASE_PATH}/oauth2/authorization/google`}>
+            <GoogleText
+              href={`${BASE_PATH}/oauth2/authorization/google`}
+              onClick={onClickedLogin}
+            >
               Google 계정으로 로그인
             </GoogleText>
           </LoginGoogleButton>

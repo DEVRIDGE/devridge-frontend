@@ -37,9 +37,10 @@ import { SwitchDetail } from "../../../constants/enums";
 import useAdaptiveWidth from "../../../hooks/useAdaptiveWtdth";
 import { switchLoginState } from "../../../recoil/switchLogin/atom";
 import Login from "../../../pages/login/Login";
+import { selectedDetailedPositionState } from "../../../recoil/selectedDetailedPosition/atom";
 
 interface IRoad {
-  roadmapApiData?: IRoadmap;
+  roadmapApiData: IRoadmap;
 }
 
 interface IOnClickTech {
@@ -60,6 +61,9 @@ function Road({ roadmapApiData }: IRoad) {
   const companyId = useRecoilValue(companyState);
   const isLoadingTechPage = useRecoilValue(isLoadingTechPageState);
   const isLoadingCoursePage = useRecoilValue(isLoadingCoursePageState);
+  const selectedDetailedPosition = useRecoilValue(
+    selectedDetailedPositionState
+  );
 
   //NOTE - 슬라이드 화면 스위칭하는 recoil atom
   const [switchDetail, setSwitchDetail] = useRecoilState(
@@ -84,29 +88,10 @@ function Road({ roadmapApiData }: IRoad) {
     setCol(currentWidth >= 1024 ? 9 : currentWidth >= 768 ? 7 : 3);
   }, [currentWidth]);
 
-  // const [courseList, setCourseList] = useState(
-  //   roadmapApiData?.data.courseList || []
-  // );
-  // const [rowAll, setRowAll] = useState(Math.ceil(courseList.length / col));
-
-  // useEffect(() => {
-  //   const tmp = JSON.parse(JSON.stringify(roadmapApiData?.data.courseList));
-  //   for (let i = col; i < tmp.length; i += col) {
-  //     tmp.splice(i, 0, null);
-  //   }
-  //   const row_tmp = Math.ceil(tmp.length / col);
-  //   setRowAll(row_tmp);
-  //   const mustFillCnt = col * row_tmp - tmp.length;
-  //   for (let i = 0; i < mustFillCnt; i++) {
-  //     tmp.splice(tmp.length, 0, null);
-  //   }
-  //   setCourseList(tmp);
-  // }, [col]);
-
   // NOTE - 그리드 레이아웃을 위한 null 값 추가 (window resize -> col 변화 -> 리렌더링)
   const [courseList, rowAll] = useMemo(() => {
     const tmp: [ICourses | null] =
-      JSON.parse(JSON.stringify(roadmapApiData?.data.courseList)) || [];
+      JSON.parse(JSON.stringify(roadmapApiData.data?.courseList)) || [];
     for (let i = col; i < tmp.length; i += col) {
       tmp.splice(i, 0, null);
     }
@@ -116,7 +101,7 @@ function Road({ roadmapApiData }: IRoad) {
       tmp.splice(tmp.length, 0, null);
     }
     return [tmp, row_tmp];
-  }, [col, roadmapApiData?.data.courseList]);
+  }, [col, roadmapApiData.data?.courseList]);
 
   const onClickTech = async ({
     selectedTechId,
@@ -130,9 +115,10 @@ function Road({ roadmapApiData }: IRoad) {
       selectedTechId,
       jobId,
       companyId,
+      selectedDetailedPosition,
     });
     setSelectedTechState(data);
-    setSelectedTechTitleState(data.data.title);
+    setSelectedTechTitleState(data.data.courseName);
     setIsLoadingTechPage(false);
   };
 
