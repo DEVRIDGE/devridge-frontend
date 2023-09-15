@@ -24,3 +24,8 @@ export enum ApiStatus {
   "error" = "error",
   "success" = "success",
 }
+
+export enum MatchingFlag {
+  "YES" = "YES",
+  "NO" = "NO",
+}

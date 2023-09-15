@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 import { StatusCircle } from "../status/styles";
-import { MediaType } from "../../../constants/enums";
+import { MatchingFlag, MediaType } from "../../../constants/enums";
 
 interface IWrapper {
   $col: number;
@@ -11,6 +11,10 @@ interface IWrapper {
 interface IProgressBar {
   $isDone?: boolean;
   $mediaType?: string; // null 불인정으로 바꾸자
+}
+
+interface ICSButton {
+  $matchingFlag: string;
 }
 
 export const Wrapper = styled.div<IWrapper>`
@@ -71,7 +75,7 @@ export const CSList = styled.div`
   align-items: center;
 `;
 
-export const CSButton = styled.button`
+export const CSButton = styled.button<ICSButton>`
   position: relative;
   display: flex;
   justify-content: center;
@@ -85,6 +89,10 @@ export const CSButton = styled.button`
   background-color: white;
   color: black;
   font-size: 12px;
+  box-shadow: ${(props) =>
+    props.$matchingFlag === MatchingFlag.YES
+      ? `0 0 2px 2px ${props.theme.matchingFlagColor}`
+      : "none"};
   cursor: pointer;
 
   ${StatusCircle} {

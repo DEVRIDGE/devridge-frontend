@@ -207,6 +207,7 @@ function Road({ roadmapApiData }: IRoad) {
                             ? 1
                             : 0
                         }
+                        $matchingFlag={courseCol.courses[0].matchingFlag}
                       />
                     </TechButton>
                     {courseCol.courses.slice(1).length !== 0 ? <Rope /> : null}
@@ -218,6 +219,7 @@ function Road({ roadmapApiData }: IRoad) {
                             onClick={() => {
                               onClickTech({ selectedTechId: cs.id, index });
                             }}
+                            $matchingFlag={cs.matchingFlag}
                           >
                             <Status width="15px" height="15px" />
                             <CSName>{cs.name}</CSName>
@@ -237,9 +239,11 @@ function Road({ roadmapApiData }: IRoad) {
                         {courseCol.courses.map((cs) => (
                           <CSButton
                             key={cs.id}
-                            onClick={() =>
-                              onClickTech({ selectedTechId: cs.id, index })
-                            }
+                            onClick={() => {
+                              onClickTech({ selectedTechId: cs.id, index });
+                              console.log(cs.matchingFlag);
+                            }}
+                            $matchingFlag={cs.matchingFlag}
                           >
                             <Status width="15px" height="15px" />
                             <CSName>{cs.name}</CSName>

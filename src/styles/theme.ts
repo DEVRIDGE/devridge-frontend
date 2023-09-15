@@ -8,6 +8,7 @@ export const darkTheme: DefaultTheme = {
   greyColor: "rgba(0, 0, 0, 0.1)",
   contentFont: "'Noto Sans KR', sans-serif",
   titleFont: "'Montserrat', sans-serif",
+  matchingFlagColor: "#e056fd",
 };
 
 export const lightTheme: DefaultTheme = {
@@ -18,4 +19,5 @@ export const lightTheme: DefaultTheme = {
   greyColor: "rgba(0, 0, 0, 0.1)",
   contentFont: "'Noto Sans KR', sans-serif",
   titleFont: "'Montserrat', sans-serif",
+  matchingFlagColor: "#e056fd",
 };
