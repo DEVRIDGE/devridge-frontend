@@ -9,5 +9,6 @@ declare module "styled-components" {
     greyColor: string;
     contentFont: string;
     titleFont: string;
+    matchingFlagColor: string;
   }
 }

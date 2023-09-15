@@ -1,12 +1,22 @@
 import axios from "axios";
 
-import { IGetRoadmapCourseDetail, IGetRoadmapTechDetail } from "./types";
+import {
+  IGetDetailedPositions,
+  IGetRoadmap,
+  IGetRoadmapCourseDetail,
+  IGetRoadmapTechDetail,
+} from "./types";
 //TODO - try catch 예외처리도 하자
 
-const BASE_PATH =
-  process.env.NODE_ENV === "development"
-    ? "http://ec2-3-34-60-62.ap-northeast-2.compute.amazonaws.com:8081"
-    : "https://api.devridge.dev";
+export const BASE_PATH = "https://api.devridge.dev";
+
+axios.defaults.withCredentials = true;
+
+export function getApplyRefreshToken() {
+  return axios
+    .get(`${BASE_PATH}/token/apply/1`)
+    .then((response) => response.data);
+}
 
 export function getJobs(accessToken: string) {
   if (accessToken) {
@@ -24,33 +34,55 @@ export function getCompanies() {
   return axios.get(`${BASE_PATH}/companies`).then((response) => response.data);
 }
 
-export function getRoadmap(jobId: number, companyId: number) {
+export function getRoadmap({
+  jobId,
+  companyId,
+  detailedPosition,
+}: IGetRoadmap) {
   return axios
-    .get(`${BASE_PATH}/courses?company=${companyId}&job=${jobId}`)
-    .then((response) => response.data);
+    .get(
+      `${BASE_PATH}/courses?company=${companyId}&job=${jobId}&detailedPosition=${detailedPosition}`
+    )
+    .then((response) => {
+      return response.data;
+    })
+    .catch((axiosError) => {
+      return axiosError.response.data;
+    });
 }
 
 export function getRoadmapTechDetail({
   selectedTechId,
   jobId,
   companyId,
+  selectedDetailedPosition,
 }: IGetRoadmapTechDetail) {
   return axios
     .get(
-      `${BASE_PATH}/courses/${selectedTechId}?company=${companyId}&job=${jobId}`
+      `${BASE_PATH}/courses/${selectedTechId}?company=${companyId}&job=${jobId}&detailedPosition=${selectedDetailedPosition}`
     )
-    .then((response) => response.data);
+    .then((response) => response.data)
+    .catch((axiosError) => {
+      return axiosError.response.data;
+    });
 }
 
 export function getRoadmapCourseDetail({
-  selectedTechId,
   selectedCourseId,
-  jobId,
-  companyId,
 }: IGetRoadmapCourseDetail) {
   return axios
-    .get(
-      `${BASE_PATH}/courses/${selectedTechId}/videos?company=${companyId}&job=${jobId}&coursedetail=${selectedCourseId}`
-    )
+    .get(`${BASE_PATH}/videos?courseDetail=${selectedCourseId}`)
     .then((response) => response.data);
+}
+
+export function getDetailedPositions({
+  jobId,
+  companyId,
+}: IGetDetailedPositions) {
+  return axios
+    .get(`${BASE_PATH}/detailedPositions?company=${companyId}&job=${jobId}`)
+    .then((response) => response.data)
+    .catch((axiosError) => {
+      return axiosError.response.data;
+    });
 }

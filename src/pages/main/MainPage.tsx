@@ -5,7 +5,11 @@ import { useEffect } from "react";
 import MainTitle from "../../components/main/mainTitle/MainTitle";
 import MainForm from "../../components/main/mainForm/MainForm";
 import Footer from "../../components/common/footer/Footer";
-import { getCompanies, getJobs } from "../../services/apis";
+import {
+  getApplyRefreshToken,
+  getCompanies,
+  getJobs,
+} from "../../services/apis";
 import { ICompanies, IJobs } from "../../services/types";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { switchLoginState } from "../../recoil/switchLogin/atom";
@@ -49,6 +53,15 @@ function MainPage() {
         companiesApiData={companiesApiData}
       />
       <Link to="/loginFailRedirectPage">asdasd</Link>
+      <button
+        onClick={async () => {
+          const data: any = await getApplyRefreshToken();
+          console.log(data);
+        }}
+        style={{ width: "100px", height: "100px" }}
+      >
+        리프레시 토큰 쿠키 테스트
+      </button>
       <Footer />
       {switchLogin ? <Login beforeLoginPath="/" /> : null}
     </Wrapper>

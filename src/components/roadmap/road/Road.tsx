@@ -37,9 +37,10 @@ import { SwitchDetail } from "../../../constants/enums";
 import useAdaptiveWidth from "../../../hooks/useAdaptiveWtdth";
 import { switchLoginState } from "../../../recoil/switchLogin/atom";
 import Login from "../../../pages/login/Login";
+import { selectedDetailedPositionState } from "../../../recoil/selectedDetailedPosition/atom";
 
 interface IRoad {
-  roadmapApiData?: IRoadmap;
+  roadmapApiData: IRoadmap;
 }
 
 interface IOnClickTech {
@@ -52,7 +53,7 @@ interface IOnClickTech {
 function Road({ roadmapApiData }: IRoad) {
   const setSelectedTechTitleState = useSetRecoilState(techTitleState);
   const setSelectedTechState = useSetRecoilState(roadmapTechState);
-  const setSelectedTechId = useSetRecoilState(selectedTechIdState);
+  const setSelectedTechId = useSetRecoilState(selectedTechIdState); // 로드맵 페이지에서 고른 기술의 아이디
   const setIsLoadingTechPage = useSetRecoilState(isLoadingTechPageState);
   const setSelectedGridIndex = useSetRecoilState(selectedGridIndexState);
 
@@ -60,6 +61,9 @@ function Road({ roadmapApiData }: IRoad) {
   const companyId = useRecoilValue(companyState);
   const isLoadingTechPage = useRecoilValue(isLoadingTechPageState);
   const isLoadingCoursePage = useRecoilValue(isLoadingCoursePageState);
+  const selectedDetailedPosition = useRecoilValue(
+    selectedDetailedPositionState
+  );
 
   //NOTE - 슬라이드 화면 스위칭하는 recoil atom
   const [switchDetail, setSwitchDetail] = useRecoilState(
@@ -84,29 +88,10 @@ function Road({ roadmapApiData }: IRoad) {
     setCol(currentWidth >= 1024 ? 9 : currentWidth >= 768 ? 7 : 3);
   }, [currentWidth]);
 
-  // const [courseList, setCourseList] = useState(
-  //   roadmapApiData?.data.courseList || []
-  // );
-  // const [rowAll, setRowAll] = useState(Math.ceil(courseList.length / col));
-
-  // useEffect(() => {
-  //   const tmp = JSON.parse(JSON.stringify(roadmapApiData?.data.courseList));
-  //   for (let i = col; i < tmp.length; i += col) {
-  //     tmp.splice(i, 0, null);
-  //   }
-  //   const row_tmp = Math.ceil(tmp.length / col);
-  //   setRowAll(row_tmp);
-  //   const mustFillCnt = col * row_tmp - tmp.length;
-  //   for (let i = 0; i < mustFillCnt; i++) {
-  //     tmp.splice(tmp.length, 0, null);
-  //   }
-  //   setCourseList(tmp);
-  // }, [col]);
-
   // NOTE - 그리드 레이아웃을 위한 null 값 추가 (window resize -> col 변화 -> 리렌더링)
   const [courseList, rowAll] = useMemo(() => {
     const tmp: [ICourses | null] =
-      JSON.parse(JSON.stringify(roadmapApiData?.data.courseList)) || [];
+      JSON.parse(JSON.stringify(roadmapApiData.data?.courseList)) || [];
     for (let i = col; i < tmp.length; i += col) {
       tmp.splice(i, 0, null);
     }
@@ -116,7 +101,7 @@ function Road({ roadmapApiData }: IRoad) {
       tmp.splice(tmp.length, 0, null);
     }
     return [tmp, row_tmp];
-  }, [col, roadmapApiData?.data.courseList]);
+  }, [col, roadmapApiData.data?.courseList]);
 
   const onClickTech = async ({
     selectedTechId,
@@ -130,9 +115,10 @@ function Road({ roadmapApiData }: IRoad) {
       selectedTechId,
       jobId,
       companyId,
+      selectedDetailedPosition,
     });
     setSelectedTechState(data);
-    setSelectedTechTitleState(data.data.title);
+    setSelectedTechTitleState(data.data.courseName);
     setIsLoadingTechPage(false);
   };
 
@@ -221,6 +207,7 @@ function Road({ roadmapApiData }: IRoad) {
                             ? 1
                             : 0
                         }
+                        $matchingFlag={courseCol.courses[0].matchingFlag}
                       />
                     </TechButton>
                     {courseCol.courses.slice(1).length !== 0 ? <Rope /> : null}
@@ -232,6 +219,7 @@ function Road({ roadmapApiData }: IRoad) {
                             onClick={() => {
                               onClickTech({ selectedTechId: cs.id, index });
                             }}
+                            $matchingFlag={cs.matchingFlag}
                           >
                             <Status width="15px" height="15px" />
                             <CSName>{cs.name}</CSName>
@@ -251,9 +239,11 @@ function Road({ roadmapApiData }: IRoad) {
                         {courseCol.courses.map((cs) => (
                           <CSButton
                             key={cs.id}
-                            onClick={() =>
-                              onClickTech({ selectedTechId: cs.id, index })
-                            }
+                            onClick={() => {
+                              onClickTech({ selectedTechId: cs.id, index });
+                              console.log(cs.matchingFlag);
+                            }}
+                            $matchingFlag={cs.matchingFlag}
                           >
                             <Status width="15px" height="15px" />
                             <CSName>{cs.name}</CSName>

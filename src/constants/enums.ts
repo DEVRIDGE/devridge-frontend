@@ -19,3 +19,13 @@ export enum LoginErrorMessage {
   "UNSUPPORTED_PROVIDER" = "unsupported_provider",
   "SERVER_ERROR" = "server_error",
 }
+
+export enum ApiStatus {
+  "error" = "error",
+  "success" = "success",
+}
+
+export enum MatchingFlag {
+  "YES" = "YES",
+  "NO" = "NO",
+}

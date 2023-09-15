@@ -1,9 +1,10 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 
 import CloseBtnSvg from "../../components/common/closeBtnSvg/CloseBtnSvg";
-import { useSetRecoilState } from "recoil";
 import { switchLoginState } from "../../recoil/switchLogin/atom";
+import { BASE_PATH } from "../../services/apis";
 
 const WrapperPage = styled.div`
   display: flex;
@@ -56,7 +57,7 @@ const Item = styled.li`
   }
 `;
 
-const LoginButton = styled.button`
+const LoginButton = styled.a`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -64,11 +65,18 @@ const LoginButton = styled.button`
   bottom: 40px;
   padding: 15px;
   width: 70%;
-  border: none;
   border-radius: 5px;
   background-color: ${(props) => props.theme.mainColor};
   color: white;
   font-size: 18px;
+  text-decoration: none;
+  cursor: pointer;
+`;
+
+const CloseBtn = styled.button`
+  padding: 3px;
+  border: none;
+  background-color: transparent;
   cursor: pointer;
 `;
 
@@ -79,13 +87,17 @@ function MenuMobile() {
     setSwitchLogin(true);
   };
 
+  const onClickedCloseButton = () => {
+    setSwitchLogin(false);
+  };
+
   return (
     <WrapperPage>
       <WrapperContent>
         <CloseHeader>
-          <Link to="/">
+          <CloseBtn onClick={onClickedCloseButton}>
             <CloseBtnSvg />
-          </Link>
+          </CloseBtn>
         </CloseHeader>
         <Items>
           <Item>
@@ -98,7 +110,12 @@ function MenuMobile() {
             <Link to="/">이벤트</Link>
           </Item>
         </Items>
-        <LoginButton onClick={onClickedLogin}>Login</LoginButton>
+        <LoginButton
+          href={`${BASE_PATH}/oauth2/authorization/google`}
+          onClick={onClickedLogin}
+        >
+          Login
+        </LoginButton>
       </WrapperContent>
     </WrapperPage>
   );

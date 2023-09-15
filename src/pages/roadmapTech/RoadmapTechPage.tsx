@@ -4,10 +4,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import TechHeader from "../../components/roadmapTech/techHeader/TechHeader";
 import Overlay from "../../components/common/overlay/Overlay";
 import { roadmapTechState } from "../../recoil/roadmapTechDetail/atom";
-import { selectedTechIdState } from "../../recoil/selectedTechId/atom";
 import { getRoadmapCourseDetail } from "../../services/apis";
-import { jobState } from "../../recoil/jobId/atom";
-import { companyState } from "../../recoil/companyId/atom";
 import { roadmapCourseState } from "../../recoil/roadmapCourseDetail/atom";
 import { switchRoadmapDetailState } from "../../recoil/swtichRoadmapDetail/atom";
 import { courseTitleState } from "../../recoil/courseTitle/atom";
@@ -82,21 +79,15 @@ function RoadmapTechPage() {
   const setIsLoadingCoursePage = useSetRecoilState(isLoadingCoursePageState);
 
   const selectedTechState = useRecoilValue(roadmapTechState);
-  const selectedTechId = useRecoilValue(selectedTechIdState);
-  const jobId = useRecoilValue(jobState);
-  const companyId = useRecoilValue(companyState);
 
   const onClickTechButton = async ({
-    selectedCourseId,
+    selectedCourseId, //NOTE - 세부 기술 선택 화면에서 고른 세부 기술
     selectedCourseTitle,
   }: IOnClickTechButton) => {
     setIsLoadingCoursePage(true);
     setSwitchRoadmapDetail(SwitchDetail.COURSE);
     const data = await getRoadmapCourseDetail({
-      selectedTechId,
       selectedCourseId,
-      jobId,
-      companyId,
     });
     setRoadmapCourseState(data);
     setSelectedCourseTitle(selectedCourseTitle);
