@@ -11,6 +11,8 @@ import {
 } from "./styles";
 import { ICompanies, IJobs } from "../../../services/types";
 import Loader from "../../common/loader/Loader";
+import { useSetRecoilState } from "recoil";
+import { selectedDetailedPositionState } from "../../../recoil/selectedDetailedPosition/atom";
 
 interface IMainForm {
   isLoading: boolean;
@@ -24,6 +26,10 @@ interface IForm {
 }
 
 function MainForm({ isLoading, jobsApiData, companiesApiData }: IMainForm) {
+  const setSelectedDetailedPosition = useSetRecoilState(
+    selectedDetailedPositionState
+  );
+
   const { register, handleSubmit, control } = useForm<IForm>();
   const history = useHistory();
   const watchJob = useWatch({ control, name: "job", defaultValue: -1 });
@@ -76,7 +82,9 @@ function MainForm({ isLoading, jobsApiData, companiesApiData }: IMainForm) {
               ))}
             </Select>
           </WrapperSelect>
-          <SubmitButton>바로가기</SubmitButton>
+          <SubmitButton onClick={() => setSelectedDetailedPosition(1)}>
+            바로가기
+          </SubmitButton>
         </>
       )}
     </Form>

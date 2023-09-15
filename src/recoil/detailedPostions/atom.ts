@@ -10,9 +10,14 @@ export interface IDetailedPositions {
   message: string;
   data: {
     detailedPositionDtos: IDetailedPosition[];
-  };
+  } | null;
 }
 
 export const detailedPositionsState = atom<IDetailedPositions>({
   key: "detailedPositions",
+  default: {
+    status: "error",
+    message: "",
+    data: null,
+  },
 });

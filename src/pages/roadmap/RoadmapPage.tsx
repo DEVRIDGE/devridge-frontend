@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import { useHistory, useLocation } from "react-router-dom";
-import { useQuery } from "react-query";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 
@@ -22,6 +21,7 @@ import {
 import { ApiStatus } from "../../constants/enums";
 import { roadmapState } from "../../recoil/roadmap/atom";
 import { isLoadingRoadmapPageState } from "../../recoil/isLoadingRoadmapPage/atom";
+import Legend from "../../components/roadmap/legend/Legend";
 
 interface IParams {
   job: string;
@@ -35,34 +35,24 @@ const Wrapper = styled.div`
   flex-direction: column;
   margin-top: 50px;
   margin-bottom: 100px;
+  min-height: calc(100% - 50px);
 `;
 
-const LegendWrapper = styled.div`
+const SelectDetailedPositionWrapper = styled.div`
   position: absolute;
-  display: flex;
   top: 40px;
-  left: 30px;
-  justify-content: center;
-  align-items: center;
-
-  @media screen and (max-width: 767px) {
-    position: static;
-    margin-bottom: 20px;
-  }
+  right: 30px;
 `;
 
-const LegendIcon = styled.div`
-  margin-right: 5px;
-  width: 25px;
-  height: 15px;
-  background-color: transparent;
-  border: 2px solid ${(props) => props.theme.matchingFlagColor};
-`;
-
-const LegendText = styled.span`
-  font-size: 12px;
+const SelectDetailedPositionText = styled.span`
+  margin-right: 10px;
+  font-size: 14px;
   color: ${(props) => props.theme.textGreyColor};
 `;
+
+const SelectDetailedPosition = styled.select``;
+
+const OptionDetailedPosition = styled.option``;
 
 // TODO - 데브옵스, 안드로이드, ios name undefined 오류 해결하자
 
@@ -78,11 +68,17 @@ function RoadmapPage() {
   const setCompany = useSetRecoilState(companyState);
   const [selectedDetailedPosition, setSelectedDetailedPosition] =
     useRecoilState(selectedDetailedPositionState);
-  const setDetailedPositions = useSetRecoilState(detailedPositionsState);
+  const [detailedPositions, setDetailedPositions] = useRecoilState(
+    detailedPositionsState
+  );
   const [roadmap, setRoadmap] = useRecoilState(roadmapState);
   const [isLoadingRoadmapPage, setIsLoadingRoadmapPage] = useRecoilState(
     isLoadingRoadmapPageState
   );
+
+  const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDetailedPosition(+event.target.value);
+  };
 
   //NOTE - 페이지 들어오자마자 로드맵 API 호출
   // const { isLoading: isRoadmapLoading, data: roadmapApiData } =
@@ -90,11 +86,10 @@ function RoadmapPage() {
   //     getRoadmap(+params.job, +params.company)
   //   );
 
-  //NOTE - jobId, companyId를 recoil atom에 저장
+  //NOTE - 디테일 포지션 API, 로드맵 API 순차적 호출
   useEffect(() => {
     setJob(+params.job);
     setCompany(+params.company);
-    setSelectedDetailedPosition(1);
     setIsLoadingRoadmapPage(true);
 
     const handleDetailedPositionsApi = async () => {
@@ -132,7 +127,7 @@ function RoadmapPage() {
 
     handleDetailedPositionsApi();
     handleRoadmapApi();
-  }, []);
+  }, [selectedDetailedPosition]);
 
   return (
     <Wrapper>
@@ -142,10 +137,25 @@ function RoadmapPage() {
             $jobName={roadmap.data?.jobName ?? "error"}
             $companyName={roadmap.data?.companyName ?? "error"}
           />
-          <LegendWrapper>
-            <LegendIcon />
-            <LegendText>: 선택한 회사의 채용 정보가 반영된 항목</LegendText>
-          </LegendWrapper>
+          <Legend />
+          <SelectDetailedPositionWrapper>
+            <SelectDetailedPositionText>부서 선택</SelectDetailedPositionText>
+            <SelectDetailedPosition
+              onChange={handleSelect}
+              value={selectedDetailedPosition}
+            >
+              {detailedPositions.data!.detailedPositionDtos.map(
+                (detailedPosition) => (
+                  <OptionDetailedPosition
+                    key={detailedPosition.id}
+                    value={detailedPosition.id}
+                  >
+                    {detailedPosition.name}
+                  </OptionDetailedPosition>
+                )
+              )}
+            </SelectDetailedPosition>
+          </SelectDetailedPositionWrapper>
         </>
       ) : null}
       {!isLoadingRoadmapPage ? (
