@@ -11,7 +11,7 @@ export interface IRoadmapTechDetail {
   data: {
     courseName: string;
     courseDetails: ICourseDetails[];
-  };
+  } | null;
 }
 
 export const roadmapTechState = atom<IRoadmapTechDetail>({

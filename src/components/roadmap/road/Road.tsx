@@ -1,5 +1,6 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect, useMemo, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import Tech from "../tech/Tech";
 import {
@@ -33,11 +34,18 @@ import Loader from "../../common/loader/Loader";
 import { isLoadingCoursePageState } from "../../../recoil/isLoadingCoursePage/atom";
 import Status from "../status/Status";
 import { selectedGridIndexState } from "../../../recoil/selectedGridIndex/atom";
-import { SwitchDetail } from "../../../constants/enums";
-import useAdaptiveWidth from "../../../hooks/useAdaptiveWtdth";
+import {
+  ApiMessage,
+  ApiStatus,
+  ErrorMessageNewAccessToken,
+  SwitchDetail,
+} from "../../../constants/enums";
+import useAdaptiveWidth from "../../../hooks/useAdaptiveWidth";
 import { switchLoginState } from "../../../recoil/switchLogin/atom";
 import Login from "../../../pages/login/Login";
 import { selectedDetailedPositionState } from "../../../recoil/selectedDetailedPosition/atom";
+import { accessTokenState } from "../../../recoil/accessToken/atom";
+import issueNewAccessTokenHook from "../../../hooks/issueNewAccessTokenHook";
 
 interface IRoad {
   roadmapApiData: IRoadmap;
@@ -51,6 +59,9 @@ interface IOnClickTech {
 //NOTE - 모바일 320px~767px, 태블릿 768px~1023px, 데스크탑 1024px~
 
 function Road({ roadmapApiData }: IRoad) {
+  const history = useHistory();
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+
   const setSelectedTechTitleState = useSetRecoilState(techTitleState);
   const setSelectedTechState = useSetRecoilState(roadmapTechState);
   const setSelectedTechId = useSetRecoilState(selectedTechIdState); // 로드맵 페이지에서 고른 기술의 아이디
@@ -116,9 +127,34 @@ function Road({ roadmapApiData }: IRoad) {
       jobId,
       companyId,
       selectedDetailedPosition,
+      accessToken,
     });
+
+    if (data.status === ApiStatus.error) {
+      if (data.message === ApiMessage.course_detail) {
+        alert("관련 강의 및 도서가 존재하지 않습니다.");
+        history.push("/");
+        return;
+      } else if (data.message === ApiMessage.login_required) {
+        alert("다시 로그인 해주세요.");
+        history.push("/");
+        return;
+      } else {
+        const newAccessToken: string = await issueNewAccessTokenHook();
+        if (newAccessToken === "/") {
+          history.push("/");
+          return;
+        } else {
+          console.log(data);
+          setAccessToken(newAccessToken);
+          onClickTech({ selectedTechId, index: gridIndex });
+          return;
+        }
+      }
+    }
+
     setSelectedTechState(data);
-    setSelectedTechTitleState(data.data.courseName);
+    setSelectedTechTitleState(data.data!.courseName);
     setIsLoadingTechPage(false);
   };
 
@@ -241,7 +277,6 @@ function Road({ roadmapApiData }: IRoad) {
                             key={cs.id}
                             onClick={() => {
                               onClickTech({ selectedTechId: cs.id, index });
-                              console.log(cs.matchingFlag);
                             }}
                             $matchingFlag={cs.matchingFlag}
                           >

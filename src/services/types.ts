@@ -28,6 +28,7 @@ export interface IGetRoadmap {
   jobId: number;
   companyId: number;
   detailedPosition: number;
+  accessToken?: string | null;
 }
 
 export interface ICourse {
@@ -58,13 +59,33 @@ export interface IGetRoadmapTechDetail {
   jobId: number;
   companyId: number;
   selectedDetailedPosition: number;
+  accessToken: string | null;
 }
 
 export interface IGetRoadmapCourseDetail {
   selectedCourseId: number;
+  jobId: number;
+  companyId: number;
+  selectedDetailedPosition: number;
+  accessToken: string | null;
 }
 
 export interface IGetDetailedPositions {
   jobId: number;
   companyId: number;
+}
+
+export interface IGetNewAccessToken {
+  // NOTE - 임시
+  refreshToken: string | null;
+}
+
+export interface INewAccessToken {
+  status: string;
+  message: string;
+  data: {
+    accessToken: string;
+    tokenType: string;
+    expiresIn: number;
+  } | null;
 }

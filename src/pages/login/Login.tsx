@@ -1,13 +1,16 @@
 import { styled } from "styled-components";
 import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import Overlay from "../../components/common/overlay/Overlay";
 import CloseBtnSvg from "../../components/common/closeBtnSvg/CloseBtnSvg";
 import Logo from "../../components/common/logo/Logo";
-import { useSetRecoilState } from "recoil";
 import { switchLoginState } from "../../recoil/switchLogin/atom";
 import { BEFORE_LOGIN_PATH } from "../../constants/constants";
-import { BASE_PATH } from "../../services/apis";
+import { BASE_PATH, getNewAccessToken } from "../../services/apis";
+import { accessTokenState } from "../../recoil/accessToken/atom";
+import issueNewAccessTokenHook from "../../hooks/issueNewAccessTokenHook";
 
 interface ILogin {
   beforeLoginPath: string;
@@ -100,8 +103,46 @@ const GoogleText = styled.a`
 function Login({ beforeLoginPath }: ILogin) {
   const setSwitchLogin = useSetRecoilState(switchLoginState);
 
+  const history = useHistory();
+  const setAccessToken = useSetRecoilState(accessTokenState);
+
   useEffect(() => {
     localStorage.setItem(BEFORE_LOGIN_PATH, beforeLoginPath);
+
+    const issueNewAccessTokenHookWrapper = async () => {
+      const newAccessToken: string = await issueNewAccessTokenHook();
+
+      if (newAccessToken === "/") {
+        history.push("/");
+      } else {
+        setAccessToken(newAccessToken);
+      }
+    };
+
+    issueNewAccessTokenHookWrapper();
+
+    // const refreshToken = localStorage.getItem("refreshToken");
+    // const issueAccessToken = async () => {
+    //   const response: INewAccessToken = await getNewAccessToken({
+    //     refreshToken,
+    //   });
+
+    //   if (response.status === ApiStatus.error) {
+    //     if (response.message === ErrorMessageNewAccessToken.verification) {
+    //       alert("잘못된 토큰입니다. 다시 로그인 해주세요.");
+    //     } else if (response.message === ErrorMessageNewAccessToken.expired) {
+    //       alert("토큰이 만료되었습니다. 다시 로그인 해주세요.");
+    //     } else {
+    //       alert("예기치 않은 오류입니다. 다시 로그인 해주세요.");
+    //     }
+    //     history.push("/");
+    //     return;
+    //   }
+
+    //   setAccessToken(response.data!.accessToken);
+    // };
+
+    // issueAccessToken();
   }, []);
 
   const onClickedCloseButton = () => {

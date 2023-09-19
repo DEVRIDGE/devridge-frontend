@@ -25,7 +25,18 @@ export enum ApiStatus {
   "success" = "success",
 }
 
+export enum ApiMessage {
+  "roadmap" = "회사, 직무, 서비스에 일치 하는 회사 정보가 없습니다.",
+  "course_detail" = "해당하는 코스가 없습니다.",
+  "login_required" = "Login required",
+}
+
 export enum MatchingFlag {
   "YES" = "YES",
   "NO" = "NO",
+}
+
+export enum ErrorMessageNewAccessToken {
+  "verification" = "Token verification failed",
+  "expired" = "Token has expired",
 }
