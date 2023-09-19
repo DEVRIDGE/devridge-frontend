@@ -1,15 +1,29 @@
 import { styled } from "styled-components";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useHistory } from "react-router-dom";
 
 import TechHeader from "../../components/roadmapTech/techHeader/TechHeader";
 import Overlay from "../../components/common/overlay/Overlay";
 import { roadmapTechState } from "../../recoil/roadmapTechDetail/atom";
 import { getRoadmapCourseDetail } from "../../services/apis";
-import { roadmapCourseState } from "../../recoil/roadmapCourseDetail/atom";
+import {
+  IRoadmapCourseDetail,
+  roadmapCourseState,
+} from "../../recoil/roadmapCourseDetail/atom";
 import { switchRoadmapDetailState } from "../../recoil/swtichRoadmapDetail/atom";
 import { courseTitleState } from "../../recoil/courseTitle/atom";
 import { isLoadingCoursePageState } from "../../recoil/isLoadingCoursePage/atom";
-import { SwitchDetail } from "../../constants/enums";
+import {
+  ApiMessage,
+  ApiStatus,
+  ErrorMessageNewAccessToken,
+  SwitchDetail,
+} from "../../constants/enums";
+import { accessTokenState } from "../../recoil/accessToken/atom";
+import issueNewAccessTokenHook from "../../hooks/issueNewAccessTokenHook";
+import { jobState } from "../../recoil/jobId/atom";
+import { companyState } from "../../recoil/companyId/atom";
+import { selectedDetailedPositionState } from "../../recoil/selectedDetailedPosition/atom";
 
 interface IOnClickTechButton {
   selectedCourseId: number;
@@ -73,12 +87,20 @@ const TechButton = styled.button`
 `;
 
 function RoadmapTechPage() {
+  const history = useHistory();
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+
   const setSwitchRoadmapDetail = useSetRecoilState(switchRoadmapDetailState);
   const setSelectedCourseTitle = useSetRecoilState(courseTitleState);
   const setRoadmapCourseState = useSetRecoilState(roadmapCourseState);
   const setIsLoadingCoursePage = useSetRecoilState(isLoadingCoursePageState);
 
   const selectedTechState = useRecoilValue(roadmapTechState);
+  const jobId = useRecoilValue(jobState);
+  const companyId = useRecoilValue(companyState);
+  const selectedDetailedPosition = useRecoilValue(
+    selectedDetailedPositionState
+  );
 
   const onClickTechButton = async ({
     selectedCourseId, //NOTE - 세부 기술 선택 화면에서 고른 세부 기술
@@ -86,9 +108,37 @@ function RoadmapTechPage() {
   }: IOnClickTechButton) => {
     setIsLoadingCoursePage(true);
     setSwitchRoadmapDetail(SwitchDetail.COURSE);
-    const data = await getRoadmapCourseDetail({
+
+    const data: IRoadmapCourseDetail = await getRoadmapCourseDetail({
       selectedCourseId,
+      jobId,
+      companyId,
+      selectedDetailedPosition,
+      accessToken,
     });
+
+    if (data.status === ApiStatus.error) {
+      if (data.message === ApiMessage.course_detail) {
+        alert("관련 강의 및 도서가 존재하지 않습니다.");
+        history.push("/");
+        return;
+      } else if (data.message === ApiMessage.login_required) {
+        alert("다시 로그인 해주세요.");
+        history.push("/");
+        return;
+      } else {
+        const newAccessToken: string = await issueNewAccessTokenHook();
+        if (newAccessToken === "/") {
+          history.push("/");
+          return;
+        } else {
+          setAccessToken(newAccessToken);
+          onClickTechButton({ selectedCourseId, selectedCourseTitle });
+          return;
+        }
+      }
+    }
+
     setRoadmapCourseState(data);
     setSelectedCourseTitle(selectedCourseTitle);
     setIsLoadingCoursePage(false);
@@ -100,7 +150,7 @@ function RoadmapTechPage() {
       <TechMenuWrapper>
         <TechHeader />
         <GridButtons>
-          {selectedTechState.data.courseDetails.map((courseDetail) => (
+          {selectedTechState.data!.courseDetails.map((courseDetail) => (
             <TechButton
               onClick={() =>
                 onClickTechButton({

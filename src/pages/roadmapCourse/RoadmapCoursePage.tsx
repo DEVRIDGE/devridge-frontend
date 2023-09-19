@@ -63,7 +63,7 @@ function RoadmapCoursePage() {
       <CourseMenuWrapper>
         <CourseHeader />
         <GridCourses>
-          {roadmapCourseDetail.data.courseVideos.map((courseVideo) => (
+          {roadmapCourseDetail.data!.courseVideos.map((courseVideo) => (
             <CourseBox key={courseVideo.id} {...courseVideo} />
           ))}
         </GridCourses>

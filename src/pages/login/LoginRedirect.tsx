@@ -11,6 +11,7 @@ import { BEFORE_LOGIN_PATH } from "../../constants/constants";
 
 interface IRouteParams {
   accessToken: string;
+  refreshToken: string; //NOTE - 임시
 }
 
 const Wrapper = styled.div``;
@@ -36,11 +37,13 @@ function LoginRedirect() {
   const location = useLocation();
   const params: IRouteParams = qs.parse(location.search.slice(1));
   const accessToken = params.accessToken;
+  const refreshToken = params.refreshToken; //NOTE - 임시
 
   useEffect(() => {
     const beforeLoginPathOrigin =
       localStorage.getItem(BEFORE_LOGIN_PATH) || "/";
     localStorage.setItem(BEFORE_LOGIN_PATH, "/");
+    localStorage.setItem("refreshToken", refreshToken);
     setAccessToken(accessToken);
 
     history.push(beforeLoginPathOrigin);

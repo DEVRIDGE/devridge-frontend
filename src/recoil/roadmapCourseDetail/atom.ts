@@ -16,7 +16,7 @@ export interface IRoadmapCourseDetail {
     courseTitle: string;
     courseDetailTitle: string;
     courseVideos: IRoadmapCourseVideos[];
-  };
+  } | null;
 }
 
 export const roadmapCourseState = atom<IRoadmapCourseDetail>({

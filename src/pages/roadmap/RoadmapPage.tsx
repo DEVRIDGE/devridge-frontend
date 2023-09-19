@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useHistory, useLocation } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 
 import RoadmapTitle from "../../components/roadmap/roadmapTitle/RoadmapTitle";
@@ -18,10 +18,16 @@ import {
   IDetailedPositions,
   detailedPositionsState,
 } from "../../recoil/detailedPostions/atom";
-import { ApiStatus } from "../../constants/enums";
+import {
+  ApiMessage,
+  ApiStatus,
+  ErrorMessageNewAccessToken,
+} from "../../constants/enums";
 import { roadmapState } from "../../recoil/roadmap/atom";
 import { isLoadingRoadmapPageState } from "../../recoil/isLoadingRoadmapPage/atom";
 import Legend from "../../components/roadmap/legend/Legend";
+import { accessTokenState } from "../../recoil/accessToken/atom";
+import issueNewAccessTokenHook from "../../hooks/issueNewAccessTokenHook";
 
 interface IParams {
   job: string;
@@ -58,6 +64,7 @@ const OptionDetailedPosition = styled.option``;
 
 function RoadmapPage() {
   const history = useHistory();
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 
   //NOTE - 쿼리스트링 파라미터 가져오는 부분
   const qs = require("querystring");
@@ -113,12 +120,29 @@ function RoadmapPage() {
         jobId: +params.job,
         companyId: +params.company,
         detailedPosition: selectedDetailedPosition,
+        accessToken: accessToken,
       });
 
       if (roadmapApiData.status === ApiStatus.error) {
-        alert("예기치 않은 오류가 발생하였습니다. 관리자에게 문의해주세요.");
-        history.push("/");
-        return;
+        if (roadmapApiData.message === ApiMessage.roadmap) {
+          alert("예기치 않은 오류가 발생하였습니다. 관리자에게 문의해주세요.");
+          history.push("/");
+          return;
+        } else if (roadmapApiData.message === ApiMessage.login_required) {
+          alert("다시 로그인 해주세요.");
+          history.push("/");
+          return;
+        } else {
+          const newAccessToken: string = await issueNewAccessTokenHook();
+          if (newAccessToken === "/") {
+            history.push("/");
+            return;
+          } else {
+            setAccessToken(newAccessToken);
+            handleRoadmapApi();
+            return;
+          }
+        }
       } else {
         setRoadmap(roadmapApiData);
         setIsLoadingRoadmapPage(false);
