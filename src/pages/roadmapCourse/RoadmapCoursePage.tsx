@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 
 const CourseMenuWrapper = styled.div`
   position: fixed;
-  overflow: hidden;
+  overflow: auto;
   top: 50px;
   right: 20px;
   bottom: 0;
@@ -27,6 +27,10 @@ const CourseMenuWrapper = styled.div`
   height: 90vh;
   border-radius: 10px;
   background-color: ${(props) => props.theme.bgColor};
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @media screen and (max-width: 767px) {
     left: 0;

@@ -48,7 +48,7 @@ function CourseBox({
           <CourseLikeLabel>{likeCnt}</CourseLikeLabel>
         </CourseLikeWrapper>
         <CourseLogoWrapper>
-          <CourseLogo>Youtube</CourseLogo>
+          <CourseLogo>{source}</CourseLogo>
         </CourseLogoWrapper>
       </CourseActions>
     </CourseWrapper>
