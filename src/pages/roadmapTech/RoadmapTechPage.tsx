@@ -13,17 +13,13 @@ import {
 import { switchRoadmapDetailState } from "../../recoil/swtichRoadmapDetail/atom";
 import { courseTitleState } from "../../recoil/courseTitle/atom";
 import { isLoadingCoursePageState } from "../../recoil/isLoadingCoursePage/atom";
-import {
-  ApiMessage,
-  ApiStatus,
-  ErrorMessageNewAccessToken,
-  SwitchDetail,
-} from "../../constants/enums";
+import { ApiMessage, ApiStatus, SwitchDetail } from "../../constants/enums";
 import { accessTokenState } from "../../recoil/accessToken/atom";
 import issueNewAccessTokenHook from "../../hooks/issueNewAccessTokenHook";
 import { jobState } from "../../recoil/jobId/atom";
 import { companyState } from "../../recoil/companyId/atom";
 import { selectedDetailedPositionState } from "../../recoil/selectedDetailedPosition/atom";
+import { switchLoginState } from "../../recoil/switchLogin/atom";
 
 interface IOnClickTechButton {
   selectedCourseId: number;
@@ -38,6 +34,7 @@ const Wrapper = styled.div`
 `;
 
 const TechMenuWrapper = styled.div`
+  overflow: auto;
   position: fixed;
   top: 50px;
   right: 20px;
@@ -50,6 +47,10 @@ const TechMenuWrapper = styled.div`
   height: 80vh;
   border-radius: 10px;
   background-color: ${(props) => props.theme.bgColor};
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @media screen and (max-width: 767px) {
     left: 0;
@@ -86,9 +87,60 @@ const TechButton = styled.button`
   }
 `;
 
+const BlindArea = styled.div`
+  position: relative;
+  width: 100%;
+  height: 55vh;
+  background-image: url("./assets/blindCourseDetail2.PNG");
+  background-size: contain;
+`;
+
+const LoginWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto auto;
+  width: max-content;
+  height: max-content;
+`;
+
+const LoginDescription = styled.h3`
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+  line-height: 130%;
+  color: ${(props) => props.theme.textColor};
+  cursor: default;
+`;
+
+const LoginButton = styled.button`
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.mainColor};
+  color: white;
+  font-size: 18px;
+  text-decoration: none;
+  cursor: pointer;
+`;
+
 function RoadmapTechPage() {
   const history = useHistory();
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+
+  //NOTE - 로그인 모달 창 스위칭 아톰
+  const setSwitchLogin = useSetRecoilState(switchLoginState);
+
+  const onClickedLogin = () => {
+    setSwitchLogin(true);
+  };
 
   const setSwitchRoadmapDetail = useSetRecoilState(switchRoadmapDetailState);
   const setSelectedCourseTitle = useSetRecoilState(courseTitleState);
@@ -149,21 +201,34 @@ function RoadmapTechPage() {
       <Overlay />
       <TechMenuWrapper>
         <TechHeader />
-        <GridButtons>
-          {selectedTechState.data!.courseDetails.map((courseDetail) => (
-            <TechButton
-              onClick={() =>
-                onClickTechButton({
-                  selectedCourseId: courseDetail.id,
-                  selectedCourseTitle: courseDetail.name,
-                })
-              }
-              key={courseDetail.id}
-            >
-              {courseDetail.name}
-            </TechButton>
-          ))}
-        </GridButtons>
+        {selectedTechState.message === ApiMessage.login_required ? (
+          <BlindArea>
+            <LoginWrapper>
+              <LoginDescription>
+                내용을 확인하려면
+                <br />
+                로그인이 필요합니다.
+              </LoginDescription>
+              <LoginButton onClick={onClickedLogin}>로그인</LoginButton>
+            </LoginWrapper>
+          </BlindArea>
+        ) : (
+          <GridButtons>
+            {selectedTechState.data!.courseDetails.map((courseDetail) => (
+              <TechButton
+                onClick={() =>
+                  onClickTechButton({
+                    selectedCourseId: courseDetail.id,
+                    selectedCourseTitle: courseDetail.name,
+                  })
+                }
+                key={courseDetail.id}
+              >
+                {courseDetail.name}
+              </TechButton>
+            ))}
+          </GridButtons>
+        )}
       </TechMenuWrapper>
     </Wrapper>
   );

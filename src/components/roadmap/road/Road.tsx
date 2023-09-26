@@ -53,6 +53,7 @@ interface IRoad {
 
 interface IOnClickTech {
   selectedTechId: number;
+  courseName: string;
   index: number;
 }
 
@@ -116,6 +117,7 @@ function Road({ roadmapApiData }: IRoad) {
 
   const onClickTech = async ({
     selectedTechId,
+    courseName,
     index: gridIndex,
   }: IOnClickTech) => {
     setSelectedTechId(selectedTechId);
@@ -130,13 +132,12 @@ function Road({ roadmapApiData }: IRoad) {
       accessToken,
     });
 
-    if (data.status === ApiStatus.error) {
+    if (
+      data.status === ApiStatus.error &&
+      data.message !== ApiMessage.login_required
+    ) {
       if (data.message === ApiMessage.course_detail) {
         alert("관련 강의 및 도서가 존재하지 않습니다.");
-        history.push("/");
-        return;
-      } else if (data.message === ApiMessage.login_required) {
-        alert("다시 로그인 해주세요.");
         history.push("/");
         return;
       } else {
@@ -145,16 +146,15 @@ function Road({ roadmapApiData }: IRoad) {
           history.push("/");
           return;
         } else {
-          console.log(data);
           setAccessToken(newAccessToken);
-          onClickTech({ selectedTechId, index: gridIndex });
+          onClickTech({ selectedTechId, courseName, index: gridIndex });
           return;
         }
       }
     }
 
     setSelectedTechState(data);
-    setSelectedTechTitleState(data.data!.courseName);
+    setSelectedTechTitleState(courseName);
     setIsLoadingTechPage(false);
   };
 
@@ -230,6 +230,7 @@ function Road({ roadmapApiData }: IRoad) {
                       onClick={() =>
                         onClickTech({
                           selectedTechId: courseCol.courses[0].id,
+                          courseName: courseCol.courses[0].name,
                           index,
                         })
                       }
@@ -253,7 +254,11 @@ function Road({ roadmapApiData }: IRoad) {
                           <CSButton
                             key={cs.id}
                             onClick={() => {
-                              onClickTech({ selectedTechId: cs.id, index });
+                              onClickTech({
+                                selectedTechId: cs.id,
+                                courseName: cs.name,
+                                index,
+                              });
                             }}
                             $matchingFlag={cs.matchingFlag}
                           >
@@ -276,7 +281,11 @@ function Road({ roadmapApiData }: IRoad) {
                           <CSButton
                             key={cs.id}
                             onClick={() => {
-                              onClickTech({ selectedTechId: cs.id, index });
+                              onClickTech({
+                                selectedTechId: cs.id,
+                                courseName: cs.name,
+                                index,
+                              });
                             }}
                             $matchingFlag={cs.matchingFlag}
                           >
