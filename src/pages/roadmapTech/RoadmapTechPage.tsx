@@ -13,12 +13,7 @@ import {
 import { switchRoadmapDetailState } from "../../recoil/swtichRoadmapDetail/atom";
 import { courseTitleState } from "../../recoil/courseTitle/atom";
 import { isLoadingCoursePageState } from "../../recoil/isLoadingCoursePage/atom";
-import {
-  ApiMessage,
-  ApiStatus,
-  ErrorMessageNewAccessToken,
-  SwitchDetail,
-} from "../../constants/enums";
+import { ApiMessage, ApiStatus, SwitchDetail } from "../../constants/enums";
 import { accessTokenState } from "../../recoil/accessToken/atom";
 import issueNewAccessTokenHook from "../../hooks/issueNewAccessTokenHook";
 import { jobState } from "../../recoil/jobId/atom";
