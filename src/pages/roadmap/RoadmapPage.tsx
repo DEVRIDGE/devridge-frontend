@@ -44,19 +44,22 @@ const Wrapper = styled.div`
   min-height: calc(100% - 50px);
 `;
 
-const SelectDetailedPositionWrapper = styled.div`
-  position: absolute;
-  top: 40px;
-  right: 30px;
-`;
+const SelectDetailedPositionWrapper = styled.div``;
 
 const SelectDetailedPositionText = styled.span`
   margin-right: 10px;
-  font-size: 14px;
+  font-size: 16px;
   color: ${(props) => props.theme.textGreyColor};
 `;
 
-const SelectDetailedPosition = styled.select``;
+const SelectDetailedPosition = styled.select`
+  padding: 5px;
+  min-width: 100px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.8);
+`;
 
 const OptionDetailedPosition = styled.option``;
 

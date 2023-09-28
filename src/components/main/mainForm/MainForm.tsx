@@ -57,19 +57,6 @@ function MainForm({ isLoading, jobsApiData, companiesApiData }: IMainForm) {
       ) : (
         <>
           <WrapperSelect>
-            <SelectName>직무</SelectName>
-            <Select value={watchJob} {...register("job")}>
-              <Option value={-1} disabled>
-                선택
-              </Option>
-              {jobsApiData?.data.jobs.map((job) => (
-                <Option key={job.id} value={job.id}>
-                  {job.name}
-                </Option>
-              ))}
-            </Select>
-          </WrapperSelect>
-          <WrapperSelect>
             <SelectName>회사</SelectName>
             <Select value={watchCompany} {...register("company")}>
               <Option value={-1} disabled>
@@ -82,6 +69,20 @@ function MainForm({ isLoading, jobsApiData, companiesApiData }: IMainForm) {
               ))}
             </Select>
           </WrapperSelect>
+          <WrapperSelect>
+            <SelectName>직무</SelectName>
+            <Select value={watchJob} {...register("job")}>
+              <Option value={-1} disabled>
+                선택
+              </Option>
+              {jobsApiData?.data.jobs.map((job) => (
+                <Option key={job.id} value={job.id}>
+                  {job.name}
+                </Option>
+              ))}
+            </Select>
+          </WrapperSelect>
+
           <SubmitButton onClick={() => setSelectedDetailedPosition(1)}>
             바로가기
           </SubmitButton>

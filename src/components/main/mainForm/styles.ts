@@ -32,7 +32,7 @@ export const SubmitButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-basis: 30%;
+  flex-basis: 20%;
   padding: 6px 0;
   max-width: 200px;
   min-width: 100px;
@@ -40,7 +40,7 @@ export const SubmitButton = styled.button`
   border-radius: 5px;
   background-color: ${(props) => props.theme.mainColor};
   color: white;
-  font-size: 12px;
+  font-size: 16px;
   cursor: pointer;
 
   @media screen and (max-width: 767px) {
@@ -53,17 +53,18 @@ export const SubmitButton = styled.button`
 export const SelectName = styled.span`
   flex-basis: 20%;
   margin-right: 10px;
-  font-size: 12px;
+  font-size: 20px;
   white-space: nowrap;
 `;
 
 export const Select = styled.select`
   flex-basis: 80%;
+  margin-top: 3px;
   padding: 5px;
   min-width: 100px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  font-size: 12px;
+  font-size: 16px;
   color: rgba(0, 0, 0, 0.8);
 `;
 

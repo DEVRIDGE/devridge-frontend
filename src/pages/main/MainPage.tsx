@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { useQuery } from "react-query";
 import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import MainTitle from "../../components/main/mainTitle/MainTitle";
 import MainForm from "../../components/main/mainForm/MainForm";
@@ -16,7 +17,6 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { switchLoginState } from "../../recoil/switchLogin/atom";
 import Login from "../login/Login";
 import { accessTokenState } from "../../recoil/accessToken/atom";
-import { useHistory } from "react-router-dom";
 import issueNewAccessTokenHook from "../../hooks/issueNewAccessTokenHook";
 
 const Wrapper = styled.div`
