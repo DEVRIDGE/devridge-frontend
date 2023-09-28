@@ -30,14 +30,8 @@ function MainForm({ isLoading, jobsApiData, companiesApiData }: IMainForm) {
     selectedDetailedPositionState
   );
 
-  const { register, handleSubmit, control } = useForm<IForm>();
+  const { register, handleSubmit } = useForm<IForm>();
   const history = useHistory();
-  const watchJob = useWatch({ control, name: "job", defaultValue: -1 });
-  const watchCompany = useWatch({
-    control,
-    name: "company",
-    defaultValue: -1,
-  });
   const onSubmit = ({ job, company }: IForm) => {
     if (+job === -1 && +company === -1) {
       alert("직무와 회사를 선택해주세요.");
@@ -58,7 +52,7 @@ function MainForm({ isLoading, jobsApiData, companiesApiData }: IMainForm) {
         <>
           <WrapperSelect>
             <SelectName>회사</SelectName>
-            <Select value={watchCompany} {...register("company")}>
+            <Select defaultValue={-1} {...register("company")}>
               <Option value={-1} disabled>
                 선택
               </Option>
@@ -71,7 +65,7 @@ function MainForm({ isLoading, jobsApiData, companiesApiData }: IMainForm) {
           </WrapperSelect>
           <WrapperSelect>
             <SelectName>직무</SelectName>
-            <Select value={watchJob} {...register("job")}>
+            <Select defaultValue={-1} {...register("job")}>
               <Option value={-1} disabled>
                 선택
               </Option>
