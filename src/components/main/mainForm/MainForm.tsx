@@ -26,10 +26,6 @@ interface IForm {
 }
 
 function MainForm({ isLoading, jobsApiData, companiesApiData }: IMainForm) {
-  const setSelectedDetailedPosition = useSetRecoilState(
-    selectedDetailedPositionState
-  );
-
   const { register, handleSubmit } = useForm<IForm>();
   const history = useHistory();
   const onSubmit = ({ job, company }: IForm) => {
@@ -77,9 +73,7 @@ function MainForm({ isLoading, jobsApiData, companiesApiData }: IMainForm) {
             </Select>
           </WrapperSelect>
 
-          <SubmitButton onClick={() => setSelectedDetailedPosition(1)}>
-            바로가기
-          </SubmitButton>
+          <SubmitButton>바로가기</SubmitButton>
         </>
       )}
     </Form>
