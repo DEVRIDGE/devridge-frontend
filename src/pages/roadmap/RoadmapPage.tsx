@@ -87,11 +87,11 @@ const DropdownListWrapper = styled.div`
 const DropdownLable = styled.label<{ $isDropdownOptions: boolean }>`
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 5px;
+  padding: 8px 13px;
   width: 100%;
-  height: 30px;
   border: 1px solid
     ${(props) =>
       props.$isDropdownOptions ? props.theme.mainColor : props.theme.greyColor};
@@ -102,16 +102,16 @@ const DropdownLable = styled.label<{ $isDropdownOptions: boolean }>`
 `;
 
 const DropdownOptionList = styled.ul`
-  padding: 10px;
+  padding: 8px;
   border: 1px solid ${(props) => props.theme.greyColor};
   border-radius: 5px;
 `;
 
 const DropdownOption = styled.li`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  height: 30px;
+  padding: 8px;
   border-radius: 5px;
 
   &:hover {
