@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useHistory, useLocation } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 
 import RoadmapTitle from "../../components/roadmap/roadmapTitle/RoadmapTitle";
@@ -18,11 +18,7 @@ import {
   IDetailedPositions,
   detailedPositionsState,
 } from "../../recoil/detailedPostions/atom";
-import {
-  ApiMessage,
-  ApiStatus,
-  ErrorMessageNewAccessToken,
-} from "../../constants/enums";
+import { ApiMessage, ApiStatus } from "../../constants/enums";
 import { roadmapState } from "../../recoil/roadmap/atom";
 import { isLoadingRoadmapPageState } from "../../recoil/isLoadingRoadmapPage/atom";
 import Legend from "../../components/roadmap/legend/Legend";
@@ -90,14 +86,9 @@ function RoadmapPage() {
     setSelectedDetailedPosition(+event.target.value);
   };
 
-  //NOTE - 페이지 들어오자마자 로드맵 API 호출
-  // const { isLoading: isRoadmapLoading, data: roadmapApiData } =
-  //   useQuery<IRoadmap>("roadmap", () =>
-  //     getRoadmap(+params.job, +params.company)
-  //   );
-
   //NOTE - 디테일 포지션 API, 로드맵 API 순차적 호출
   useEffect(() => {
+    let firstDetailedPosition: number = -1;
     setJob(+params.job);
     setCompany(+params.company);
     setIsLoadingRoadmapPage(true);
@@ -115,6 +106,11 @@ function RoadmapPage() {
         return;
       } else {
         setDetailedPositions(detailedPositionApiData);
+        setSelectedDetailedPosition(
+          +detailedPositionApiData.data!.detailedPositionDtos[0].id || -1
+        );
+        firstDetailedPosition =
+          +detailedPositionApiData.data!.detailedPositionDtos[0].id || -1;
       }
     };
 
@@ -122,7 +118,7 @@ function RoadmapPage() {
       const roadmapApiData: IRoadmap = await getRoadmap({
         jobId: +params.job,
         companyId: +params.company,
-        detailedPosition: selectedDetailedPosition,
+        detailedPosition: firstDetailedPosition,
         accessToken: accessToken,
       });
 
@@ -152,8 +148,12 @@ function RoadmapPage() {
       }
     };
 
-    handleDetailedPositionsApi();
-    handleRoadmapApi();
+    const handleGoRoadmap = async () => {
+      await handleDetailedPositionsApi();
+      await handleRoadmapApi();
+    };
+
+    handleGoRoadmap();
   }, [selectedDetailedPosition]);
 
   return (
