@@ -20,12 +20,14 @@ export function getApplyRefreshToken() {
     .then((response) => response.data);
 }
 
-export function getJobs() {
-  return axios.get(`${BASE_PATH}/jobs`).then((response) => response.data);
-}
-
 export function getCompanies() {
   return axios.get(`${BASE_PATH}/companies`).then((response) => response.data);
+}
+
+export function getJobs(companyId: number) {
+  return axios
+    .get(`${BASE_PATH}/jobs?company=${companyId}`)
+    .then((response) => response.data);
 }
 
 export function getRoadmap({

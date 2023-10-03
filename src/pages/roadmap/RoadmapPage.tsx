@@ -81,6 +81,7 @@ const DropdownDescription = styled.div`
 `;
 
 const DropdownListWrapper = styled.div`
+  position: relative;
   width: 150px;
 `;
 
@@ -102,9 +103,17 @@ const DropdownLable = styled.label<{ $isDropdownOptions: boolean }>`
 `;
 
 const DropdownOptionList = styled.ul`
+  overflow: auto;
+  position: absolute;
+  top: 40px;
   padding: 8px;
+  width: 150px;
   border: 1px solid ${(props) => props.theme.greyColor};
   border-radius: 5px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const DropdownOption = styled.li`
@@ -172,7 +181,7 @@ function RoadmapPage() {
     setSelectedDropdownLabelText(optionText);
     setSelectedDetailedPosition(optionId);
   };
-  const toggleDropdown = (event: React.MouseEvent<HTMLElement>) => {
+  const onToggleDropdown = (event: React.MouseEvent<HTMLElement>) => {
     setIsDropdownOptions(false);
   };
 
@@ -252,7 +261,7 @@ function RoadmapPage() {
   }, [selectedDetailedPosition]);
 
   return (
-    <Wrapper onClick={toggleDropdown}>
+    <Wrapper onClick={onToggleDropdown}>
       {!isLoadingRoadmapPage ? (
         <>
           <RoadmapTitle
