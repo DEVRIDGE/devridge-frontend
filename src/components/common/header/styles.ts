@@ -16,10 +16,6 @@ export const Nav = styled.nav`
 
 export const Col = styled.div`
   display: flex;
-
-  svg {
-    margin-right: 30px;
-  }
 `;
 
 export const Items = styled.ul`

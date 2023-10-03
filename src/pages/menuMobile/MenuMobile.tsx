@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
 import CloseBtnSvg from "../../components/common/closeBtnSvg/CloseBtnSvg";
@@ -81,6 +81,7 @@ const CloseBtn = styled.button`
 `;
 
 function MenuMobile() {
+  const history = useHistory();
   const setSwitchLogin = useSetRecoilState(switchLoginState);
 
   const onClickedLogin = () => {
@@ -88,7 +89,7 @@ function MenuMobile() {
   };
 
   const onClickedCloseButton = () => {
-    setSwitchLogin(false);
+    history.push("/");
   };
 
   return (
