@@ -52,10 +52,10 @@ export const WrapperItem = styled.div`
   align-items: center;
 `;
 
-export const Rope = styled.div<{ $marginTop?: string }>`
+export const Rope = styled.div<{ $marginTop?: string; $height?: string }>`
   margin-top: ${(props) => props.$marginTop || "3px"};
   width: 1px;
-  height: 30px;
+  height: ${(props) => props.$height || "30px"};
   border: 1px dashed ${(props) => props.theme.greyColor};
 `;
 
@@ -182,7 +182,7 @@ export const ProgressBar = styled.div<IProgressBar>`
       props.$mediaType === MediaType.rightMid ||
       props.$mediaType === MediaType.leftMid
     ) {
-      return "325px";
+      return "363px";
     } else {
       return "15px";
     }
@@ -209,7 +209,7 @@ export const ProgressBar = styled.div<IProgressBar>`
     }};
     right: ${(props) => {
       if (props.$mediaType === MediaType.rightMid) {
-        return "-16.5px";
+        return "-16.8px";
       }
     }};
     width: ${(props) => {
@@ -230,6 +230,16 @@ export const ProgressBar = styled.div<IProgressBar>`
         props.$mediaType === MediaType.leftBot
       ) {
         return "150px";
+      }
+    }};
+    height: ${(props) => {
+      if (
+        props.$mediaType === MediaType.rightMid ||
+        props.$mediaType === MediaType.leftMid
+      ) {
+        return "353px";
+      } else {
+        return "15px";
       }
     }};
   }
@@ -278,6 +288,16 @@ export const ProgressBar = styled.div<IProgressBar>`
         return "160px";
       }
     }};
+    height: ${(props) => {
+      if (
+        props.$mediaType === MediaType.rightMid ||
+        props.$mediaType === MediaType.leftMid
+      ) {
+        return "343px";
+      } else {
+        return "15px";
+      }
+    }};
   }
 
   /* 모바일(플립) 미디어 쿼리 */
@@ -301,7 +321,7 @@ export const ProgressBar = styled.div<IProgressBar>`
     }};
     right: ${(props) => {
       if (props.$mediaType === MediaType.rightMid) {
-        return "-16px";
+        return "-15.8px";
       }
     }};
     width: ${(props) => {
@@ -329,7 +349,7 @@ export const ProgressBar = styled.div<IProgressBar>`
         props.$mediaType === MediaType.rightMid ||
         props.$mediaType === MediaType.leftMid
       ) {
-        return "292px";
+        return "330px";
       } else {
         return "12px";
       }

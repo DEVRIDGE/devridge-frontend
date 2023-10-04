@@ -89,7 +89,7 @@ function MenuMobile() {
   };
 
   const onClickedCloseButton = () => {
-    history.push("/");
+    history.goBack();
   };
 
   return (

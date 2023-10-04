@@ -3,12 +3,12 @@ import { styled } from "styled-components";
 export const LegendWrapper = styled.div`
   position: absolute;
   display: flex;
-  top: 40px;
+  top: 25px;
   left: 30px;
   justify-content: center;
   align-items: center;
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 1023px) {
     position: static;
     margin-bottom: 20px;
   }

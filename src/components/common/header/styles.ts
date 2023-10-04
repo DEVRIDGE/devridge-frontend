@@ -28,7 +28,7 @@ export const Items = styled.ul`
 `;
 
 export const Item = styled.li`
-  margin-right: 20px;
+  margin-left: 20px;
   font-size: 12px;
 `;
 
