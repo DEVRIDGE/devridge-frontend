@@ -93,6 +93,7 @@ const GoogleText = styled.a`
   font-size: 16px;
   text-decoration: none;
   color: black;
+  word-break: keep-all;
 
   @media screen and (max-width: 767px) {
     padding-left: 10px;

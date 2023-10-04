@@ -272,7 +272,7 @@ function Road({ roadmapApiData }: IRoad) {
                 ) : (
                   <>
                     {courseCol.courses.length !== 0 ? (
-                      <Rope $marginTop="43px" />
+                      <Rope $marginTop="35px" $height="60px" />
                     ) : null}
                     {courseCol.courses.length !== 0 ? <Rope /> : null}
                     {courseCol.courses.length !== 0 ? (

@@ -110,6 +110,8 @@ const DropdownOptionList = styled.ul`
   width: 150px;
   border: 1px solid ${(props) => props.theme.greyColor};
   border-radius: 5px;
+  background-color: ${(props) => props.theme.bgColor};
+  z-index: 3;
 
   &::-webkit-scrollbar {
     display: none;
@@ -187,6 +189,10 @@ function RoadmapPage() {
 
   //NOTE - 디테일 포지션 API, 로드맵 API 순차적 호출
   useEffect(() => {
+    setSelectedDetailedPosition(-1);
+  }, []);
+
+  useEffect(() => {
     let firstDetailedPosition: number = selectedDetailedPosition;
     setJob(+params.job);
     setCompany(+params.company);
@@ -204,12 +210,12 @@ function RoadmapPage() {
         history.push("/");
         return;
       } else {
+        setSelectedDropdownLabelText(
+          detailedPositionApiData.data!.detailedPositionDtos[0].name || "error"
+        );
         setDetailedPositions(detailedPositionApiData);
         setSelectedDetailedPosition(
           detailedPositionApiData.data!.detailedPositionDtos[0].id || -1
-        );
-        setSelectedDropdownLabelText(
-          detailedPositionApiData.data!.detailedPositionDtos[0].name || "error"
         );
         firstDetailedPosition =
           detailedPositionApiData.data!.detailedPositionDtos[0].id || -1;
@@ -246,7 +252,7 @@ function RoadmapPage() {
         }
       } else {
         setRoadmap(roadmapApiData);
-        setIsLoadingRoadmapPage(false);
+        return;
       }
     };
 
@@ -255,6 +261,7 @@ function RoadmapPage() {
         await handleDetailedPositionsApi();
       }
       await handleRoadmapApi();
+      setIsLoadingRoadmapPage(false);
     };
 
     handleGoRoadmap();
