@@ -20,26 +20,28 @@ interface ICSButton {
 export const Wrapper = styled.div<IWrapper>`
   display: grid;
   grid-template-columns: repeat(${(props) => props.$col}, minmax(50px, 1fr));
-  grid-template-rows: repeat(${(props) => props.$row}, minmax(210px, 1fr));
-  gap: 100px 20px;
+  grid-template-rows: repeat(${(props) => props.$row}, minmax(300px, 1fr));
+  gap: 50px 20px;
   padding: 50px;
   width: 1024px;
 
   @media screen and (max-width: 1023px) {
-    gap: 100px 10px;
+    grid-template-rows: repeat(${(props) => props.$row}, minmax(280px, 1fr));
+    gap: 50px 10px;
     padding: 30px;
     width: 768px;
   }
 
   @media screen and (max-width: 767px) {
-    gap: 100px 10px;
+    grid-template-rows: repeat(${(props) => props.$row}, minmax(250px, 1fr));
+    gap: 50px 10px;
     padding: 10px;
     width: 320px;
   }
 
   @media screen and (max-width: 400px) {
-    grid-template-rows: repeat(${(props) => props.$row}, minmax(180px, 1fr));
-    gap: 100px 10px;
+    grid-template-rows: repeat(${(props) => props.$row}, minmax(230px, 1fr));
+    gap: 50px 10px;
     padding: 20px;
     width: 280px;
   }
@@ -182,7 +184,7 @@ export const ProgressBar = styled.div<IProgressBar>`
       props.$mediaType === MediaType.rightMid ||
       props.$mediaType === MediaType.leftMid
     ) {
-      return "363px";
+      return "365px";
     } else {
       return "15px";
     }
@@ -237,7 +239,7 @@ export const ProgressBar = styled.div<IProgressBar>`
         props.$mediaType === MediaType.rightMid ||
         props.$mediaType === MediaType.leftMid
       ) {
-        return "353px";
+        return "345px";
       } else {
         return "15px";
       }
@@ -293,7 +295,7 @@ export const ProgressBar = styled.div<IProgressBar>`
         props.$mediaType === MediaType.rightMid ||
         props.$mediaType === MediaType.leftMid
       ) {
-        return "343px";
+        return "315px";
       } else {
         return "15px";
       }
@@ -349,7 +351,7 @@ export const ProgressBar = styled.div<IProgressBar>`
         props.$mediaType === MediaType.rightMid ||
         props.$mediaType === MediaType.leftMid
       ) {
-        return "330px";
+        return "292px";
       } else {
         return "12px";
       }

@@ -124,6 +124,7 @@ function MainForm() {
     const invokeCompaniesApi = async () => {
       setCompaniesApiData(await getCompanies());
     };
+
     setIsCompaniesLoading(true);
     invokeCompaniesApi();
     setIsCompaniesLoading(false);
