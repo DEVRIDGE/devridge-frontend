@@ -91,7 +91,7 @@ const BlindArea = styled.div<{ $publicUrl: string }>`
   position: relative;
   width: 100%;
   height: 55vh;
-  background-image: url("./assets/blindCourseDetail2.PNG");
+  background-image: url("./assets/blindCourseDetail2.png");
   background-size: contain;
 `;
 
