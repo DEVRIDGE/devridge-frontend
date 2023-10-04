@@ -87,7 +87,7 @@ const TechButton = styled.button`
   }
 `;
 
-const BlindArea = styled.div<{ $publicUrl: string }>`
+const BlindArea = styled.div`
   position: relative;
   width: 100%;
   height: 55vh;
@@ -202,7 +202,7 @@ function RoadmapTechPage() {
       <TechMenuWrapper>
         <TechHeader />
         {selectedTechState.message === ApiMessage.login_required ? (
-          <BlindArea $publicUrl={process.env.PUBLIC_URL}>
+          <BlindArea>
             <LoginWrapper>
               <LoginDescription>
                 내용을 확인하려면
