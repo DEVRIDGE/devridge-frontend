@@ -26,7 +26,6 @@ import { isJobDropdownOptionsState } from "../../../recoil/isJobDropdownOptions/
 import { isCompanyDropdownOptionsState } from "../../../recoil/isCompanyDropdownOptions/atoms";
 
 interface IForm {
-  event: React.FormEvent<HTMLFormElement>;
   job: number;
   company: number;
 }
