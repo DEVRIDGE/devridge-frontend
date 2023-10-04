@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { useHistory, useLocation } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 
 import RoadmapTitle from "../../components/roadmap/roadmapTitle/RoadmapTitle";
 import Road from "../../components/roadmap/road/Road";
@@ -163,6 +163,7 @@ function RoadmapPage() {
   const [isLoadingRoadmapPage, setIsLoadingRoadmapPage] = useRecoilState(
     isLoadingRoadmapPageState
   );
+  const [isFirstRendering, setIsFirstRendering] = useState(true);
 
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDetailedPosition(+event.target.value);
@@ -188,10 +189,6 @@ function RoadmapPage() {
   };
 
   //NOTE - 디테일 포지션 API, 로드맵 API 순차적 호출
-  useEffect(() => {
-    setSelectedDetailedPosition(-1);
-  }, []);
-
   useEffect(() => {
     let firstDetailedPosition: number = selectedDetailedPosition;
     setJob(+params.job);
@@ -257,7 +254,7 @@ function RoadmapPage() {
     };
 
     const handleGoRoadmap = async () => {
-      if (selectedDetailedPosition === -1) {
+      if (selectedDetailedPosition === -1 || isFirstRendering) {
         await handleDetailedPositionsApi();
       }
       await handleRoadmapApi();
@@ -265,6 +262,7 @@ function RoadmapPage() {
     };
 
     handleGoRoadmap();
+    setIsFirstRendering(false);
   }, [selectedDetailedPosition]);
 
   return (
