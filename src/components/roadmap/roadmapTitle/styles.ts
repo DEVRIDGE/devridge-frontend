@@ -13,26 +13,29 @@ export const Wrapper = styled.div`
 `;
 
 export const Job = styled.h1`
-  font-size: 24px;
-  font-weight: 600;
+  font-family: ${(props) => props.theme.pretendardExtraBold};
+  font-size: 30px;
+  font-weight: bolder;
 
   @media screen and (max-width: 400px) {
-    font-size: 20px;
+    font-size: 24px;
     white-space: nowrap;
   }
 `;
 
 export const Company = styled.h1`
+  font-family: ${(props) => props.theme.pretendardExtraBold};
+
   margin-right: 10px;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 30px;
+  font-weight: bolder;
 
   @media screen and (max-width: 767px) {
     margin-bottom: 10px;
   }
 
   @media screen and (max-width: 400px) {
-    font-size: 20px;
+    font-size: 24px;
     white-space: nowrap;
   }
 `;

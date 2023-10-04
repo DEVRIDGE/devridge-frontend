@@ -98,6 +98,7 @@ export const DropdownLable = styled.label<{ $isDropdownOptions: boolean }>`
   justify-content: flex-start;
   align-items: center;
   padding: 8px 13px;
+  width: 100%;
   max-width: 240px;
   min-width: 130px;
   border: 1px solid
@@ -115,6 +116,8 @@ export const DropdownOptionList = styled.ul`
   top: 40px;
   padding: 8px;
   width: 100%;
+  max-width: 240px;
+  min-width: 130px;
   max-height: 140px;
   border: 1px solid ${(props) => props.theme.greyColor};
   border-radius: 5px;
@@ -122,7 +125,7 @@ export const DropdownOptionList = styled.ul`
   z-index: 4;
 
   &::-webkit-scrollbar {
-    display: none;
+    /* display: none; */
   }
 `;
 
