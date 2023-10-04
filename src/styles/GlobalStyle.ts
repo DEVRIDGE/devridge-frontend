@@ -6,6 +6,23 @@ export const GlobalStyle = createGlobalStyle`
    License: none (public domain)
 */
 
+@font-face {
+	font-family: "pretendard-medium";
+	src: url("./fonts/Pretendard-Medium.woff");
+}
+@font-face {
+	font-family: "pretendard-regular";
+	src: url("./fonts/Pretendard-Regular.woff");
+}
+@font-face {
+	font-family: "pretendard-bold";
+	src: url("./fonts/Pretendard-Bold.woff");
+}
+@font-face {
+	font-family: "pretendard-extrabold";
+	src: url("./fonts/Pretendard-ExtraBold.woff");
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,

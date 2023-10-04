@@ -7,7 +7,10 @@ export const darkTheme: DefaultTheme = {
   mainColorLight: "#FFF2EC",
   textGreyColor: "rgba(0, 0, 0, 0.5)",
   greyColor: "rgba(0, 0, 0, 0.1)",
-  contentFont: "'Noto Sans KR', sans-serif",
+  contentFont: "'pretendard-medium', sans-serif",
+  pretendardRegular: "'pretendard-regular', sans-serif",
+  pretendardBold: "'pretendard-bold', sans-serif",
+  pretendardExtraBold: "'pretendard-extrabold', sans-serif",
   titleFont: "'Montserrat', sans-serif",
   matchingFlagColor: "#e056fd",
 };
@@ -19,7 +22,10 @@ export const lightTheme: DefaultTheme = {
   mainColorLight: "#FFF2EC",
   textGreyColor: "rgba(0, 0, 0, 0.5)",
   greyColor: "rgba(0, 0, 0, 0.1)",
-  contentFont: "'Noto Sans KR', sans-serif",
+  contentFont: "'pretendard-medium', sans-serif",
+  pretendardRegular: "'pretendard-regular', sans-serif",
+  pretendardBold: "'pretendard-bold', sans-serif",
+  pretendardExtraBold: "'pretendard-extrabold', sans-serif",
   titleFont: "'Montserrat', sans-serif",
   matchingFlagColor: "#e056fd",
 };

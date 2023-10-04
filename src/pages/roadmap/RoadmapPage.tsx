@@ -108,13 +108,15 @@ const DropdownOptionList = styled.ul`
   top: 40px;
   padding: 8px;
   width: 150px;
+  height: fit-content;
+  max-height: 150px;
   border: 1px solid ${(props) => props.theme.greyColor};
   border-radius: 5px;
   background-color: ${(props) => props.theme.bgColor};
   z-index: 3;
 
   &::-webkit-scrollbar {
-    display: none;
+    /* display: none; */
   }
 `;
 
