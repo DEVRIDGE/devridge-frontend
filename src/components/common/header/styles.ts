@@ -52,3 +52,59 @@ export const MenuBars = styled.svg`
     display: block;
   }
 `;
+
+export const ProfileWrapper = styled.div`
+  position: relative;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+`;
+
+export const Profile = styled.svg`
+  padding: 10px;
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.mainColorLight};
+  fill: ${(props) => props.theme.mainColor};
+  cursor: pointer;
+
+  @media screen and (max-width: 767px) {
+    display: block;
+  }
+`;
+
+export const ProfileDropdownList = styled.ul`
+  position: absolute;
+  top: 30px;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10px;
+  padding: 10px;
+  width: max-content;
+  max-width: 200px;
+  border: 1px solid ${(props) => props.theme.greyColor};
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.bgColor};
+`;
+
+export const ProfileDropdownOption = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 7px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: ${(props) => props.theme.textGreyColor};
+  word-break: keep-all;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) => props.theme.mainColorLight};
+    color: ${(props) => props.theme.mainColor};
+    font-weight: bold;
+  }
+`;

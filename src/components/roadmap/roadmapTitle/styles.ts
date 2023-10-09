@@ -13,6 +13,9 @@ export const Wrapper = styled.div`
 `;
 
 export const Job = styled.h1`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: ${(props) => props.theme.pretendardExtraBold};
   font-size: 30px;
   font-weight: bolder;
@@ -24,6 +27,9 @@ export const Job = styled.h1`
 `;
 
 export const Company = styled.h1`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: ${(props) => props.theme.pretendardExtraBold};
 
   margin-right: 10px;
@@ -31,6 +37,7 @@ export const Company = styled.h1`
   font-weight: bolder;
 
   @media screen and (max-width: 767px) {
+    margin-right: 0;
     margin-bottom: 10px;
   }
 

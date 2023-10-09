@@ -8,6 +8,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { afterLoginState } from "../../recoil/afterLogin/atom";
 import { accessTokenState } from "../../recoil/accessToken/atom";
 import { BEFORE_LOGIN_PATH } from "../../constants/constants";
+import { isLoginState } from "../../recoil/isLogin/atoms";
 
 interface IRouteParams {
   accessToken: string;
@@ -32,6 +33,7 @@ function LoginRedirect() {
   const history = useHistory();
 
   const setAccessToken = useSetRecoilState(accessTokenState);
+  const setIsLogin = useSetRecoilState(isLoginState);
 
   const qs = require("querystring");
   const location = useLocation();
@@ -45,6 +47,7 @@ function LoginRedirect() {
     localStorage.setItem(BEFORE_LOGIN_PATH, "/");
     localStorage.setItem("refreshToken", refreshToken);
     setAccessToken(accessToken);
+    setIsLogin(true);
 
     history.push(beforeLoginPathOrigin);
   }, []);

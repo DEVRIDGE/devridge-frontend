@@ -23,9 +23,11 @@ import { roadmapState } from "../../recoil/roadmap/atom";
 import { isLoadingRoadmapPageState } from "../../recoil/isLoadingRoadmapPage/atom";
 import Legend from "../../components/roadmap/legend/Legend";
 import { accessTokenState } from "../../recoil/accessToken/atom";
-import issueNewAccessTokenHook from "../../hooks/issueNewAccessTokenHook";
+import issueNewAccessTokenHook from "../../utils/issueNewAccessTokenHook";
 import useAdaptiveWidth from "../../hooks/useAdaptiveWidth";
 import DownCaretSvg from "../../components/common/downCaretSvg/DownCaretSvg";
+import useOnClickedProfileOuter from "../../hooks/useOnClickedProfileOuter";
+import { isLoginState } from "../../recoil/isLogin/atoms";
 
 interface IParams {
   job: string;
@@ -35,6 +37,11 @@ interface IParams {
 interface IOnClickedDropdownOption {
   optionId: number;
   optionText: string;
+}
+
+interface IHandleRoadmapApi {
+  accessToken: string | null;
+  recursionCount: number;
 }
 
 const Wrapper = styled.div`
@@ -166,6 +173,9 @@ function RoadmapPage() {
     isLoadingRoadmapPageState
   );
   const [isFirstRendering, setIsFirstRendering] = useState(true);
+  const setIsLogin = useSetRecoilState(isLoginState);
+
+  const onClickedProfileOuter = useOnClickedProfileOuter();
 
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDetailedPosition(+event.target.value);
@@ -186,9 +196,32 @@ function RoadmapPage() {
     setSelectedDropdownLabelText(optionText);
     setSelectedDetailedPosition(optionId);
   };
-  const onToggleDropdown = (event: React.MouseEvent<HTMLElement>) => {
+  const onClickedWrapper = (event: React.MouseEvent<HTMLElement>) => {
     setIsDropdownOptions(false);
+    onClickedProfileOuter();
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("refreshToken")) {
+      setIsLogin(true);
+    }
+
+    const handleRefreshPageIssueToken = async () => {
+      const newAccessToken: string | null = await issueNewAccessTokenHook();
+      if (newAccessToken === "/") {
+        setIsLogin(false);
+        setAccessToken(null);
+        history.push("/");
+      } else {
+        setAccessToken(newAccessToken);
+      }
+      return;
+    };
+
+    if (!accessToken && localStorage.getItem("refreshToken")) {
+      handleRefreshPageIssueToken();
+    }
+  }, []);
 
   //NOTE - 디테일 포지션 API, 로드맵 API 순차적 호출
   useEffect(() => {
@@ -221,13 +254,24 @@ function RoadmapPage() {
       }
     };
 
-    const handleRoadmapApi = async () => {
+    const handleRoadmapApi = async ({
+      accessToken,
+      recursionCount,
+    }: IHandleRoadmapApi) => {
       const roadmapApiData: IRoadmap = await getRoadmap({
         jobId: +params.job,
         companyId: +params.company,
         detailedPosition: firstDetailedPosition,
         accessToken: accessToken,
       });
+      if (recursionCount > 3) {
+        alert("과도한 통신량 발생. 관리자에게 문의해주세요.");
+        setIsLogin(false);
+        setAccessToken(null);
+        localStorage.removeItem("refreshToken");
+        history.push("/");
+        return;
+      }
 
       if (roadmapApiData.status === ApiStatus.error) {
         if (roadmapApiData.message === ApiMessage.roadmap) {
@@ -235,22 +279,32 @@ function RoadmapPage() {
           history.push("/");
           return;
         } else if (roadmapApiData.message === ApiMessage.login_required) {
-          alert("다시 로그인 해주세요.");
+          alert("로그인이 필요한 서비스입니다.");
+          setIsLogin(false);
+          setAccessToken(null);
+          localStorage.removeItem("refreshToken");
           history.push("/");
           return;
         } else {
-          const newAccessToken: string = await issueNewAccessTokenHook();
+          const newAccessToken: string | null = await issueNewAccessTokenHook();
+
           if (newAccessToken === "/") {
+            setIsLogin(false);
+            setAccessToken(null);
             history.push("/");
             return;
           } else {
             setAccessToken(newAccessToken);
-            handleRoadmapApi();
+            handleRoadmapApi({
+              accessToken: newAccessToken,
+              recursionCount: recursionCount + 1,
+            });
             return;
           }
         }
       } else {
         setRoadmap(roadmapApiData);
+        setIsLoadingRoadmapPage(false);
         return;
       }
     };
@@ -259,8 +313,7 @@ function RoadmapPage() {
       if (selectedDetailedPosition === -1 || isFirstRendering) {
         await handleDetailedPositionsApi();
       }
-      await handleRoadmapApi();
-      setIsLoadingRoadmapPage(false);
+      await handleRoadmapApi({ accessToken, recursionCount: 0 });
     };
 
     handleGoRoadmap();
@@ -268,7 +321,7 @@ function RoadmapPage() {
   }, [selectedDetailedPosition]);
 
   return (
-    <Wrapper onClick={onToggleDropdown}>
+    <Wrapper onClick={onClickedWrapper}>
       {!isLoadingRoadmapPage ? (
         <>
           <RoadmapTitle

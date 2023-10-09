@@ -1,10 +1,13 @@
 import { styled } from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import Overlay from "../../components/common/overlay/Overlay";
 import CourseHeader from "../../components/roadmapCourse/courseHeader/CourseHeader";
 import CourseBox from "../../components/roadmapCourse/courseBox/CourseBox";
 import { roadmapCourseState } from "../../recoil/roadmapCourseDetail/atom";
+import { SwitchDetail } from "../../constants/enums";
+import { switchRoadmapDetailState } from "../../recoil/swtichRoadmapDetail/atom";
+import useOnClickedProfileOuter from "../../hooks/useOnClickedProfileOuter";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -21,10 +24,10 @@ const CourseMenuWrapper = styled.div`
   bottom: 0;
   margin: auto auto;
   padding: 20px;
+  width: 40vw;
   max-width: 450px;
   min-width: 260px;
-  width: 40vw;
-  height: 90vh;
+  height: 80vh;
   border-radius: 10px;
   background-color: ${(props) => props.theme.bgColor};
 
@@ -61,10 +64,23 @@ const GridCourses = styled.div`
 
 function RoadmapCoursePage() {
   const roadmapCourseDetail = useRecoilValue(roadmapCourseState);
+  const setSwitchRoadmapDetail = useSetRecoilState(switchRoadmapDetailState);
+
+  const onClickedProfileOuter = useOnClickedProfileOuter();
+
   return (
-    <Wrapper>
+    <Wrapper
+      onClick={() => {
+        setSwitchRoadmapDetail(SwitchDetail.BLIND);
+      }}
+    >
       <Overlay />
-      <CourseMenuWrapper>
+      <CourseMenuWrapper
+        onClick={(event) => {
+          event.stopPropagation();
+          onClickedProfileOuter();
+        }}
+      >
         <CourseHeader />
         <GridCourses>
           {roadmapCourseDetail.data!.courseVideos.map((courseVideo) => (
