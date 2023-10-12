@@ -5,6 +5,7 @@ export const StudyStateSelect = styled.select`
   border: none;
   border-radius: 5px;
   background-color: ${(props) => props.theme.greyColor};
+  font-family: ${(props) => props.theme.contentFont};
 `;
 
 export const StudyStateOption = styled.option`

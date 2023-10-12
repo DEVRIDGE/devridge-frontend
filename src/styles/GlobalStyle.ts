@@ -1,26 +1,21 @@
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
-    /* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
 @font-face {
 	font-family: "pretendard-medium";
-	src: url("./fonts/Pretendard-Medium.woff");
+	src: url(${`${process.env.PUBLIC_URL}/fonts/Pretendard-Medium.woff`});
 }
 @font-face {
 	font-family: "pretendard-regular";
-	src: url("./fonts/Pretendard-Regular.woff");
+	src: url(${`${process.env.PUBLIC_URL}/fonts/Pretendard-Regular.woff`});
 }
 @font-face {
 	font-family: "pretendard-bold";
-	src: url("./fonts/Pretendard-Bold.woff");
+	src: url(${`${process.env.PUBLIC_URL}/fonts/Pretendard-Bold.woff`});
 }
 @font-face {
 	font-family: "pretendard-extrabold";
-	src: url("./fonts/Pretendard-ExtraBold.woff");
+	src: url(${`${process.env.PUBLIC_URL}/fonts/Pretendard-ExtraBold.woff`});
 }
 
 html, body, div, span, applet, object, iframe,

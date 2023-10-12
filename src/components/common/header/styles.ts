@@ -12,6 +12,7 @@ export const Nav = styled.nav`
   box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
   background-color: white;
   z-index: 99;
+  box-sizing: border-box;
 `;
 
 export const Col = styled.div`
@@ -29,7 +30,9 @@ export const Items = styled.ul`
 
 export const Item = styled.li`
   margin-left: 20px;
+  padding: 5px;
   font-size: 12px;
+  cursor: pointer;
 `;
 
 export const LoginButton = styled.button`
@@ -50,5 +53,61 @@ export const MenuBars = styled.svg`
 
   @media screen and (max-width: 767px) {
     display: block;
+  }
+`;
+
+export const ProfileWrapper = styled.div`
+  position: relative;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+`;
+
+export const Profile = styled.svg`
+  padding: 10px;
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.mainColorLight};
+  fill: ${(props) => props.theme.mainColor};
+  cursor: pointer;
+
+  @media screen and (max-width: 767px) {
+    display: block;
+  }
+`;
+
+export const ProfileDropdownList = styled.ul`
+  position: absolute;
+  top: 30px;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10px;
+  padding: 10px;
+  width: max-content;
+  max-width: 200px;
+  border: 1px solid ${(props) => props.theme.greyColor};
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.bgColor};
+`;
+
+export const ProfileDropdownOption = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 7px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: ${(props) => props.theme.textGreyColor};
+  word-break: keep-all;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) => props.theme.mainColorLight};
+    color: ${(props) => props.theme.mainColor};
+    font-weight: bold;
   }
 `;

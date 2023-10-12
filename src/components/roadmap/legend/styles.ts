@@ -1,17 +1,10 @@
 import { styled } from "styled-components";
 
 export const LegendWrapper = styled.div`
-  position: absolute;
   display: flex;
-  top: 25px;
-  left: 30px;
   justify-content: center;
   align-items: center;
-
-  @media screen and (max-width: 1023px) {
-    position: static;
-    margin-bottom: 20px;
-  }
+  margin-bottom: 20px;
 `;
 
 export const LegendIconBox = styled.div`

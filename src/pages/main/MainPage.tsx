@@ -17,10 +17,13 @@ import { ICompanies, IJobs } from "../../services/types";
 import { switchLoginState } from "../../recoil/switchLogin/atom";
 import Login from "../login/Login";
 import { accessTokenState } from "../../recoil/accessToken/atom";
-import issueNewAccessTokenHook from "../../hooks/issueNewAccessTokenHook";
+import issueNewAccessTokenHook from "../../utils/issueNewAccessTokenHook";
 import { isJobDropdownOptionsState } from "../../recoil/isJobDropdownOptions/atoms";
 import { isCompanyDropdownOptionsState } from "../../recoil/isCompanyDropdownOptions/atoms";
 import { companyState } from "../../recoil/companyId/atom";
+import { isProfileDropdownState } from "../../recoil/isProfileDropdown/atoms";
+import useOnClickedProfileOuter from "../../hooks/useOnClickedProfileOuter";
+import { isLoginState } from "../../recoil/isLogin/atoms";
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,7 +39,7 @@ function MainPage() {
   const history = useHistory();
   const setAccessToken = useSetRecoilState(accessTokenState);
   const onClickTestIssueNewAccessToken = async () => {
-    const newAccessToken: string = await issueNewAccessTokenHook();
+    const newAccessToken: string | null = await issueNewAccessTokenHook();
 
     if (newAccessToken === "/") {
       history.push("/");
@@ -52,18 +55,46 @@ function MainPage() {
   const setIsCompanyDropdownOptions = useSetRecoilState(
     isCompanyDropdownOptionsState
   );
+  const setIsLogin = useSetRecoilState(isLoginState);
 
-  const onToggleDropdown = () => {
+  const [isProfileDropdown, setIsProfileDropdown] = useRecoilState(
+    isProfileDropdownState
+  );
+
+  const onClickedProfileOuter = useOnClickedProfileOuter();
+
+  const onClickedWrapper = () => {
     setIsJobDropdownOptions(false);
     setIsCompanyDropdownOptions(false);
+    onClickedProfileOuter();
   };
 
   useEffect(() => {
     setSwitchLogin(false);
+
+    if (localStorage.getItem("refreshToken")) {
+      setIsLogin(true);
+    }
+
+    const handleRefreshPageIssueToken = async () => {
+      const newAccessToken: string | null = await issueNewAccessTokenHook();
+      if (newAccessToken === "/") {
+        setIsLogin(false);
+        setAccessToken(null);
+        history.push("/");
+      } else {
+        setAccessToken(newAccessToken);
+      }
+      return;
+    };
+
+    if (!accessToken && localStorage.getItem("refreshToken")) {
+      handleRefreshPageIssueToken();
+    }
   }, []);
 
   return (
-    <Wrapper onClick={onToggleDropdown}>
+    <Wrapper onClick={onClickedWrapper}>
       <MainTitle />
       <MainForm />
       {/* <button

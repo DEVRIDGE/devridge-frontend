@@ -35,13 +35,14 @@ export const Title = styled.h1`
   margin-bottom: 5vh;
   font-size: 30px;
   font-family: ${(props) => props.theme.titleFont};
+  line-height: 130%;
 
   @media screen and (max-width: 767px) {
-    font-size: 26px;
+    font-size: 24px;
   }
 
-  @media screen and (max-width: 500px) {
-    font-size: 18px;
+  @media screen and (max-width: 359px) {
+    font-size: 22px;
   }
 `;
 
@@ -53,11 +54,11 @@ export const Description = styled.h3`
   }
 
   @media screen and (max-width: 767px) {
-    font-size: 14px;
+    font-size: 13px;
   }
 
-  @media screen and (max-width: 500px) {
-    font-size: 9px;
+  @media screen and (max-width: 360px) {
+    font-size: 10px;
   }
 `;
 

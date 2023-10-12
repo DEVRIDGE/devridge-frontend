@@ -13,7 +13,7 @@ export const TechName = styled.span`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  min-height: 40px;
+  min-height: 38px;
   text-decoration: none;
   font-weight: 600;
   color: ${(props) => props.theme.textColor};

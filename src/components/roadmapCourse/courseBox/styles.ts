@@ -31,6 +31,7 @@ export const CourseThumbnailWrapper = styled.div`
 export const CourseThumbnail = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
   border-radius: 5px;
 `;
 
@@ -60,7 +61,6 @@ export const CourseLogo = styled.span`
 export const CourseTitle = styled.h3`
   display: -webkit-box;
   overflow: hidden;
-  padding-bottom: 2px;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   font-size: 13px;

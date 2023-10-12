@@ -10,7 +10,7 @@ import { switchLoginState } from "../../recoil/switchLogin/atom";
 import { BEFORE_LOGIN_PATH } from "../../constants/constants";
 import { BASE_PATH, getNewAccessToken } from "../../services/apis";
 import { accessTokenState } from "../../recoil/accessToken/atom";
-import issueNewAccessTokenHook from "../../hooks/issueNewAccessTokenHook";
+import issueNewAccessTokenHook from "../../utils/issueNewAccessTokenHook";
 
 interface ILogin {
   beforeLoginPath: string;
@@ -111,7 +111,7 @@ function Login({ beforeLoginPath }: ILogin) {
     localStorage.setItem(BEFORE_LOGIN_PATH, beforeLoginPath);
 
     const issueNewAccessTokenHookWrapper = async () => {
-      const newAccessToken: string = await issueNewAccessTokenHook();
+      const newAccessToken: string | null = await issueNewAccessTokenHook();
 
       if (newAccessToken === "/") {
         history.push("/");

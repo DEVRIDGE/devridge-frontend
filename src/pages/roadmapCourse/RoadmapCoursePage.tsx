@@ -1,10 +1,14 @@
 import { styled } from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useEffect } from "react";
 
 import Overlay from "../../components/common/overlay/Overlay";
 import CourseHeader from "../../components/roadmapCourse/courseHeader/CourseHeader";
 import CourseBox from "../../components/roadmapCourse/courseBox/CourseBox";
 import { roadmapCourseState } from "../../recoil/roadmapCourseDetail/atom";
+import { SwitchDetail } from "../../constants/enums";
+import { switchRoadmapDetailState } from "../../recoil/swtichRoadmapDetail/atom";
+import useOnClickedProfileOuter from "../../hooks/useOnClickedProfileOuter";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -21,10 +25,10 @@ const CourseMenuWrapper = styled.div`
   bottom: 0;
   margin: auto auto;
   padding: 20px;
+  width: 40vw;
   max-width: 450px;
   min-width: 260px;
-  width: 40vw;
-  height: 90vh;
+  height: 80vh;
   border-radius: 10px;
   background-color: ${(props) => props.theme.bgColor};
 
@@ -46,7 +50,7 @@ const GridCourses = styled.div`
   justify-content: center;
   justify-items: center;
   width: 100%;
-  height: 100%;
+  height: max-content;
   gap: 10px;
   margin-top: 30px;
 
@@ -61,10 +65,36 @@ const GridCourses = styled.div`
 
 function RoadmapCoursePage() {
   const roadmapCourseDetail = useRecoilValue(roadmapCourseState);
+  const setSwitchRoadmapDetail = useSetRecoilState(switchRoadmapDetailState);
+
+  const onClickedProfileOuter = useOnClickedProfileOuter();
+
+  useEffect(() => {
+    document.body.style.cssText = `
+    position: fixed; 
+    top: -${window.scrollY}px;
+    overflow-y: scroll;
+    width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
+  }, []);
+
   return (
-    <Wrapper>
+    <Wrapper
+      onClick={() => {
+        setSwitchRoadmapDetail(SwitchDetail.TECH);
+      }}
+    >
       <Overlay />
-      <CourseMenuWrapper>
+      <CourseMenuWrapper
+        onClick={(event) => {
+          event.stopPropagation();
+          onClickedProfileOuter();
+        }}
+      >
         <CourseHeader />
         <GridCourses>
           {roadmapCourseDetail.data!.courseVideos.map((courseVideo) => (

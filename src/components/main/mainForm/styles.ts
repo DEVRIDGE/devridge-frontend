@@ -67,6 +67,7 @@ export const Select = styled.select`
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   font-size: 16px;
+  font-family: inherit;
   color: rgba(0, 0, 0, 0.8);
 `;
 

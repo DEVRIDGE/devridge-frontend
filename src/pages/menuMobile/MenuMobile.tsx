@@ -1,10 +1,14 @@
 import { styled } from "styled-components";
 import { Link, useHistory } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { useEffect } from "react";
 
 import CloseBtnSvg from "../../components/common/closeBtnSvg/CloseBtnSvg";
 import { switchLoginState } from "../../recoil/switchLogin/atom";
 import { BASE_PATH } from "../../services/apis";
+import { isLoginState } from "../../recoil/isLogin/atoms";
+import { accessTokenState } from "../../recoil/accessToken/atom";
+import issueNewAccessTokenHook from "../../utils/issueNewAccessTokenHook";
 
 const WrapperPage = styled.div`
   display: flex;
@@ -83,6 +87,9 @@ const CloseBtn = styled.button`
 function MenuMobile() {
   const history = useHistory();
   const setSwitchLogin = useSetRecoilState(switchLoginState);
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
 
   const onClickedLogin = () => {
     setSwitchLogin(true);
@@ -91,6 +98,38 @@ function MenuMobile() {
   const onClickedCloseButton = () => {
     history.goBack();
   };
+
+  const onClickedLogout = () => {
+    history.push("/");
+    localStorage.removeItem("refreshToken");
+    setAccessToken(null);
+    setIsLogin(false);
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    setSwitchLogin(false);
+
+    if (localStorage.getItem("refreshToken")) {
+      setIsLogin(true);
+    }
+
+    const handleRefreshPageIssueToken = async () => {
+      const newAccessToken: string | null = await issueNewAccessTokenHook();
+      if (newAccessToken === "/") {
+        setIsLogin(false);
+        setAccessToken(null);
+        history.push("/");
+      } else {
+        setAccessToken(newAccessToken);
+      }
+      return;
+    };
+
+    if (!accessToken && localStorage.getItem("refreshToken")) {
+      handleRefreshPageIssueToken();
+    }
+  }, []);
 
   return (
     <WrapperPage>
@@ -110,13 +149,22 @@ function MenuMobile() {
           <Item>
             <Link to="/">이벤트</Link>
           </Item>
+          {isLogin ? (
+            <Item>
+              <Link to="/">프로필</Link>
+            </Item>
+          ) : null}
         </Items>
-        <LoginButton
-          href={`${BASE_PATH}/oauth2/authorization/google`}
-          onClick={onClickedLogin}
-        >
-          Login
-        </LoginButton>
+        {isLogin ? (
+          <LoginButton onClick={onClickedLogout}>로그아웃</LoginButton>
+        ) : (
+          <LoginButton
+            href={`${BASE_PATH}/oauth2/authorization/google`}
+            onClick={onClickedLogin}
+          >
+            로그인
+          </LoginButton>
+        )}
       </WrapperContent>
     </WrapperPage>
   );

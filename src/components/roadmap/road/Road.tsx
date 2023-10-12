@@ -45,7 +45,8 @@ import { switchLoginState } from "../../../recoil/switchLogin/atom";
 import Login from "../../../pages/login/Login";
 import { selectedDetailedPositionState } from "../../../recoil/selectedDetailedPosition/atom";
 import { accessTokenState } from "../../../recoil/accessToken/atom";
-import issueNewAccessTokenHook from "../../../hooks/issueNewAccessTokenHook";
+import issueNewAccessTokenHook from "../../../utils/issueNewAccessTokenHook";
+import { isLoginState } from "../../../recoil/isLogin/atoms";
 
 interface IRoad {
   roadmapApiData: IRoadmap;
@@ -55,9 +56,11 @@ interface IOnClickTech {
   selectedTechId: number;
   courseName: string;
   index: number;
+  accessToken: string | null;
+  recursionCount: number;
 }
 
-//NOTE - 모바일 320px~767px, 태블릿 768px~1023px, 데스크탑 1024px~
+//NOTE - 플립 280px~359px, 모바일 360px~767px, 태블릿 768px~1023px, 데스크탑 1024px~
 
 function Road({ roadmapApiData }: IRoad) {
   const history = useHistory();
@@ -68,6 +71,7 @@ function Road({ roadmapApiData }: IRoad) {
   const setSelectedTechId = useSetRecoilState(selectedTechIdState); // 로드맵 페이지에서 고른 기술의 아이디
   const setIsLoadingTechPage = useSetRecoilState(isLoadingTechPageState);
   const setSelectedGridIndex = useSetRecoilState(selectedGridIndexState);
+  const setIsLogin = useSetRecoilState(isLoginState);
 
   const jobId = useRecoilValue(jobState);
   const companyId = useRecoilValue(companyState);
@@ -97,7 +101,15 @@ function Road({ roadmapApiData }: IRoad) {
   // NOTE - 그리드 컬럼 수
   const [col, setCol] = useState(9);
   useEffect(() => {
-    setCol(currentWidth >= 1024 ? 9 : currentWidth >= 768 ? 7 : 3);
+    setCol(
+      currentWidth >= 1024
+        ? 9
+        : currentWidth >= 768
+        ? 7
+        : currentWidth >= 360
+        ? 5
+        : 3
+    );
   }, [currentWidth]);
 
   // NOTE - 그리드 레이아웃을 위한 null 값 추가 (window resize -> col 변화 -> 리렌더링)
@@ -119,7 +131,18 @@ function Road({ roadmapApiData }: IRoad) {
     selectedTechId,
     courseName,
     index: gridIndex,
+    accessToken,
+    recursionCount,
   }: IOnClickTech) => {
+    if (recursionCount > 3) {
+      alert("과도한 통신량 발생. 관리자에게 문의해주세요.");
+      setIsLogin(false);
+      setAccessToken(null);
+      localStorage.removeItem("refreshToken");
+      history.push("/");
+      return;
+    }
+
     setSelectedTechId(selectedTechId);
     setSelectedGridIndex(gridIndex);
     setIsLoadingTechPage(true);
@@ -141,21 +164,29 @@ function Road({ roadmapApiData }: IRoad) {
         history.push("/");
         return;
       } else {
-        const newAccessToken: string = await issueNewAccessTokenHook();
+        const newAccessToken: string | null = await issueNewAccessTokenHook();
         if (newAccessToken === "/") {
+          setIsLogin(false);
+          setAccessToken(null);
           history.push("/");
           return;
         } else {
           setAccessToken(newAccessToken);
-          onClickTech({ selectedTechId, courseName, index: gridIndex });
+          onClickTech({
+            selectedTechId,
+            courseName,
+            index: gridIndex,
+            accessToken: newAccessToken,
+            recursionCount: recursionCount + 1,
+          });
           return;
         }
       }
+    } else {
+      setSelectedTechState(data);
+      setSelectedTechTitleState(courseName);
+      setIsLoadingTechPage(false);
     }
-
-    setSelectedTechState(data);
-    setSelectedTechTitleState(courseName);
-    setIsLoadingTechPage(false);
   };
 
   return (
@@ -232,6 +263,8 @@ function Road({ roadmapApiData }: IRoad) {
                           selectedTechId: courseCol.courses[0].id,
                           courseName: courseCol.courses[0].name,
                           index,
+                          accessToken,
+                          recursionCount: 0,
                         })
                       }
                     >
@@ -258,6 +291,8 @@ function Road({ roadmapApiData }: IRoad) {
                                 selectedTechId: cs.id,
                                 courseName: cs.name,
                                 index,
+                                accessToken,
+                                recursionCount: 0,
                               });
                             }}
                             $matchingFlag={cs.matchingFlag}
@@ -272,7 +307,7 @@ function Road({ roadmapApiData }: IRoad) {
                 ) : (
                   <>
                     {courseCol.courses.length !== 0 ? (
-                      <Rope $marginTop="35px" $height="60px" />
+                      <Rope $marginTop="33px" $height="60px" />
                     ) : null}
                     {courseCol.courses.length !== 0 ? <Rope /> : null}
                     {courseCol.courses.length !== 0 ? (
@@ -285,6 +320,8 @@ function Road({ roadmapApiData }: IRoad) {
                                 selectedTechId: cs.id,
                                 courseName: cs.name,
                                 index,
+                                accessToken,
+                                recursionCount: 0,
                               });
                             }}
                             $matchingFlag={cs.matchingFlag}
