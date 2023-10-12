@@ -69,6 +69,7 @@ const SelectDetailedPosition = styled.select`
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   font-size: 16px;
+  font-family: ${(props) => props.theme.contentFont};
   color: rgba(0, 0, 0, 0.8);
 `;
 

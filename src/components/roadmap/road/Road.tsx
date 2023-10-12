@@ -60,7 +60,7 @@ interface IOnClickTech {
   recursionCount: number;
 }
 
-//NOTE - 모바일 320px~767px, 태블릿 768px~1023px, 데스크탑 1024px~
+//NOTE - 플립 280px~359px, 모바일 360px~767px, 태블릿 768px~1023px, 데스크탑 1024px~
 
 function Road({ roadmapApiData }: IRoad) {
   const history = useHistory();
@@ -101,7 +101,15 @@ function Road({ roadmapApiData }: IRoad) {
   // NOTE - 그리드 컬럼 수
   const [col, setCol] = useState(9);
   useEffect(() => {
-    setCol(currentWidth >= 1024 ? 9 : currentWidth >= 768 ? 7 : 3);
+    setCol(
+      currentWidth >= 1024
+        ? 9
+        : currentWidth >= 768
+        ? 7
+        : currentWidth >= 360
+        ? 5
+        : 3
+    );
   }, [currentWidth]);
 
   // NOTE - 그리드 레이아웃을 위한 null 값 추가 (window resize -> col 변화 -> 리렌더링)
@@ -299,7 +307,7 @@ function Road({ roadmapApiData }: IRoad) {
                 ) : (
                   <>
                     {courseCol.courses.length !== 0 ? (
-                      <Rope $marginTop="35px" $height="60px" />
+                      <Rope $marginTop="33px" $height="60px" />
                     ) : null}
                     {courseCol.courses.length !== 0 ? <Rope /> : null}
                     {courseCol.courses.length !== 0 ? (

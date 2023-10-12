@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 
 import TechHeader from "../../components/roadmapTech/techHeader/TechHeader";
 import Overlay from "../../components/common/overlay/Overlay";
@@ -95,7 +96,7 @@ const BlindArea = styled.div`
   position: relative;
   width: 100%;
   height: 55vh;
-  background-image: url("./assets/blindCourseDetail2.png");
+  background-image: url(${`${process.env.PUBLIC_URL}/assets/blindCourseDetail2.png`});
   background-size: contain;
 `;
 
@@ -223,6 +224,19 @@ function RoadmapTechPage() {
     setSelectedCourseTitle(selectedCourseTitle);
     setIsLoadingCoursePage(false);
   };
+
+  useEffect(() => {
+    document.body.style.cssText = `
+    position: fixed; 
+    top: -${window.scrollY}px;
+    overflow-y: scroll;
+    width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
+  }, []);
 
   return (
     <Wrapper onClick={() => setSwitchRoadmapDetail(SwitchDetail.BLIND)}>

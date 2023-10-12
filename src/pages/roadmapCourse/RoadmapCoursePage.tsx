@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useEffect } from "react";
 
 import Overlay from "../../components/common/overlay/Overlay";
 import CourseHeader from "../../components/roadmapCourse/courseHeader/CourseHeader";
@@ -49,7 +50,7 @@ const GridCourses = styled.div`
   justify-content: center;
   justify-items: center;
   width: 100%;
-  height: 100%;
+  height: max-content;
   gap: 10px;
   margin-top: 30px;
 
@@ -68,10 +69,23 @@ function RoadmapCoursePage() {
 
   const onClickedProfileOuter = useOnClickedProfileOuter();
 
+  useEffect(() => {
+    document.body.style.cssText = `
+    position: fixed; 
+    top: -${window.scrollY}px;
+    overflow-y: scroll;
+    width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
+  }, []);
+
   return (
     <Wrapper
       onClick={() => {
-        setSwitchRoadmapDetail(SwitchDetail.BLIND);
+        setSwitchRoadmapDetail(SwitchDetail.TECH);
       }}
     >
       <Overlay />

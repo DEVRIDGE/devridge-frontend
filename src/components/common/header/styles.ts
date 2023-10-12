@@ -12,6 +12,7 @@ export const Nav = styled.nav`
   box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
   background-color: white;
   z-index: 99;
+  box-sizing: border-box;
 `;
 
 export const Col = styled.div`
@@ -29,7 +30,9 @@ export const Items = styled.ul`
 
 export const Item = styled.li`
   margin-left: 20px;
+  padding: 5px;
   font-size: 12px;
+  cursor: pointer;
 `;
 
 export const LoginButton = styled.button`
