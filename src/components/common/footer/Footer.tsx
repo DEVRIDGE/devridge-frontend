@@ -1,4 +1,13 @@
-import { Col, Info, Item, Logo, TeamInfo, Teams, Wrapper } from "./styles";
+import {
+  Col,
+  Info,
+  Item,
+  Logo,
+  Policy,
+  TeamInfo,
+  Teams,
+  Wrapper,
+} from "./styles";
 
 //TODO - 세로 길이 줄어들 때 footer가 form 가리는거 해결
 function Footer() {
@@ -28,7 +37,14 @@ function Footer() {
       </Col>
       <Col>
         <Info>
-          <Item>개인정보처리방침</Item>
+          <Item>
+            <Policy
+              href="https://chlorinated-passive-16c.notion.site/DEVRIDGE-6829e4c2efef4ae7b1d1bbe123de8251?pvs=4"
+              target="_blank"
+            >
+              개인정보처리방침
+            </Policy>
+          </Item>
           <Item>|</Item>
           <Item>이용약관</Item>
         </Info>

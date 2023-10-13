@@ -72,9 +72,9 @@ interface EventProperty {
 type Appearance = "light" | "dark" | "system" | null;
 
 class ChannelService {
-  constructor() {
-    this.loadScript();
-  }
+  // constructor() {
+  //   this.loadScript();
+  // }
 
   loadScript() {
     (function () {
@@ -198,4 +198,4 @@ class ChannelService {
   }
 }
 
-export default new ChannelService();
+export default ChannelService;

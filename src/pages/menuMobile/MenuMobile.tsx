@@ -9,6 +9,7 @@ import { BASE_PATH } from "../../services/apis";
 import { isLoginState } from "../../recoil/isLogin/atoms";
 import { accessTokenState } from "../../recoil/accessToken/atom";
 import issueNewAccessTokenHook from "../../utils/issueNewAccessTokenHook";
+import ChannelService from "../../services/ChannelService";
 
 const WrapperPage = styled.div`
   display: flex;
@@ -108,6 +109,9 @@ function MenuMobile() {
   };
 
   useEffect(() => {
+    const channelTalk = new ChannelService();
+    channelTalk.boot({ pluginKey: "879e637c-369e-44e8-a44e-21b8fd3d0f63" });
+
     setSwitchLogin(false);
 
     if (localStorage.getItem("refreshToken")) {

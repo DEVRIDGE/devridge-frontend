@@ -24,6 +24,7 @@ import { companyState } from "../../recoil/companyId/atom";
 import { isProfileDropdownState } from "../../recoil/isProfileDropdown/atoms";
 import useOnClickedProfileOuter from "../../hooks/useOnClickedProfileOuter";
 import { isLoginState } from "../../recoil/isLogin/atoms";
+import ChannelService from "../../services/ChannelService";
 
 const Wrapper = styled.div`
   display: flex;
@@ -70,6 +71,9 @@ function MainPage() {
   };
 
   useEffect(() => {
+    const channelTalk = new ChannelService();
+    channelTalk.boot({ pluginKey: "879e637c-369e-44e8-a44e-21b8fd3d0f63" });
+
     setSwitchLogin(false);
 
     if (localStorage.getItem("refreshToken")) {

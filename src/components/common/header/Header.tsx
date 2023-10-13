@@ -59,10 +59,10 @@ function Header() {
         <Link to="/">
           <Logo />
         </Link>
-        <Items>
+        {/* <Items>
           <Item>공지사항</Item>
           <Item>이벤트</Item>
-        </Items>
+        </Items> */}
       </Col>
       <Col>
         {isLogin ? (
@@ -78,7 +78,7 @@ function Header() {
             </Profile>
             {isProfileDropdown ? (
               <ProfileDropdownList>
-                <ProfileDropdownOption>프로필</ProfileDropdownOption>
+                {/* <ProfileDropdownOption>프로필</ProfileDropdownOption> */}
                 <ProfileDropdownOption onClick={onClickedLogout}>
                   로그아웃
                 </ProfileDropdownOption>
