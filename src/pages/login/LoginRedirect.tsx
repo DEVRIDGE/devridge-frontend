@@ -58,9 +58,11 @@ function LoginRedirect() {
     const handleGetUserInfo = async () => {
       userInfo = await getUserInfo({ accessToken });
       const userObject = {
+        avatarUrl: userInfo.data?.profilePicture,
         profile: {
           email: userInfo.data?.email,
           name: userInfo.data?.name,
+          provider: userInfo.data?.provider,
         },
       };
       channelTalk.updateUser(userObject);
