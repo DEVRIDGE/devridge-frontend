@@ -73,31 +73,43 @@ const SocialLoginBoxWrapper = styled.div`
 `;
 
 //TODO - 구글 브랜딩 가이드 추후에 더 면밀히 살펴보고 reject 안 당하게 조심하자
-const LoginGoogleButton = styled.button`
+const LoginGoogleButton = styled.a`
   display: flex;
+  justify-content: center;
   align-items: center;
+  padding: 5px;
   height: 53px;
   border: none;
   border-radius: 5px;
   box-shadow: 0 0 2px 2px ${(props) => props.theme.greyColor};
   background-color: white;
+  text-decoration: none;
   cursor: pointer;
 `;
 
 const GoogleLogo = styled.svg``;
 
-const GoogleText = styled.a`
+const GoogleText = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding-left: 20px;
   padding-right: 20px;
   font-family: "Roboto";
   font-size: 16px;
-  text-decoration: none;
   color: black;
   word-break: keep-all;
 
   @media screen and (max-width: 767px) {
     padding-left: 10px;
     padding-right: 10px;
+    font-size: 15px;
+  }
+
+  @media screen and (max-width: 359px) {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 15px;
   }
 `;
 
@@ -165,7 +177,10 @@ function Login({ beforeLoginPath }: ILogin) {
         </CloseBtnWrapper>
         <Logo />
         <SocialLoginBoxWrapper>
-          <LoginGoogleButton>
+          <LoginGoogleButton
+            href={`${BASE_PATH}/oauth2/authorization/google`}
+            onClick={onClickedLogin}
+          >
             <GoogleLogo
               xmlns="http://www.w3.org/2000/svg"
               xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -215,12 +230,7 @@ function Login({ beforeLoginPath }: ILogin) {
                 </g>
               </g>
             </GoogleLogo>
-            <GoogleText
-              href={`${BASE_PATH}/oauth2/authorization/google`}
-              onClick={onClickedLogin}
-            >
-              Google 계정으로 로그인
-            </GoogleText>
+            <GoogleText>Google 계정으로 로그인</GoogleText>
           </LoginGoogleButton>
         </SocialLoginBoxWrapper>
       </ModalWrapper>

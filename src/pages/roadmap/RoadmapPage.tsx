@@ -28,6 +28,7 @@ import useAdaptiveWidth from "../../hooks/useAdaptiveWidth";
 import DownCaretSvg from "../../components/common/downCaretSvg/DownCaretSvg";
 import useOnClickedProfileOuter from "../../hooks/useOnClickedProfileOuter";
 import { isLoginState } from "../../recoil/isLogin/atoms";
+import ChannelService from "../../services/ChannelService";
 
 interface IParams {
   job: string;
@@ -151,6 +152,12 @@ const DropdownCaretWrapper = styled.div`
   }
 `;
 
+const CloseDescription = styled.p`
+  margin-top: 30px;
+  font-size: 24px;
+  font-weight: bold;
+`;
+
 function RoadmapPage() {
   const currentWidth = useAdaptiveWidth();
 
@@ -203,6 +210,9 @@ function RoadmapPage() {
   };
 
   useEffect(() => {
+    const channelTalk = new ChannelService();
+    channelTalk.boot({ pluginKey: "879e637c-369e-44e8-a44e-21b8fd3d0f63" });
+
     if (localStorage.getItem("refreshToken")) {
       setIsLogin(true);
     }
@@ -388,7 +398,11 @@ function RoadmapPage() {
       ) : null}
       {!isLoadingRoadmapPage ? (
         <>
-          <Road roadmapApiData={roadmap} />
+          {roadmap.data?.courseList.length ? (
+            <Road roadmapApiData={roadmap} />
+          ) : (
+            <CloseDescription>준비 중입니다.</CloseDescription>
+          )}
           <Footer />
         </>
       ) : (

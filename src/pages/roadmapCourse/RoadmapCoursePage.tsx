@@ -27,7 +27,7 @@ const CourseMenuWrapper = styled.div`
   padding: 20px;
   width: 40vw;
   max-width: 450px;
-  min-width: 260px;
+  min-width: 320px;
   height: 80vh;
   border-radius: 10px;
   background-color: ${(props) => props.theme.bgColor};
@@ -37,6 +37,12 @@ const CourseMenuWrapper = styled.div`
   }
 
   @media screen and (max-width: 767px) {
+    left: 0;
+    right: 0;
+  }
+
+  @media screen and (max-width: 359px) {
+    min-width: 240px;
     left: 0;
     right: 0;
   }

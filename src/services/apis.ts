@@ -6,6 +6,7 @@ import {
   IGetRoadmap,
   IGetRoadmapCourseDetail,
   IGetRoadmapTechDetail,
+  IGetUserInfo,
 } from "./types";
 //TODO - try catch 예외처리도 하자
 
@@ -110,6 +111,19 @@ export function getNewAccessToken({ refreshToken }: IGetNewAccessToken) {
       token: refreshToken,
     })
     .then((response) => response.data)
+    .catch((axiosError) => {
+      return axiosError.response.data;
+    });
+}
+
+export function getUserInfo({ accessToken }: IGetUserInfo) {
+  return axios
+    .get(`${BASE_PATH}/users/channeltalkinfo`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+    .then((response) => {
+      return response.data;
+    })
     .catch((axiosError) => {
       return axiosError.response.data;
     });

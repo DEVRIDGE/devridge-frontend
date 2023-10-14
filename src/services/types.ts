@@ -89,3 +89,20 @@ export interface INewAccessToken {
     expiresIn: number;
   } | null;
 }
+
+export interface IGetUserInfo {
+  accessToken: string;
+}
+
+export interface IUserInfoData {
+  email: string;
+  name: string;
+  profilePicture: string;
+  provider: string;
+}
+
+export interface IUserInfo {
+  status: string;
+  message: string;
+  data: IUserInfoData | null;
+}

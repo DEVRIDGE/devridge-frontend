@@ -100,3 +100,9 @@ export const Info = styled.ul`
     flex-direction: column;
   }
 `;
+
+export const Policy = styled.a`
+  text-decoration: none;
+  color: ${(props) => props.theme.textGreyColor};
+  cursor: pointer;
+`;

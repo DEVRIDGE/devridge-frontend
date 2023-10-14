@@ -9,6 +9,9 @@ import { afterLoginState } from "../../recoil/afterLogin/atom";
 import { accessTokenState } from "../../recoil/accessToken/atom";
 import { BEFORE_LOGIN_PATH } from "../../constants/constants";
 import { isLoginState } from "../../recoil/isLogin/atoms";
+import ChannelService from "../../services/ChannelService";
+import { IUserInfo, IUserInfoData } from "../../services/types";
+import { getUserInfo } from "../../services/apis";
 
 interface IRouteParams {
   accessToken: string;
@@ -48,6 +51,30 @@ function LoginRedirect() {
     localStorage.setItem("refreshToken", refreshToken);
     setAccessToken(accessToken);
     setIsLogin(true);
+
+    const channelTalk = new ChannelService();
+    let userInfo: IUserInfo;
+
+    const handleGetUserInfo = async () => {
+      userInfo = await getUserInfo({ accessToken });
+      const userObject = {
+        profile: {
+          email: userInfo.data?.email,
+          name: userInfo.data?.name,
+        },
+      };
+      channelTalk.updateUser(userObject);
+
+      // channelTalk.boot({
+      //   pluginKey: "879e637c-369e-44e8-a44e-21b8fd3d0f63",
+      //   memberId: userInfo.data?.email,
+      //   profile: {
+      //     name: userInfo.data?.name,
+      //   },
+      // });
+    };
+
+    handleGetUserInfo();
 
     history.push(beforeLoginPathOrigin);
   }, []);
