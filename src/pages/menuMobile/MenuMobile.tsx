@@ -147,7 +147,7 @@ function MenuMobile() {
           <Item>
             <Link to="/">Home</Link>
           </Item>
-          <Item>
+          {/* <Item>
             <Link to="/">공지사항</Link>
           </Item>
           <Item>
@@ -157,7 +157,7 @@ function MenuMobile() {
             <Item>
               <Link to="/">프로필</Link>
             </Item>
-          ) : null}
+          ) : null} */}
         </Items>
         {isLogin ? (
           <LoginButton onClick={onClickedLogout}>로그아웃</LoginButton>
