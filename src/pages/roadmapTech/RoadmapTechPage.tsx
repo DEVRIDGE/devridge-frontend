@@ -23,6 +23,7 @@ import { selectedDetailedPositionState } from "../../recoil/selectedDetailedPosi
 import { switchLoginState } from "../../recoil/switchLogin/atom";
 import useOnClickedProfileOuter from "../../hooks/useOnClickedProfileOuter";
 import { isLoginState } from "../../recoil/isLogin/atoms";
+import { selectedTechIdState } from "../../recoil/selectedTechId/atom";
 
 interface IOnClickTechButton {
   selectedCourseId: number;
@@ -159,6 +160,8 @@ function RoadmapTechPage() {
   const setIsLoadingCoursePage = useSetRecoilState(isLoadingCoursePageState);
   const setIsLogin = useSetRecoilState(isLoginState);
 
+  const selectedTechId = useRecoilValue(selectedTechIdState);
+
   const selectedTechState = useRecoilValue(roadmapTechState);
   const jobId = useRecoilValue(jobState);
   const companyId = useRecoilValue(companyState);
@@ -187,6 +190,7 @@ function RoadmapTechPage() {
     setSwitchRoadmapDetail(SwitchDetail.COURSE);
 
     const data: IRoadmapCourseDetail = await getRoadmapCourseDetail({
+      selectedTechId,
       selectedCourseId,
       jobId,
       companyId,

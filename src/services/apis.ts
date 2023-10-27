@@ -73,6 +73,7 @@ export function getRoadmapTechDetail({
 }
 
 export function getRoadmapCourseDetail({
+  selectedTechId,
   selectedCourseId,
   jobId,
   companyId,
@@ -81,7 +82,7 @@ export function getRoadmapCourseDetail({
 }: IGetRoadmapCourseDetail) {
   return axios
     .get(
-      `${BASE_PATH}/videos?courseDetail=${selectedCourseId}&job=${jobId}&company=${companyId}&detailedPosition=${selectedDetailedPosition}`,
+      `${BASE_PATH}/videos?course=${selectedTechId}&courseDetail=${selectedCourseId}&job=${jobId}&company=${companyId}&detailedPosition=${selectedDetailedPosition}`,
       accessToken !== null
         ? { headers: { Authorization: `Bearer ${accessToken}` } }
         : {}

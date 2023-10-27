@@ -63,6 +63,7 @@ export interface IGetRoadmapTechDetail {
 }
 
 export interface IGetRoadmapCourseDetail {
+  selectedTechId: number;
   selectedCourseId: number;
   jobId: number;
   companyId: number;
