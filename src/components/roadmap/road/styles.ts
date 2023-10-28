@@ -126,13 +126,13 @@ export const CSName = styled.span`
 
 export const Flag = styled.svg<{ $isCS?: boolean }>`
   position: absolute;
-  top: ${(props) => (props.$isCS === true ? "-23px" : "-25px")};
+  top: ${(props) => (props.$isCS === true ? "-15px" : "-25px")};
   left: ${(props) => (props.$isCS === true ? "auto" : 0)};
   right: ${(props) => (props.$isCS === true ? "3px" : 0)};
   margin: ${(props) => (props.$isCS === true ? "0 0" : "auto auto")};
-  width: ${(props) => (props.$isCS === true ? "20px" : "25px")};
-  height: ${(props) => (props.$isCS === true ? "20px" : "25px")};
-  transform: translateX(8px);
+  width: ${(props) => (props.$isCS === true ? "15px" : "25px")};
+  height: ${(props) => (props.$isCS === true ? "15px" : "25px")};
+  transform: translateX(8px) ${(props) => (props.$isCS ? "rotate(10deg)" : "")};
 `;
 
 export const ProgressBar = styled.div<IProgressBar>`
