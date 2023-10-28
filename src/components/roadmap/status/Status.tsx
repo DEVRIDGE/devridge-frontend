@@ -5,22 +5,15 @@ interface IStatus {
   width?: string;
   height?: string;
   $checkerType?: number;
-  $matchingFlag?: string;
 }
 
 function Status({
   width = "35px",
   height = "35px",
   $checkerType = 0,
-  $matchingFlag = MatchingFlag.NO,
 }: IStatus) {
   return (
-    <StatusCircle
-      width={width}
-      height={height}
-      $checkerType={$checkerType}
-      $matchingFlag={$matchingFlag}
-    >
+    <StatusCircle width={width} height={height} $checkerType={$checkerType}>
       <Checker
         xmlns="http://www.w3.org/2000/svg"
         height="1em"

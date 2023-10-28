@@ -45,7 +45,7 @@ function CourseHeader() {
           <br />
           {`> ${selectedCourseTitle}`}
         </CoursePageTitle>
-        <StudyState />
+        {/* <StudyState /> */}
       </WrapperTitleAndState>
     </>
   );

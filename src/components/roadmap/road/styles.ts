@@ -13,16 +13,12 @@ interface IProgressBar {
   $mediaType?: string; // null 불인정으로 바꾸자
 }
 
-interface ICSButton {
-  $matchingFlag: string;
-}
-
 export const Wrapper = styled.div<IWrapper>`
   display: grid;
   grid-template-columns: repeat(${(props) => props.$col}, minmax(50px, 1fr));
   grid-template-rows: repeat(${(props) => props.$row}, minmax(300px, 1fr));
   gap: 50px 20px;
-  margin-top: 20px;
+  margin-top: 30px;
   padding: 50px;
   width: 1024px;
 
@@ -63,6 +59,7 @@ export const Rope = styled.div<{ $marginTop?: string; $height?: string }>`
 `;
 
 export const TechButton = styled.button`
+  position: relative;
   display: contents;
   cursor: pointer;
 `;
@@ -78,7 +75,7 @@ export const CSList = styled.div`
   align-items: center;
 `;
 
-export const CSButton = styled.button<ICSButton>`
+export const CSButton = styled.button`
   position: relative;
   display: flex;
   justify-content: center;
@@ -92,10 +89,6 @@ export const CSButton = styled.button<ICSButton>`
   background-color: white;
   color: black;
   font-size: 12px;
-  box-shadow: ${(props) =>
-    props.$matchingFlag === MatchingFlag.YES
-      ? `0 0 2px 2px ${props.theme.matchingFlagColor}`
-      : "none"};
   cursor: pointer;
 
   ${StatusCircle} {
@@ -129,6 +122,17 @@ export const CSName = styled.span`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   word-break: break-all;
+`;
+
+export const Flag = styled.svg<{ $isCS?: boolean }>`
+  position: absolute;
+  top: ${(props) => (props.$isCS === true ? "-15px" : "-25px")};
+  left: ${(props) => (props.$isCS === true ? "auto" : 0)};
+  right: ${(props) => (props.$isCS === true ? "3px" : 0)};
+  margin: ${(props) => (props.$isCS === true ? "0 0" : "auto auto")};
+  width: ${(props) => (props.$isCS === true ? "15px" : "25px")};
+  height: ${(props) => (props.$isCS === true ? "15px" : "25px")};
+  transform: translateX(8px) ${(props) => (props.$isCS ? "rotate(10deg)" : "")};
 `;
 
 export const ProgressBar = styled.div<IProgressBar>`
