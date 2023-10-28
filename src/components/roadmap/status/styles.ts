@@ -1,12 +1,9 @@
 import { styled } from "styled-components";
 
-import { MatchingFlag } from "../../../constants/enums";
-
 interface IStatusCircle {
   width: string;
   height: string;
   $checkerType: number;
-  $matchingFlag: string;
 }
 
 export const StatusCircle = styled.div<IStatusCircle>`
@@ -29,10 +26,6 @@ export const StatusCircle = styled.div<IStatusCircle>`
   border-radius: 50%;
   background-color: ${(props) =>
     props.$checkerType === 2 ? props.theme.mainColor : "white"};
-  box-shadow: ${(props) =>
-    props.$matchingFlag === MatchingFlag.YES
-      ? `0 0 4px 4px ${props.theme.matchingFlagColor}`
-      : "none"};
 `;
 
 export const Checker = styled.svg<{ $checkerType: number }>`

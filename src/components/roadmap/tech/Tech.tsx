@@ -5,13 +5,12 @@ interface ITech {
   techName: string;
   marginBottom?: string;
   $checkerType?: number;
-  $matchingFlag: string;
 }
 
-function Tech({ techName, marginBottom, $checkerType, $matchingFlag }: ITech) {
+function Tech({ techName, marginBottom, $checkerType }: ITech) {
   return (
     <Wrapper style={{ marginBottom }}>
-      <Status $checkerType={$checkerType} $matchingFlag={$matchingFlag} />
+      <Status $checkerType={$checkerType} />
       <TechName>{techName}</TechName>
     </Wrapper>
   );
