@@ -96,24 +96,26 @@ function MenuMobile() {
   const [isLogin, setIsLogin] = useRecoilState(isLoginState);
 
   const onClickedLogin = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    if (browser.name === "kakaotalk") {
-      event.preventDefault();
-      alert(
-        "정책 문제로 카카오톡 브라우저에서는 구글 로그인을 지원하지 않습니다. 다른 브라우저를 이용해주세요."
-      );
-    } else if (browser.name === "chromium-webview") {
-      event.preventDefault();
-      alert(
-        "정책 문제로 chromium-webview에서는 구글 로그인을 지원하지 않습니다. 다른 브라우저를 이용해주세요."
-      );
-    } else if (browser.name === "samsung") {
-      event.preventDefault();
-      alert(
-        "현재 삼성 인터넷 브라우저에서는 일시적으로 로그인 기능을 지원하지 않습니다. 다른 브라우저를 이용해주세요."
-      );
-    } else {
-      setSwitchLogin(true);
-    }
+    // if (browser.name === "kakaotalk") {
+    //   event.preventDefault();
+    //   alert(
+    //     "정책 문제로 카카오톡 브라우저에서는 구글 로그인을 지원하지 않습니다. 다른 브라우저를 이용해주세요."
+    //   );
+    // } else if (browser.name === "chromium-webview") {
+    //   event.preventDefault();
+    //   alert(
+    //     "정책 문제로 chromium-webview에서는 구글 로그인을 지원하지 않습니다. 다른 브라우저를 이용해주세요."
+    //   );
+    // } else if (browser.name === "samsung") {
+    //   event.preventDefault();
+    //   alert(
+    //     "현재 삼성 인터넷 브라우저에서는 일시적으로 로그인 기능을 지원하지 않습니다. 다른 브라우저를 이용해주세요."
+    //   );
+    // } else {
+    //   setSwitchLogin(true);
+    // }
+    event.preventDefault();
+    alert(browser.name);
   };
 
   const onClickedCloseButton = () => {
