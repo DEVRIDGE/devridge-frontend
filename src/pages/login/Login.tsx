@@ -69,7 +69,7 @@ const SocialLoginBoxWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 80px;
 `;
 
 //TODO - 구글 브랜딩 가이드 추후에 더 면밀히 살펴보고 reject 안 당하게 조심하자
