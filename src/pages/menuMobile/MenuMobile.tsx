@@ -86,6 +86,9 @@ const CloseBtn = styled.button`
 `;
 
 function MenuMobile() {
+  const { detect } = require("detect-browser");
+  const browser = detect();
+
   const history = useHistory();
   const setSwitchLogin = useSetRecoilState(switchLoginState);
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
@@ -93,6 +96,11 @@ function MenuMobile() {
   const [isLogin, setIsLogin] = useRecoilState(isLoginState);
 
   const onClickedLogin = () => {
+    setSwitchLogin(true);
+  };
+
+  const onClickedLoginTest = () => {
+    alert(browser.name);
     setSwitchLogin(true);
   };
 
@@ -162,12 +170,20 @@ function MenuMobile() {
         {isLogin ? (
           <LoginButton onClick={onClickedLogout}>로그아웃</LoginButton>
         ) : (
-          <LoginButton
-            href={`${BASE_PATH}/oauth2/authorization/google`}
-            onClick={onClickedLogin}
-          >
-            로그인
-          </LoginButton>
+          <>
+            <LoginButton
+              href={`${BASE_PATH}/oauth2/authorization/google`}
+              onClick={onClickedLogin}
+            >
+              로그인
+            </LoginButton>
+            <LoginButton
+              onClick={onClickedLoginTest}
+              style={{ marginBottom: "50px" }}
+            >
+              Test
+            </LoginButton>
+          </>
         )}
       </WrapperContent>
     </WrapperPage>
