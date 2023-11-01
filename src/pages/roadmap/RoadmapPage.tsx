@@ -29,6 +29,7 @@ import DownCaretSvg from "../../components/common/downCaretSvg/DownCaretSvg";
 import useOnClickedProfileOuter from "../../hooks/useOnClickedProfileOuter";
 import { isLoginState } from "../../recoil/isLogin/atoms";
 import ChannelService from "../../services/ChannelService";
+import setMetaTags from "../../utils/setMetaTags";
 
 interface IParams {
   job: string;
@@ -232,6 +233,18 @@ function RoadmapPage() {
     if (!accessToken && localStorage.getItem("refreshToken")) {
       handleRefreshPageIssueToken();
     }
+
+    setMetaTags({
+      title: "채용 정보 기반 로드맵 - DEVRIDGE",
+      description: "원하는 직무, 회사, 부서에 맞는 맞춤형 로드맵을 만나보세요.",
+      ogTitle: "채용 정보 기반 로드맵 - DEVRIDGE",
+      ogDescription:
+        "원하는 직무, 회사, 부서에 맞는 맞춤형 로드맵을 만나보세요.",
+    });
+
+    return () => {
+      setMetaTags({});
+    };
   }, []);
 
   //NOTE - 디테일 포지션 API, 로드맵 API 순차적 호출
