@@ -49,6 +49,14 @@ const ModalWrapper = styled.div`
     width: 270px;
     height: 400px;
   }
+
+  @media screen and (orientation: landscape) and (max-height: 550px) {
+    height: 300px;
+  }
+
+  @media screen and (orientation: landscape) and (max-height: 450px) {
+    height: 210px;
+  }
 `;
 
 const CloseBtnWrapper = styled.div`
@@ -70,6 +78,14 @@ const SocialLoginBoxWrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 80px;
+
+  @media screen and (orientation: landscape) and (max-height: 550px) {
+    margin-top: 40px;
+  }
+
+  @media screen and (orientation: landscape) and (max-height: 450px) {
+    margin-top: 20px;
+  }
 `;
 
 //TODO - 구글 브랜딩 가이드 추후에 더 면밀히 살펴보고 reject 안 당하게 조심하자
