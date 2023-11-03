@@ -13,11 +13,11 @@ export const TechName = styled.span`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  min-height: 35px;
+  min-height: 30px;
   text-decoration: none;
   font-weight: 600;
   color: ${(props) => props.theme.textColor};
   text-align: center;
   font-size: 14px;
-  word-break: keep-all;
+  word-break: break-all;
 `;
