@@ -15,7 +15,7 @@ export const Wrapper = styled.footer`
     padding: 5px 10px;
   }
 
-  @media screen and (orientation: landscape) {
+  @media screen and (orientation: landscape) and (max-height: 670px) {
     transform: translateY(200px);
   }
 `;

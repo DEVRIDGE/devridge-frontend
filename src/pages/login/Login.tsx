@@ -50,7 +50,11 @@ const ModalWrapper = styled.div`
     height: 400px;
   }
 
-  @media screen and (orientation: landscape) {
+  @media screen and (orientation: landscape) and (max-height: 550px) {
+    height: 300px;
+  }
+
+  @media screen and (orientation: landscape) and (max-height: 450px) {
     height: 210px;
   }
 `;
@@ -75,7 +79,11 @@ const SocialLoginBoxWrapper = styled.div`
   align-items: center;
   margin-top: 80px;
 
-  @media screen and (orientation: landscape) {
+  @media screen and (orientation: landscape) and (max-height: 550px) {
+    margin-top: 40px;
+  }
+
+  @media screen and (orientation: landscape) and (max-height: 450px) {
     margin-top: 20px;
   }
 `;
