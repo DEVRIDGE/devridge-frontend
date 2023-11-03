@@ -4,6 +4,8 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  vertical-align: center;
   margin: 5vh 20vw;
   padding: 20px;
 
@@ -22,7 +24,6 @@ export const Job = styled.h1`
 
   @media screen and (max-width: 400px) {
     font-size: 24px;
-    white-space: nowrap;
   }
 `;
 
@@ -43,6 +44,5 @@ export const Company = styled.h1`
 
   @media screen and (max-width: 400px) {
     font-size: 24px;
-    white-space: nowrap;
   }
 `;

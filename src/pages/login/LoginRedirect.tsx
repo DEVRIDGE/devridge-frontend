@@ -3,14 +3,13 @@ import { useEffect } from "react";
 
 import { LoaderWrapper } from "../../components/common/loaderPageWrapper/styles";
 import Loader from "../../components/common/loader/Loader";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { afterLoginState } from "../../recoil/afterLogin/atom";
+import { useHistory, useLocation } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import { accessTokenState } from "../../recoil/accessToken/atom";
 import { BEFORE_LOGIN_PATH } from "../../constants/constants";
 import { isLoginState } from "../../recoil/isLogin/atoms";
 import ChannelService from "../../services/ChannelService";
-import { IUserInfo, IUserInfoData } from "../../services/types";
+import { IUserInfo } from "../../services/types";
 import { getUserInfo } from "../../services/apis";
 
 interface IRouteParams {
