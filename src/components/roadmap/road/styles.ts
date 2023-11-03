@@ -128,7 +128,7 @@ export const Flag = styled.svg<{ $isCS?: boolean }>`
   position: absolute;
   top: ${(props) => (props.$isCS === true ? "-15px" : "-25px")};
   left: ${(props) => (props.$isCS === true ? "auto" : 0)};
-  right: ${(props) => (props.$isCS === true ? "3px" : 0)};
+  right: ${(props) => (props.$isCS === true ? "5px" : 0)};
   margin: ${(props) => (props.$isCS === true ? "0 0" : "auto auto")};
   width: ${(props) => (props.$isCS === true ? "15px" : "25px")};
   height: ${(props) => (props.$isCS === true ? "15px" : "25px")};

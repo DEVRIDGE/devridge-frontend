@@ -337,7 +337,7 @@ function Road({ roadmapApiData }: IRoad) {
                 ) : (
                   <>
                     {courseCol.courses.length !== 0 ? (
-                      <Rope $marginTop="32px" $height="58px" />
+                      <Rope $marginTop="32px" $height="53px" />
                     ) : null}
                     {courseCol.courses.length !== 0 ? <Rope /> : null}
                     {courseCol.courses.length !== 0 ? (
