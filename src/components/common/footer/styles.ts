@@ -14,6 +14,10 @@ export const Wrapper = styled.footer`
   @media screen and (max-width: 767px) {
     padding: 5px 10px;
   }
+
+  @media screen and (orientation: landscape) {
+    transform: translateY(200px);
+  }
 `;
 
 export const Item = styled.li`
