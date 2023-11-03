@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { useHistory, useLocation } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import RoadmapTitle from "../../components/roadmap/roadmapTitle/RoadmapTitle";
 import Road from "../../components/roadmap/road/Road";

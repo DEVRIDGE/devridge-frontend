@@ -3,9 +3,6 @@ import { FlagDescriptionIcon, LegendText, LegendWrapper } from "./styles";
 function Legend() {
   return (
     <LegendWrapper>
-      {/* <LegendIconBox />
-      <LegendIconSeparate>/</LegendIconSeparate>
-      <LegendIconCircle /> */}
       <FlagDescriptionIcon
         width="31"
         height="49"

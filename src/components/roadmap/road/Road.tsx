@@ -38,7 +38,6 @@ import { selectedGridIndexState } from "../../../recoil/selectedGridIndex/atom";
 import {
   ApiMessage,
   ApiStatus,
-  ErrorMessageNewAccessToken,
   MatchingFlag,
   SwitchDetail,
 } from "../../../constants/enums";
@@ -49,7 +48,6 @@ import { selectedDetailedPositionState } from "../../../recoil/selectedDetailedP
 import { accessTokenState } from "../../../recoil/accessToken/atom";
 import issueNewAccessTokenHook from "../../../utils/issueNewAccessTokenHook";
 import { isLoginState } from "../../../recoil/isLogin/atoms";
-import { css } from "styled-components";
 
 interface IRoad {
   roadmapApiData: IRoadmap;
@@ -209,19 +207,6 @@ function Road({ roadmapApiData }: IRoad) {
               <ProgressBar $isDone={true} $mediaType="normal" />
             ) : null}
 
-            {/* //TODO - 뷰포트 단위 대신 픽셀로 하드코딩하고, 화면 크기 별로 레이아웃을 여러 개 구현한 뒤, 미디어쿼리로 기기에 맞게 정해진 레이아웃을 띄우는 방식으로 구현하자 */}
-
-            {/* 오른쪽 ㄷ자 progress bar */}
-            {/* {Math.floor(index / col) + 1 !== rowAll &&
-            (index + 10) % (col * 2) === 0 ? (
-              <>
-                <ProgressBar $mediaType="rightTop" />
-                <ProgressBar $mediaType="rightMid" />
-              </>
-            ) : null}
-            {(index + 9) % (col * 2) === 0 ? (
-              <ProgressBar $mediaType="rightBot" />
-            ) : null} */}
             {Math.floor(index / col) + 1 !== rowAll &&
             index % (col * 2) === col - 1 ? (
               <>
@@ -352,7 +337,7 @@ function Road({ roadmapApiData }: IRoad) {
                 ) : (
                   <>
                     {courseCol.courses.length !== 0 ? (
-                      <Rope $marginTop="32px" $height="60px" />
+                      <Rope $marginTop="32px" $height="58px" />
                     ) : null}
                     {courseCol.courses.length !== 0 ? <Rope /> : null}
                     {courseCol.courses.length !== 0 ? (

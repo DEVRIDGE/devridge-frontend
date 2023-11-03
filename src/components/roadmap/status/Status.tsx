@@ -1,4 +1,3 @@
-import { MatchingFlag } from "../../../constants/enums";
 import { Checker, StatusCircle } from "./styles";
 
 interface IStatus {
