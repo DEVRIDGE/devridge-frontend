@@ -9,10 +9,14 @@ import {
   Wrapper,
 } from "./styles";
 
+interface IFooter {
+  $isRoadmapPage?: boolean;
+}
+
 //TODO - 세로 길이 줄어들 때 footer가 form 가리는거 해결
-function Footer() {
+function Footer({ $isRoadmapPage = false }: IFooter) {
   return (
-    <Wrapper>
+    <Wrapper $isRoadmapPage={$isRoadmapPage}>
       <Col>
         <Logo
           width="167"
