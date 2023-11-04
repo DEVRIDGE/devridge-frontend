@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Wrapper = styled.footer`
+export const Wrapper = styled.footer<{ $isRoadmapPage: boolean }>`
   display: flex;
   position: absolute;
   bottom: 0;
@@ -10,14 +10,16 @@ export const Wrapper = styled.footer`
   width: 100%;
   box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
   background-color: white;
-  transform: translateY(100px);
+  transform: ${(props) =>
+    props.$isRoadmapPage ? "translateY(100px)" : "none"};
 
   @media screen and (max-width: 767px) {
     padding: 5px 10px;
   }
 
   @media screen and (max-width: 520px) {
-    transform: translateY(200px);
+    transform: ${(props) =>
+      props.$isRoadmapPage ? "translateY(200px)" : "none"};
   }
 
   @media screen and (orientation: landscape) and (max-height: 670px) {

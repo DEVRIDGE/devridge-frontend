@@ -425,7 +425,7 @@ function RoadmapPage() {
           ) : (
             <CloseDescription>준비 중입니다.</CloseDescription>
           )}
-          <Footer />
+          <Footer $isRoadmapPage={true} />
         </>
       ) : (
         <>
