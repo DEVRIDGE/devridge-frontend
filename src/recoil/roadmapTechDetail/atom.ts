@@ -10,6 +10,8 @@ export interface IRoadmapTechDetail {
   message: string;
   data: {
     courseName: string;
+    loginStatus: string;
+    studyStatus: string | null;
     courseDetails: ICourseDetails[];
   } | null;
 }

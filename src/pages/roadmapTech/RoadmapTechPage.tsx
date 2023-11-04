@@ -257,7 +257,9 @@ function RoadmapTechPage() {
           onClickedProfileOuter();
         }}
       >
-        <TechHeader />
+        <TechHeader
+          $loginStatus={selectedTechState.data?.loginStatus || "NO"}
+        />
         {selectedTechState.message === ApiMessage.login_required ? (
           <BlindArea>
             <LoginWrapper>
