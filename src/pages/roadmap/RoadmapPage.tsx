@@ -30,6 +30,7 @@ import useOnClickedProfileOuter from "../../hooks/useOnClickedProfileOuter";
 import { isLoginState } from "../../recoil/isLogin/atoms";
 import ChannelService from "../../services/ChannelService";
 import setMetaTags from "../../utils/setMetaTags";
+import GoogleAdsense from "../../components/common/adsense/GoogleAdsense";
 
 interface IParams {
   job: string;
@@ -407,6 +408,14 @@ function RoadmapPage() {
               </DropdownListWrapper>
             </DropdownDetailedPositionWrapper>
           )}
+          <GoogleAdsense
+            className="adsbygoogle"
+            client="ca-pub-5067775298991229"
+            slot="8977744885"
+            format="auto"
+            responsive="true"
+            $isAside={currentWidth > 1370 ? true : false}
+          />
         </>
       ) : null}
       {!isLoadingRoadmapPage ? (
