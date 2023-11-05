@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useHistory, useLocation } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect, useState } from "react";
 
 import RoadmapTitle from "../../components/roadmap/roadmapTitle/RoadmapTitle";
@@ -18,7 +18,11 @@ import {
   IDetailedPositions,
   detailedPositionsState,
 } from "../../recoil/detailedPostions/atom";
-import { ApiMessage, ApiStatus } from "../../constants/enums";
+import {
+  ApiMessage,
+  ApiStatus,
+  StudyStatusMessage,
+} from "../../constants/enums";
 import { roadmapState } from "../../recoil/roadmap/atom";
 import { isLoadingRoadmapPageState } from "../../recoil/isLoadingRoadmapPage/atom";
 import Legend from "../../components/roadmap/legend/Legend";
@@ -31,6 +35,10 @@ import { isLoginState } from "../../recoil/isLogin/atoms";
 import ChannelService from "../../services/ChannelService";
 import setMetaTags from "../../utils/setMetaTags";
 import GoogleAdsense from "../../components/common/adsense/GoogleAdsense";
+import {
+  IRoadmapStudyStatusCodes,
+  roadmapStudyStatusCodesState,
+} from "../../recoil/roadmapStudyStatusCodes/atoms";
 
 interface IParams {
   job: string;
@@ -139,7 +147,7 @@ const DropdownOption = styled.li`
   border-radius: 5px;
 
   &:hover {
-    background-color: ${(props) => props.theme.mainColorLight};
+    background-color: ${(props) => props.theme.mainColorLighter};
     color: ${(props) => props.theme.mainColor};
     font-weight: bold;
   }
@@ -184,6 +192,9 @@ function RoadmapPage() {
   );
   const [isFirstRendering, setIsFirstRendering] = useState(true);
   const setIsLogin = useSetRecoilState(isLoginState);
+  const setRoadmapStudyStatusCodes = useSetRecoilState(
+    roadmapStudyStatusCodesState
+  );
 
   const onClickedProfileOuter = useOnClickedProfileOuter();
 
@@ -209,6 +220,31 @@ function RoadmapPage() {
   const onClickedWrapper = (event: React.MouseEvent<HTMLElement>) => {
     setIsDropdownOptions(false);
     onClickedProfileOuter();
+  };
+  const initRoadmapStudyStatusCodes = (roadmapApiData: IRoadmap) => {
+    let roadmapStudyStatusCodes: IRoadmapStudyStatusCodes =
+      roadmapApiData.data!.courseList.map((course) => {
+        if (course?.courses.length === 0) {
+          return {};
+        } else {
+          let roadmapColumn: any = {};
+          for (let i = 0; i < course!.courses.length; i++) {
+            const coursesItem = course!.courses[i];
+            if (coursesItem.studyStatus === StudyStatusMessage.STUDYING) {
+              roadmapColumn[coursesItem.id.toString()] = 1;
+            } else if (
+              coursesItem.studyStatus === StudyStatusMessage.STUDY_END
+            ) {
+              roadmapColumn[coursesItem.id.toString()] = 2;
+            } else {
+              roadmapColumn[coursesItem.id.toString()] = 0;
+            }
+          }
+          return roadmapColumn;
+        }
+      });
+
+    setRoadmapStudyStatusCodes(roadmapStudyStatusCodes);
   };
 
   useEffect(() => {
@@ -330,6 +366,7 @@ function RoadmapPage() {
       } else {
         setRoadmap(roadmapApiData);
         setIsLoadingRoadmapPage(false);
+        initRoadmapStudyStatusCodes(roadmapApiData);
         return;
       }
     };

@@ -4,13 +4,13 @@ import { TechName, Wrapper } from "./styles";
 interface ITech {
   techName: string;
   marginBottom?: string;
-  $checkerType?: number;
+  $studyStatusCode?: number;
 }
 
-function Tech({ techName, marginBottom, $checkerType }: ITech) {
+function Tech({ techName, marginBottom, $studyStatusCode }: ITech) {
   return (
     <Wrapper style={{ marginBottom }}>
-      <Status $checkerType={$checkerType} />
+      <Status $studyStatusCode={$studyStatusCode} />
       <TechName>{techName}</TechName>
     </Wrapper>
   );

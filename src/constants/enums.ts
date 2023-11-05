@@ -40,3 +40,8 @@ export enum ErrorMessageNewAccessToken {
   "verification" = "Token verification failed",
   "expired" = "Token has expired",
 }
+
+export enum StudyStatusMessage {
+  "STUDYING" = "STUDYING",
+  "STUDY_END" = "STUDY_END",
+}
