@@ -82,7 +82,7 @@ export function getRoadmapCourseDetail({
 }: IGetRoadmapCourseDetail) {
   return axios
     .get(
-      `${BASE_PATH}/videos?course=${selectedTechId}&courseDetail=${selectedCourseId}&job=${jobId}&company=${companyId}&detailedPosition=${selectedDetailedPosition}`,
+      `${BASE_PATH}/items?course=${selectedTechId}&courseDetail=${selectedCourseId}&job=${jobId}&company=${companyId}&detailedPosition=${selectedDetailedPosition}`,
       accessToken !== null
         ? { headers: { Authorization: `Bearer ${accessToken}` } }
         : {}
