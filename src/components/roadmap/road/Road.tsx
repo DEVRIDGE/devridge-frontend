@@ -204,7 +204,7 @@ function Road({ roadmapApiData }: IRoad) {
           >
             {/* 맨 처음 progress bar 따로 추가 */}
             {index === 1 ? (
-              <ProgressBar $isDone={true} $mediaType="normal" />
+              <ProgressBar $studyStatusCode={2} $mediaType="normal" />
             ) : null}
 
             {Math.floor(index / col) + 1 !== rowAll &&
@@ -236,10 +236,7 @@ function Road({ roadmapApiData }: IRoad) {
                 {courseCol.index % 2 !== 0 &&
                 (index + 2) % (col * 2) !== 0 &&
                 (index - 1) % (col * 2) !== 0 ? (
-                  <ProgressBar
-                    $isDone={courseCol.index <= 3}
-                    $mediaType="normal"
-                  />
+                  <ProgressBar $mediaType="normal" />
                 ) : null}
 
                 {/* 서버에서 받은 인덱스가 홀수면 기술과 CS, 짝수면 CS 단독 리스트임 */}
@@ -258,7 +255,7 @@ function Road({ roadmapApiData }: IRoad) {
                     >
                       <Tech
                         techName={courseCol.courses[0].name}
-                        $checkerType={
+                        $studyStatusCode={
                           courseCol.index <= 2
                             ? 2
                             : courseCol.index === 3

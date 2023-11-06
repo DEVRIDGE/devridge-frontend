@@ -67,7 +67,7 @@ export const ProfileWrapper = styled.div`
 export const Profile = styled.svg`
   padding: 10px;
   border-radius: 10px;
-  background-color: ${(props) => props.theme.mainColorLight};
+  background-color: ${(props) => props.theme.mainColorLighter};
   fill: ${(props) => props.theme.mainColor};
   cursor: pointer;
 
@@ -106,7 +106,7 @@ export const ProfileDropdownOption = styled.li`
   cursor: pointer;
 
   &:hover {
-    background-color: ${(props) => props.theme.mainColorLight};
+    background-color: ${(props) => props.theme.mainColorLighter};
     color: ${(props) => props.theme.mainColor};
     font-weight: bold;
   }

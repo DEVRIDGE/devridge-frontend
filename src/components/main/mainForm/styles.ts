@@ -138,7 +138,7 @@ export const DropdownOption = styled.li`
   border-radius: 5px;
 
   &:hover {
-    background-color: ${(props) => props.theme.mainColorLight};
+    background-color: ${(props) => props.theme.mainColorLighter};
     color: ${(props) => props.theme.mainColor};
     font-weight: bold;
   }

@@ -36,6 +36,7 @@ export interface ICourse {
   name: string;
   type: string;
   matchingFlag: string;
+  studyStatus: string | null;
 }
 
 export interface ICourses {

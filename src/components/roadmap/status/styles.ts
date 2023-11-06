@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 interface IStatusCircle {
   width: string;
   height: string;
-  $checkerType: number;
+  $studyStatusCode: number;
 }
 
 export const StatusCircle = styled.div<IStatusCircle>`
@@ -15,9 +15,9 @@ export const StatusCircle = styled.div<IStatusCircle>`
   height: ${(props) => props.height};
   border: 2px solid
     ${(props) => {
-      if (props.$checkerType === 0) {
+      if (props.$studyStatusCode === 0) {
         return props.theme.greyColor;
-      } else if (props.$checkerType === 1) {
+      } else if (props.$studyStatusCode === 1) {
         return props.theme.mainColor;
       } else {
         return "white";
@@ -25,14 +25,14 @@ export const StatusCircle = styled.div<IStatusCircle>`
     }};
   border-radius: 50%;
   background-color: ${(props) =>
-    props.$checkerType === 2 ? props.theme.mainColor : "white"};
+    props.$studyStatusCode === 2 ? props.theme.mainColor : "white"};
 `;
 
-export const Checker = styled.svg<{ $checkerType: number }>`
+export const Checker = styled.svg<{ $studyStatusCode: number }>`
   fill: ${(props) =>
-    props.$checkerType === 0
+    props.$studyStatusCode === 0
       ? props.theme.greyColor
-      : props.$checkerType === 1
+      : props.$studyStatusCode === 1
       ? props.theme.mainColor
       : "white"};
 `;

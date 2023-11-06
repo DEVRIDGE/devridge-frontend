@@ -12,7 +12,11 @@ import CloseBtnSvg from "../../common/closeBtnSvg/CloseBtnSvg";
 import { techTitleState } from "../../../recoil/techTitle/atom";
 import { SwitchDetail } from "../../../constants/enums";
 
-function TechHeader() {
+interface ITechHeader {
+  $loginStatus: string;
+}
+
+function TechHeader({ $loginStatus }: ITechHeader) {
   const selectedTechTitle = useRecoilValue(techTitleState);
 
   const setSwitchDetail = useSetRecoilState(switchRoadmapDetailState);
@@ -30,7 +34,7 @@ function TechHeader() {
       </WrapperClose>
       <WrapperTitleAndState>
         <TechTitle>{selectedTechTitle}</TechTitle>
-        <StudyState />
+        {$loginStatus === "YES" ? <StudyState /> : null}
       </WrapperTitleAndState>
     </>
   );

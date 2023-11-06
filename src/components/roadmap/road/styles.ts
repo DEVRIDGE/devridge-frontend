@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 import { StatusCircle } from "../status/styles";
-import { MatchingFlag, MediaType } from "../../../constants/enums";
+import { MediaType } from "../../../constants/enums";
 
 interface IWrapper {
   $col: number;
@@ -9,7 +9,7 @@ interface IWrapper {
 }
 
 interface IProgressBar {
-  $isDone?: boolean;
+  $studyStatusCode?: number;
   $mediaType?: string; // null 불인정으로 바꾸자
 }
 
@@ -140,7 +140,9 @@ export const ProgressBar = styled.div<IProgressBar>`
   border: none;
   top: 10px;
   background-color: ${(props) =>
-    props.$isDone ? props.theme.mainColor : props.theme.greyColor};
+    props.$studyStatusCode === 2
+      ? props.theme.mainColor
+      : props.theme.greyColor};
 
   left: ${(props) => {
     if (props.$mediaType === MediaType.normal) {

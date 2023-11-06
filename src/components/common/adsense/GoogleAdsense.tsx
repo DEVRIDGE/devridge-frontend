@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect } from "react";
 import { styled } from "styled-components";
 
@@ -108,4 +109,4 @@ function GoogleAdsense({
   );
 }
 
-export default GoogleAdsense;
+export default React.memo(GoogleAdsense);
