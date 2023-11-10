@@ -40,6 +40,9 @@ const Ins = styled.ins<{ $isAside: boolean }>`
 `;
 
 const TestDiv = styled.ins<{ $isAside: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: ${(props) => (props.$isAside ? "fixed" : "absolute")};
   top: ${(props) => (props.$isAside ? 0 : "auto")};
   left: ${(props) => (props.$isAside ? "10px" : 0)};
@@ -50,6 +53,9 @@ const TestDiv = styled.ins<{ $isAside: boolean }>`
   height: ${(props) => (props.$isAside ? "70vh" : "100px")};
   min-height: ${(props) => (props.$isAside ? "500px" : "100px")};
   transform: ${(props) => (props.$isAside ? "none" : "translateY(20px)")};
+  background-color: ${(props) => props.theme.greyColor};
+  text-decoration: none;
+  font-weight: bold;
 
   @media screen and (max-height: 670px) {
     transform: ${(props) => (props.$isAside ? "none" : "translateY(150px)")};
@@ -85,16 +91,7 @@ function GoogleAdsense({
   }, []);
 
   if (process.env.NODE_ENV !== "production") {
-    return (
-      <TestDiv
-        style={{
-          backgroundColor: "yellow",
-        }}
-        $isAside={$isAside}
-      >
-        광고 표시 영역
-      </TestDiv>
-    );
+    return <TestDiv $isAside={$isAside}>광고 표시 영역</TestDiv>;
   }
 
   return (
