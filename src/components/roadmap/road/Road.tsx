@@ -48,12 +48,15 @@ import { selectedDetailedPositionState } from "../../../recoil/selectedDetailedP
 import { accessTokenState } from "../../../recoil/accessToken/atom";
 import issueNewAccessTokenHook from "../../../utils/issueNewAccessTokenHook";
 import { isLoginState } from "../../../recoil/isLogin/atoms";
+import { roadmapStudyStatusCodesState } from "../../../recoil/roadmapStudyStatusCodes/atoms";
+import { selectedRoadmapIndexState } from "../../../recoil/selectedRoadmapIndex/atoms";
 
 interface IRoad {
   roadmapApiData: IRoadmap;
 }
 
 interface IOnClickTech {
+  selectedRoadmapIndex: number;
   selectedTechId: number;
   courseName: string;
   index: number;
@@ -73,6 +76,7 @@ function Road({ roadmapApiData }: IRoad) {
   const setIsLoadingTechPage = useSetRecoilState(isLoadingTechPageState);
   const setSelectedGridIndex = useSetRecoilState(selectedGridIndexState);
   const setIsLogin = useSetRecoilState(isLoginState);
+  const setSelectedRoadmapIndex = useSetRecoilState(selectedRoadmapIndexState);
 
   const jobId = useRecoilValue(jobState);
   const companyId = useRecoilValue(companyState);
@@ -81,6 +85,7 @@ function Road({ roadmapApiData }: IRoad) {
   const selectedDetailedPosition = useRecoilValue(
     selectedDetailedPositionState
   );
+  const roadmapStudyStatusCode = useRecoilValue(roadmapStudyStatusCodesState);
 
   //NOTE - 슬라이드 화면 스위칭하는 recoil atom
   const [switchDetail, setSwitchDetail] = useRecoilState(
@@ -129,6 +134,7 @@ function Road({ roadmapApiData }: IRoad) {
   }, [col, roadmapApiData.data?.courseList]);
 
   const onClickTech = async ({
+    selectedRoadmapIndex,
     selectedTechId,
     courseName,
     index: gridIndex,
@@ -174,6 +180,7 @@ function Road({ roadmapApiData }: IRoad) {
         } else {
           setAccessToken(newAccessToken);
           onClickTech({
+            selectedRoadmapIndex,
             selectedTechId,
             courseName,
             index: gridIndex,
@@ -186,6 +193,7 @@ function Road({ roadmapApiData }: IRoad) {
     } else {
       setSelectedTechState(data);
       setSelectedTechTitleState(courseName);
+      setSelectedRoadmapIndex(selectedRoadmapIndex);
       setIsLoadingTechPage(false);
     }
   };
@@ -204,39 +212,93 @@ function Road({ roadmapApiData }: IRoad) {
           >
             {/* 맨 처음 progress bar 따로 추가 */}
             {index === 1 ? (
-              <ProgressBar $studyStatusCode={2} $mediaType="normal" />
+              <ProgressBar
+                $studyStatusCode={
+                  Object.values(roadmapStudyStatusCode[index])[0]
+                }
+                $mediaType="normal"
+              />
             ) : null}
 
+            {/* 오른쪽 ㄷ자 progress bar */}
             {Math.floor(index / col) + 1 !== rowAll &&
             index % (col * 2) === col - 1 ? (
               <>
-                <ProgressBar $mediaType="rightTop" />
-                <ProgressBar $mediaType="rightMid" />
+                <ProgressBar
+                  $studyStatusCode={
+                    Object.values(roadmapStudyStatusCode[index + 1 - row])[0]
+                  }
+                  $mediaType="rightTop"
+                />
+                <ProgressBar
+                  $studyStatusCode={
+                    Object.values(roadmapStudyStatusCode[index + 1 - row])[0]
+                  }
+                  $mediaType="rightMid"
+                />
               </>
             ) : null}
             {index % (col * 2) === col ? (
-              <ProgressBar $mediaType="rightBot" />
+              <ProgressBar
+                $studyStatusCode={
+                  Object.values(roadmapStudyStatusCode[index - (row - 1)])[0]
+                }
+                $mediaType="rightBot"
+              />
             ) : null}
 
             {/* 왼쪽 ㄷ자 progress bar */}
             {Math.floor(index / col) + 1 !== rowAll &&
             (index + 1) % (col * 2) === 0 ? (
               <>
-                <ProgressBar $mediaType="leftTop" />
-                <ProgressBar $mediaType="leftMid" />
+                <ProgressBar
+                  $studyStatusCode={
+                    Object.values(roadmapStudyStatusCode[index - (row - 1)])[0]
+                  }
+                  $mediaType="leftTop"
+                />
+                <ProgressBar
+                  $studyStatusCode={
+                    Object.values(roadmapStudyStatusCode[index - (row - 1)])[0]
+                  }
+                  $mediaType="leftMid"
+                />
               </>
             ) : null}
             {index !== 0 && index % (col * 2) === 0 ? (
-              <ProgressBar $mediaType="leftBot" />
+              <ProgressBar
+                $studyStatusCode={
+                  Object.values(roadmapStudyStatusCode[index - (row - 1)])[0]
+                }
+                $mediaType="leftBot"
+              />
             ) : null}
 
             {courseCol !== null ? (
               <>
                 {/* ㄷ자 부분 제외하고 progress bar 렌더링하는 부분 */}
+                {/* row가 짝수일 때 */}
                 {courseCol.index % 2 !== 0 &&
-                (index + 2) % (col * 2) !== 0 &&
-                (index - 1) % (col * 2) !== 0 ? (
-                  <ProgressBar $mediaType="normal" />
+                (index - 1) % (col * 2) !== 0 &&
+                row % 2 === 0 ? (
+                  <ProgressBar
+                    $studyStatusCode={
+                      Object.values(roadmapStudyStatusCode[courseCol.index])[0]
+                    }
+                    $mediaType="normal"
+                  />
+                ) : null}
+
+                {/* row가 홀수일 때 */}
+                {courseCol.index % 2 !== 0 &&
+                index % (col * row + 1) !== 0 &&
+                row % 2 !== 0 ? (
+                  <ProgressBar
+                    $studyStatusCode={
+                      Object.values(roadmapStudyStatusCode[courseCol.index])[0]
+                    }
+                    $mediaType="normalReverse"
+                  />
                 ) : null}
 
                 {/* 서버에서 받은 인덱스가 홀수면 기술과 CS, 짝수면 CS 단독 리스트임 */}
@@ -245,6 +307,7 @@ function Road({ roadmapApiData }: IRoad) {
                     <TechButton
                       onClick={() =>
                         onClickTech({
+                          selectedRoadmapIndex: courseCol.index,
                           selectedTechId: courseCol.courses[0].id,
                           courseName: courseCol.courses[0].name,
                           index,
@@ -256,11 +319,9 @@ function Road({ roadmapApiData }: IRoad) {
                       <Tech
                         techName={courseCol.courses[0].name}
                         $studyStatusCode={
-                          courseCol.index <= 2
-                            ? 2
-                            : courseCol.index === 3
-                            ? 1
-                            : 0
+                          Object(roadmapStudyStatusCode[courseCol.index])[
+                            courseCol.courses[0].id
+                          ]
                         }
                       />
                       {courseCol.courses[0].matchingFlag ===
@@ -294,6 +355,7 @@ function Road({ roadmapApiData }: IRoad) {
                             key={cs.id}
                             onClick={() => {
                               onClickTech({
+                                selectedRoadmapIndex: courseCol.index,
                                 selectedTechId: cs.id,
                                 courseName: cs.name,
                                 index,
@@ -302,7 +364,13 @@ function Road({ roadmapApiData }: IRoad) {
                               });
                             }}
                           >
-                            <Status width="15px" height="15px" />
+                            <Status
+                              $studyStatusCode={
+                                roadmapStudyStatusCode[courseCol.index][cs.id]
+                              }
+                              width="15px"
+                              height="15px"
+                            />
                             <CSName>{cs.name}</CSName>
                             {cs.matchingFlag === MatchingFlag.YES ? (
                               <Flag
@@ -344,6 +412,7 @@ function Road({ roadmapApiData }: IRoad) {
                             key={cs.id}
                             onClick={() => {
                               onClickTech({
+                                selectedRoadmapIndex: courseCol.index,
                                 selectedTechId: cs.id,
                                 courseName: cs.name,
                                 index,
@@ -352,7 +421,13 @@ function Road({ roadmapApiData }: IRoad) {
                               });
                             }}
                           >
-                            <Status width="15px" height="15px" />
+                            <Status
+                              $studyStatusCode={
+                                roadmapStudyStatusCode[courseCol.index][cs.id]
+                              }
+                              width="15px"
+                              height="15px"
+                            />
                             <CSName>{cs.name}</CSName>
                             {cs.matchingFlag === MatchingFlag.YES ? (
                               <Flag

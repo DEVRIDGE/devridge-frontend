@@ -1,5 +1,6 @@
 export enum MediaType {
   "normal" = "normal",
+  "normalReverse" = "normalReverse",
   "rightTop" = "rightTop",
   "rightMid" = "rightMid",
   "rightBot" = "rightBot",
@@ -27,7 +28,7 @@ export enum ApiStatus {
 
 export enum ApiMessage {
   "roadmap" = "회사, 직무, 서비스에 일치 하는 회사 정보가 없습니다.",
-  "course_detail" = "해당하는 코스가 없습니다.",
+  "course_detail" = "해당하는 세부코스가 없습니다.",
   "login_required" = "Login required",
 }
 
@@ -42,6 +43,7 @@ export enum ErrorMessageNewAccessToken {
 }
 
 export enum StudyStatusMessage {
+  "BEFORE_STUDYING" = "BEFORE_STUDYING",
   "STUDYING" = "STUDYING",
   "STUDY_END" = "STUDY_END",
 }

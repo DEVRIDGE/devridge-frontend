@@ -7,6 +7,7 @@ import {
   IGetRoadmapCourseDetail,
   IGetRoadmapTechDetail,
   IGetUserInfo,
+  IPostStudyStatus,
 } from "./types";
 //TODO - try catch 예외처리도 하자
 
@@ -122,6 +123,35 @@ export function getUserInfo({ accessToken }: IGetUserInfo) {
     .get(`${BASE_PATH}/users/channeltalkinfo`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((axiosError) => {
+      return axiosError.response.data;
+    });
+}
+
+export function postStudyStatus({
+  accessToken,
+  selectedTechId,
+  studyStatus,
+  companyId,
+  jobId,
+  detailedPosition,
+}: IPostStudyStatus) {
+  return axios
+    .post(
+      `${BASE_PATH}/courses/${selectedTechId}/change-studystatus`,
+      {
+        companyId: companyId,
+        jobId: jobId,
+        detailedPositionId: detailedPosition,
+        studyStatus: studyStatus,
+      },
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    )
     .then((response) => {
       return response.data;
     })

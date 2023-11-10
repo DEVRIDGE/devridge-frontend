@@ -164,10 +164,15 @@ export const ProgressBar = styled.div<IProgressBar>`
   right: ${(props) => {
     if (props.$mediaType === MediaType.rightMid) {
       return "-37px";
+    } else if (props.$mediaType === MediaType.normalReverse) {
+      return "-160px";
     }
   }};
   width: ${(props) => {
-    if (props.$mediaType === MediaType.normal) {
+    if (
+      props.$mediaType === MediaType.normal ||
+      props.$mediaType === MediaType.normalReverse
+    ) {
       return "210px";
     } else if (
       props.$mediaType === MediaType.rightTop ||
@@ -219,10 +224,15 @@ export const ProgressBar = styled.div<IProgressBar>`
     right: ${(props) => {
       if (props.$mediaType === MediaType.rightMid) {
         return "-16.8px";
+      } else if (props.$mediaType === MediaType.normalReverse) {
+        return "-150px";
       }
     }};
     width: ${(props) => {
-      if (props.$mediaType === MediaType.normal) {
+      if (
+        props.$mediaType === MediaType.normal ||
+        props.$mediaType === MediaType.normalReverse
+      ) {
         return "180px";
       } else if (
         props.$mediaType === MediaType.rightTop ||
@@ -275,10 +285,15 @@ export const ProgressBar = styled.div<IProgressBar>`
     right: ${(props) => {
       if (props.$mediaType === MediaType.rightMid) {
         return "-21.6px";
+      } else if (props.$mediaType === MediaType.normalReverse) {
+        return "-90px";
       }
     }};
     width: ${(props) => {
-      if (props.$mediaType === MediaType.normal) {
+      if (
+        props.$mediaType === MediaType.normal ||
+        props.$mediaType === MediaType.normalReverse
+      ) {
         return "110px";
       } else if (
         props.$mediaType === MediaType.rightTop ||
@@ -331,10 +346,15 @@ export const ProgressBar = styled.div<IProgressBar>`
     right: ${(props) => {
       if (props.$mediaType === MediaType.rightMid) {
         return "-15.8px";
+      } else if (props.$mediaType === MediaType.normalReverse) {
+        return "-110px";
       }
     }};
     width: ${(props) => {
-      if (props.$mediaType === MediaType.normal) {
+      if (
+        props.$mediaType === MediaType.normal ||
+        props.$mediaType === MediaType.normalReverse
+      ) {
         return "160px";
       } else if (
         props.$mediaType === MediaType.rightTop ||
