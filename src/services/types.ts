@@ -108,3 +108,18 @@ export interface IUserInfo {
   message: string;
   data: IUserInfoData | null;
 }
+
+export interface IPostStudyStatus {
+  accessToken: string | null;
+  selectedTechId: number;
+  studyStatus: string;
+  companyId: number;
+  jobId: number;
+  detailedPosition: number;
+}
+
+export interface IStudyStatusResponse {
+  status: string;
+  message: string;
+  data: null;
+}

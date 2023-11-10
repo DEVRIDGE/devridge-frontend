@@ -222,27 +222,48 @@ function RoadmapPage() {
     onClickedProfileOuter();
   };
   const initRoadmapStudyStatusCodes = (roadmapApiData: IRoadmap) => {
-    let roadmapStudyStatusCodes: IRoadmapStudyStatusCodes =
-      roadmapApiData.data!.courseList.map((course) => {
-        if (course?.courses.length === 0) {
-          return {};
-        } else {
-          let roadmapColumn: any = {};
-          for (let i = 0; i < course!.courses.length; i++) {
-            const coursesItem = course!.courses[i];
-            if (coursesItem.studyStatus === StudyStatusMessage.STUDYING) {
-              roadmapColumn[coursesItem.id.toString()] = 1;
-            } else if (
-              coursesItem.studyStatus === StudyStatusMessage.STUDY_END
-            ) {
-              roadmapColumn[coursesItem.id.toString()] = 2;
-            } else {
-              roadmapColumn[coursesItem.id.toString()] = 0;
-            }
+    // let roadmapStudyStatusCodes: IRoadmapStudyStatusCodes =
+    //   roadmapApiData.data!.courseList.map((course) => {
+    //     if (course?.courses.length === 0) {
+    //       return {};
+    //     } else {
+    //       let roadmapColumn: IRoadmapStudyStatusCodes = {};
+    //       for (let i = 0; i < course!.courses.length; i++) {
+    //         const coursesItem = course!.courses[i];
+    //         if (coursesItem.studyStatus === StudyStatusMessage.STUDYING) {
+    //           roadmapColumn[coursesItem.id] = 1;
+    //         } else if (
+    //           coursesItem.studyStatus === StudyStatusMessage.STUDY_END
+    //         ) {
+    //           roadmapColumn[coursesItem.id] = 2;
+    //         } else {
+    //           roadmapColumn[coursesItem.id] = 0;
+    //         }
+    //       }
+    //       return roadmapColumn;
+    //     }
+    //   });
+    let roadmapStudyStatusCodes: IRoadmapStudyStatusCodes = {};
+
+    for (let i = 0; i < roadmapApiData.data!.courseList.length; i++) {
+      const course = roadmapApiData.data!.courseList[i];
+      if (course?.courses.length === 0) {
+        roadmapStudyStatusCodes[i] = {};
+      } else {
+        let roadmapColumn: any = {};
+        for (let i = 0; i < course!.courses.length; i++) {
+          const coursesItem = course!.courses[i];
+          if (coursesItem.studyStatus === StudyStatusMessage.STUDYING) {
+            roadmapColumn[coursesItem.id] = 1;
+          } else if (coursesItem.studyStatus === StudyStatusMessage.STUDY_END) {
+            roadmapColumn[coursesItem.id] = 2;
+          } else {
+            roadmapColumn[coursesItem.id] = 0;
           }
-          return roadmapColumn;
         }
-      });
+        roadmapStudyStatusCodes[i] = roadmapColumn;
+      }
+    }
 
     setRoadmapStudyStatusCodes(roadmapStudyStatusCodes);
   };
@@ -255,21 +276,21 @@ function RoadmapPage() {
       setIsLogin(true);
     }
 
-    const handleRefreshPageIssueToken = async () => {
-      const newAccessToken: string | null = await issueNewAccessTokenHook();
-      if (newAccessToken === "/") {
-        setIsLogin(false);
-        setAccessToken(null);
-        history.push("/");
-      } else {
-        setAccessToken(newAccessToken);
-      }
-      return;
-    };
+    // const handleRefreshPageIssueToken = async () => {
+    //   const newAccessToken: string | null = await issueNewAccessTokenHook();
+    //   if (newAccessToken === "/") {
+    //     setIsLogin(false);
+    //     setAccessToken(null);
+    //     history.push("/");
+    //   } else {
+    //     setAccessToken(newAccessToken);
+    //   }
+    //   return;
+    // };
 
-    if (!accessToken && localStorage.getItem("refreshToken")) {
-      handleRefreshPageIssueToken();
-    }
+    // if (!accessToken && localStorage.getItem("refreshToken")) {
+    //   handleRefreshPageIssueToken();
+    // }
 
     setMetaTags({
       title: "채용 정보 기반 로드맵 - DEVRIDGE",
@@ -371,11 +392,34 @@ function RoadmapPage() {
       }
     };
 
+    const handleRefreshPageIssueToken = async () => {
+      const newAccessToken: string | null = await issueNewAccessTokenHook();
+      if (newAccessToken === "/") {
+        setIsLogin(false);
+        setAccessToken(null);
+        history.push("/");
+        return null;
+      } else {
+        setAccessToken(newAccessToken);
+      }
+      return newAccessToken;
+    };
+
     const handleGoRoadmap = async () => {
+      let accessTokenChecked: string | null = accessToken;
+      if (!accessToken && localStorage.getItem("refreshToken")) {
+        accessTokenChecked = await handleRefreshPageIssueToken();
+        if (accessTokenChecked === null) {
+          return;
+        }
+      }
       if (selectedDetailedPosition === -1 || isFirstRendering) {
         await handleDetailedPositionsApi();
       }
-      await handleRoadmapApi({ accessToken, recursionCount: 0 });
+      await handleRoadmapApi({
+        accessToken: accessTokenChecked,
+        recursionCount: 0,
+      });
     };
 
     handleGoRoadmap();
