@@ -49,8 +49,8 @@ export interface IRoadmap {
   message: string;
   data: {
     companyName: string;
-    companyLogo: string;
     jobName: string;
+    companyInfoUrl: string | null;
     courseList: [ICourses | null];
   } | null;
 }
@@ -119,6 +119,17 @@ export interface IPostStudyStatus {
 }
 
 export interface IStudyStatusResponse {
+  status: string;
+  message: string;
+  data: null;
+}
+
+export interface IPostUserLikedYn {
+  selectedVideoId: number;
+  accessToken: string;
+}
+
+export interface IUserLikedYn {
   status: string;
   message: string;
   data: null;
