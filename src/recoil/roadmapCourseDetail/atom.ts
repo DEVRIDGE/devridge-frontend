@@ -6,6 +6,15 @@ export interface IRoadmapCourseVideos {
   likeCnt: number;
   thumbnail: string;
   url: string;
+  userLikedYn: string;
+  source: string;
+}
+
+export interface IRoadmapCourseBooks {
+  id: number;
+  title: string;
+  url: string;
+  thumbnail: string;
   source: string;
 }
 
@@ -15,7 +24,9 @@ export interface IRoadmapCourseDetail {
   data: {
     courseTitle: string;
     courseDetailTitle: string;
+    courseDetailDescription: string;
     courseVideos: IRoadmapCourseVideos[];
+    courseBooks: IRoadmapCourseBooks[];
   } | null;
 }
 

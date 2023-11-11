@@ -47,3 +47,8 @@ export enum StudyStatusMessage {
   "STUDYING" = "STUDYING",
   "STUDY_END" = "STUDY_END",
 }
+
+export enum UserLike {
+  "YES" = "YES",
+  "NO" = "NO",
+}

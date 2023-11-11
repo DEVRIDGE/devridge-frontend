@@ -9,6 +9,7 @@ import { roadmapCourseState } from "../../recoil/roadmapCourseDetail/atom";
 import { SwitchDetail } from "../../constants/enums";
 import { switchRoadmapDetailState } from "../../recoil/swtichRoadmapDetail/atom";
 import useOnClickedProfileOuter from "../../hooks/useOnClickedProfileOuter";
+import { accessTokenState } from "../../recoil/accessToken/atom";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -70,6 +71,8 @@ const GridCourses = styled.div`
 `;
 
 function RoadmapCoursePage() {
+  const setAccessToken = useSetRecoilState(accessTokenState);
+
   const roadmapCourseDetail = useRecoilValue(roadmapCourseState);
   const setSwitchRoadmapDetail = useSetRecoilState(switchRoadmapDetailState);
 

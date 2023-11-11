@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { UserLike } from "../../../constants/enums";
 
 export const CourseWrapper = styled.div`
   display: flex;
@@ -80,12 +81,14 @@ export const CourseLikeWrapper = styled.div`
 export const CourseLikeBtn = styled.button`
   border: none;
   background-color: transparent;
+  cursor: pointer;
 `;
 
-export const CourseLikeSvg = styled.svg`
+export const CourseLikeSvg = styled.svg<{ userLikedYn: string }>`
   width: 15px;
   height: 15px;
-  fill: ${(props) => props.theme.textGreyColor};
+  fill: ${(props) =>
+    props.userLikedYn === UserLike.YES ? "red" : props.theme.textGreyColor};
 `;
 
 export const CourseLikeLabel = styled.span`

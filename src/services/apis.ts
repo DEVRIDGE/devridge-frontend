@@ -8,6 +8,7 @@ import {
   IGetRoadmapTechDetail,
   IGetUserInfo,
   IPostStudyStatus,
+  IPostUserLikedYn,
 } from "./types";
 //TODO - try catch 예외처리도 하자
 
@@ -147,6 +148,28 @@ export function postStudyStatus({
         jobId: jobId,
         detailedPositionId: detailedPosition,
         studyStatus: studyStatus,
+      },
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    )
+    .then((response) => {
+      return response.data;
+    })
+    .catch((axiosError) => {
+      return axiosError.response.data;
+    });
+}
+
+export function postUserLikedYn({
+  selectedVideoId,
+  accessToken,
+}: IPostUserLikedYn) {
+  return axios
+    .post(
+      `${BASE_PATH}/videos/like`,
+      {
+        courseVideoId: selectedVideoId,
       },
       {
         headers: { Authorization: `Bearer ${accessToken}` },
