@@ -3,10 +3,10 @@ import { atom } from "recoil";
 export interface IRoadmapCourseVideos {
   id: number;
   title: string;
-  likeCnt: number;
+  likeCnt?: number | null;
   thumbnail: string;
   url: string;
-  userLikedYn: string;
+  userLikedYn?: string | null;
   source: string;
 }
 

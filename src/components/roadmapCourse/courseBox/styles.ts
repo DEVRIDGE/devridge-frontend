@@ -29,10 +29,10 @@ export const CourseThumbnailWrapper = styled.div`
   }
 `;
 
-export const CourseThumbnail = styled.img`
+export const CourseThumbnail = styled.img<{ $isVideoTap: boolean }>`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: ${(props) => (props.theme.$isVideoTap ? "cover" : "contain")};
   border-radius: 5px;
 `;
 
@@ -68,9 +68,10 @@ export const CourseTitle = styled.h3`
   word-break: break-all;
 `;
 
-export const CourseActions = styled.div`
+export const CourseActions = styled.div<{ $isVideoTap: boolean }>`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${(props) =>
+    props.theme.$isVideoTap ? "space-between" : "flex-end"};
 `;
 
 export const CourseLikeWrapper = styled.div`
@@ -84,11 +85,11 @@ export const CourseLikeBtn = styled.button`
   cursor: pointer;
 `;
 
-export const CourseLikeSvg = styled.svg<{ userLikedYn: string }>`
+export const CourseLikeSvg = styled.svg<{ userLiked: string | null }>`
   width: 15px;
   height: 15px;
   fill: ${(props) =>
-    props.userLikedYn === UserLike.YES ? "red" : props.theme.textGreyColor};
+    props.userLiked === UserLike.YES ? "red" : props.theme.textGreyColor};
 `;
 
 export const CourseLikeLabel = styled.span`
