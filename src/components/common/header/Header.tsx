@@ -1,5 +1,5 @@
 import { Link, useHistory } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 import {
   Col,
@@ -12,6 +12,8 @@ import {
   ProfileDropdownList,
   ProfileDropdownOption,
   ProfileWrapper,
+  UserProfilePicture,
+  UserProfilePictureWrapper,
 } from "./styles";
 import { switchLoginState } from "../../../recoil/switchLogin/atom";
 import Logo from "../logo/Logo";
@@ -19,6 +21,7 @@ import { isProfileDropdownState } from "../../../recoil/isProfileDropdown/atoms"
 import useOnClickedProfileOuter from "../../../hooks/useOnClickedProfileOuter";
 import { accessTokenState } from "../../../recoil/accessToken/atom";
 import { isLoginState } from "../../../recoil/isLogin/atoms";
+import { userInfoState } from "../../../recoil/userInfo/atoms";
 
 function Header() {
   const history = useHistory();
@@ -31,6 +34,7 @@ function Header() {
   );
 
   const setAccessToken = useSetRecoilState(accessTokenState);
+  const userInfoData = useRecoilValue(userInfoState);
 
   const onClickedProfileOuter = useOnClickedProfileOuter();
 
@@ -67,15 +71,23 @@ function Header() {
       <Col>
         {isLogin ? (
           <ProfileWrapper>
-            <Profile
-              xmlns="http://www.w3.org/2000/svg"
-              height="1em"
-              viewBox="0 0 448 512"
-              onClick={onClickedProfile}
-            >
-              {/* <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --> */}
-              <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
-            </Profile>
+            {userInfoData ? (
+              <UserProfilePictureWrapper onClick={onClickedProfile}>
+                <UserProfilePicture
+                  src={userInfoData?.profilePicture}
+                  alt={"profile"}
+                />
+              </UserProfilePictureWrapper>
+            ) : (
+              <Profile
+                xmlns="http://www.w3.org/2000/svg"
+                height="1em"
+                viewBox="0 0 448 512"
+                onClick={onClickedProfile}
+              >
+                <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+              </Profile>
+            )}
             {isProfileDropdown ? (
               <ProfileDropdownList>
                 {/* <ProfileDropdownOption>프로필</ProfileDropdownOption> */}
