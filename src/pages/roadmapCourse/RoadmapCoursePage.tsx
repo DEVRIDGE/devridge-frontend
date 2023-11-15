@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Overlay from "../../components/common/overlay/Overlay";
 import CourseHeader from "../../components/roadmapCourse/courseHeader/CourseHeader";
@@ -49,6 +49,56 @@ const CourseMenuWrapper = styled.div`
   }
 `;
 
+const TabMenuWrapper = styled.div<{ $isAll: boolean }>`
+  display: flex;
+  justify-content: ${(props) =>
+    props.theme.$isAll ? "space-evenly" : "flex-start"};
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px dotted ${(props) => props.theme.greyColor};
+`;
+
+const TabMenu = styled.button`
+  flex-basis: 50%;
+  width: 100%;
+  height: 40px;
+  border: 1px solid ${(props) => props.theme.greyColor};
+  border-radius: 10px;
+  background-color: ${(props) => props.theme.bgColor};
+  font-size: 16px;
+  cursor: pointer;
+
+  &:first-child {
+    margin-right: 10px;
+  }
+
+  &:hover {
+    background-color: ${(props) => props.theme.mainColorLighter};
+    color: ${(props) => props.theme.mainColor};
+    font-weight: bold;
+  }
+`;
+
+const CoupangPartnersPhrase = styled.span`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 130%;
+  color: ${(props) => props.theme.textGreyColor};
+`;
+
+const CoursePageDescription = styled.span`
+  display: block;
+  padding: 10px;
+  font-size: 13px;
+  color: ${(props) => props.theme.textGreyColor};
+`;
+
 const GridCourses = styled.div`
   display: grid;
   position: relative;
@@ -71,12 +121,18 @@ const GridCourses = styled.div`
 `;
 
 function RoadmapCoursePage() {
-  const setAccessToken = useSetRecoilState(accessTokenState);
+  const [isVideoTap, setIsVideoTap] = useState(true);
 
   const roadmapCourseDetail = useRecoilValue(roadmapCourseState);
   const setSwitchRoadmapDetail = useSetRecoilState(switchRoadmapDetailState);
 
   const onClickedProfileOuter = useOnClickedProfileOuter();
+  const onClickedVideoTap = () => {
+    setIsVideoTap(true);
+  };
+  const onClickedBookTap = () => {
+    setIsVideoTap(false);
+  };
 
   useEffect(() => {
     document.body.style.cssText = `
@@ -105,10 +161,44 @@ function RoadmapCoursePage() {
         }}
       >
         <CourseHeader />
+        <CoursePageDescription>
+          {roadmapCourseDetail.data!.courseDetailDescription}
+        </CoursePageDescription>
+        <TabMenuWrapper
+          $isAll={
+            roadmapCourseDetail.data!.courseVideos.length > 0 &&
+            roadmapCourseDetail.data!.courseBooks.length > 0
+          }
+        >
+          {roadmapCourseDetail.data!.courseVideos.length > 0 ? (
+            <TabMenu onClick={onClickedVideoTap}>영상</TabMenu>
+          ) : null}
+          {roadmapCourseDetail.data!.courseBooks.length > 0 ? (
+            <TabMenu onClick={onClickedBookTap}>책</TabMenu>
+          ) : null}
+        </TabMenuWrapper>
+        {!isVideoTap ? (
+          <CoupangPartnersPhrase>
+            이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의
+            수수료를 제공받습니다.
+          </CoupangPartnersPhrase>
+        ) : null}
         <GridCourses>
-          {roadmapCourseDetail.data!.courseVideos.map((courseVideo) => (
-            <CourseBox key={courseVideo.id} {...courseVideo} />
-          ))}
+          {isVideoTap
+            ? roadmapCourseDetail.data!.courseVideos.map((courseVideo) => (
+                <CourseBox
+                  key={courseVideo.id}
+                  $isVideoTap={true}
+                  {...courseVideo}
+                />
+              ))
+            : roadmapCourseDetail.data!.courseBooks.map((courseBook) => (
+                <CourseBox
+                  key={courseBook.id}
+                  $isVideoTap={false}
+                  {...courseBook}
+                />
+              ))}
         </GridCourses>
       </CourseMenuWrapper>
     </Wrapper>

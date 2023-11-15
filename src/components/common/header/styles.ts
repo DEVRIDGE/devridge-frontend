@@ -111,3 +111,18 @@ export const ProfileDropdownOption = styled.li`
     font-weight: bold;
   }
 `;
+
+export const UserProfilePictureWrapper = styled.div`
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+`;
+
+export const UserProfilePicture = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid ${(props) => props.theme.textGreyColor};
+  border-radius: 50%;
+  background-color: ${(props) => props.theme.bgColor};
+`;

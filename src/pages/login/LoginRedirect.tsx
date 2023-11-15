@@ -11,6 +11,7 @@ import { isLoginState } from "../../recoil/isLogin/atoms";
 import ChannelService from "../../services/ChannelService";
 import { IUserInfo } from "../../services/types";
 import { getUserInfo } from "../../services/apis";
+import { userInfoState } from "../../recoil/userInfo/atoms";
 
 interface IRouteParams {
   accessToken: string;
@@ -36,6 +37,7 @@ function LoginRedirect() {
 
   const setAccessToken = useSetRecoilState(accessTokenState);
   const setIsLogin = useSetRecoilState(isLoginState);
+  const setUserInfo = useSetRecoilState(userInfoState);
 
   const qs = require("querystring");
   const location = useLocation();
@@ -56,15 +58,7 @@ function LoginRedirect() {
 
     const handleGetUserInfo = async () => {
       userInfo = await getUserInfo({ accessToken });
-      // const userObject = {
-      //   avatarUrl: userInfo.data?.profilePicture,
-      //   profile: {
-      //     email: userInfo.data?.email,
-      //     name: userInfo.data?.name,
-      //     provider: userInfo.data?.provider,
-      //   },
-      // };
-      // channelTalk.updateUser(userObject);
+      setUserInfo(userInfo.data);
 
       channelTalk.boot({
         pluginKey: "879e637c-369e-44e8-a44e-21b8fd3d0f63",

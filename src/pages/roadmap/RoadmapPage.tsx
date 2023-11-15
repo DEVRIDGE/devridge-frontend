@@ -168,6 +168,53 @@ const CloseDescription = styled.p`
   font-weight: bold;
 `;
 
+const EmployAndDetailedPositionWrapper = styled.div`
+  position: relative;
+
+  @media screen and (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const EmploymentInfoLink = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: -350px;
+  bottom: 0;
+  margin: auto auto;
+  width: 150px;
+  height: 40px;
+  border: 1px solid ${(props) => props.theme.greyColor};
+  border-radius: 10px;
+  color: ${(props) => props.theme.textColor};
+  text-decoration: none;
+  cursor: pointer;
+
+  @media screen and (max-width: 1024px) {
+    right: -250px;
+  }
+
+  @media screen and (max-width: 767px) {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    margin: 0;
+    margin-top: 20px;
+  }
+
+  &:hover {
+    background-color: ${(props) => props.theme.mainColorLighter};
+    color: ${(props) => props.theme.mainColor};
+    font-weight: bold;
+  }
+`;
+
 function RoadmapPage() {
   const currentWidth = useAdaptiveWidth();
 
@@ -435,68 +482,79 @@ function RoadmapPage() {
             $companyName={roadmap.data?.companyName ?? "error"}
           />
           <Legend />
-          {currentWidth < 768 ? (
-            <SelectDetailedPositionWrapper>
-              <SelectDetailedPositionText>부서</SelectDetailedPositionText>
-              <SelectDetailedPosition
-                onChange={handleSelect}
-                value={selectedDetailedPosition}
-              >
-                {detailedPositions.data!.detailedPositionDtos.map(
-                  (detailedPosition) => (
-                    <OptionDetailedPosition
-                      key={detailedPosition.id}
-                      value={detailedPosition.id}
-                    >
-                      {detailedPosition.name}
-                    </OptionDetailedPosition>
-                  )
-                )}
-              </SelectDetailedPosition>
-            </SelectDetailedPositionWrapper>
-          ) : (
-            <DropdownDetailedPositionWrapper>
-              <DropdownDescription>부서</DropdownDescription>
-              <DropdownListWrapper>
-                <DropdownLable
-                  onClick={onClickedDropdownLabel}
-                  $isDropdownOptions={isDropdownOptions}
+          <EmployAndDetailedPositionWrapper>
+            {currentWidth < 768 ? (
+              <SelectDetailedPositionWrapper>
+                <SelectDetailedPositionText>부서</SelectDetailedPositionText>
+                <SelectDetailedPosition
+                  onChange={handleSelect}
+                  value={selectedDetailedPosition}
                 >
-                  {selectedDropdownLabelText}
-                  <DropdownCaretWrapper>
-                    <DownCaretSvg />
-                  </DropdownCaretWrapper>
-                </DropdownLable>
-                {isDropdownOptions ? (
-                  <DropdownOptionList>
-                    {detailedPositions.data!.detailedPositionDtos.map(
-                      (detailedPosition) => (
-                        <DropdownOption
-                          key={detailedPosition.id}
-                          onClick={() =>
-                            onClickedDropdownOption({
-                              optionId: detailedPosition.id,
-                              optionText: detailedPosition.name,
-                            })
-                          }
-                        >
-                          {detailedPosition.name}
-                        </DropdownOption>
-                      )
-                    )}
-                  </DropdownOptionList>
-                ) : null}
-              </DropdownListWrapper>
-            </DropdownDetailedPositionWrapper>
-          )}
-          <GoogleAdsense
+                  {detailedPositions.data!.detailedPositionDtos.map(
+                    (detailedPosition) => (
+                      <OptionDetailedPosition
+                        key={detailedPosition.id}
+                        value={detailedPosition.id}
+                      >
+                        {detailedPosition.name}
+                      </OptionDetailedPosition>
+                    )
+                  )}
+                </SelectDetailedPosition>
+              </SelectDetailedPositionWrapper>
+            ) : (
+              <DropdownDetailedPositionWrapper>
+                <DropdownDescription>부서</DropdownDescription>
+                <DropdownListWrapper>
+                  <DropdownLable
+                    onClick={onClickedDropdownLabel}
+                    $isDropdownOptions={isDropdownOptions}
+                  >
+                    {selectedDropdownLabelText}
+                    <DropdownCaretWrapper>
+                      <DownCaretSvg />
+                    </DropdownCaretWrapper>
+                  </DropdownLable>
+                  {isDropdownOptions ? (
+                    <DropdownOptionList>
+                      {detailedPositions.data!.detailedPositionDtos.map(
+                        (detailedPosition) => (
+                          <DropdownOption
+                            key={detailedPosition.id}
+                            onClick={() =>
+                              onClickedDropdownOption({
+                                optionId: detailedPosition.id,
+                                optionText: detailedPosition.name,
+                              })
+                            }
+                          >
+                            {detailedPosition.name}
+                          </DropdownOption>
+                        )
+                      )}
+                    </DropdownOptionList>
+                  ) : null}
+                </DropdownListWrapper>
+              </DropdownDetailedPositionWrapper>
+            )}
+            {roadmap.data?.companyInfoUrl ? (
+              <EmploymentInfoLink
+                href={roadmap.data.companyInfoUrl}
+                target="_blank"
+              >
+                채용 정보 보기
+              </EmploymentInfoLink>
+            ) : null}
+          </EmployAndDetailedPositionWrapper>
+
+          {/* <GoogleAdsense
             className="adsbygoogle"
             client="ca-pub-5067775298991229"
             slot="8977744885"
             format="auto"
             responsive="true"
             $isAside={currentWidth > 1370 ? true : false}
-          />
+          /> */}
         </>
       ) : null}
       {!isLoadingRoadmapPage ? (
