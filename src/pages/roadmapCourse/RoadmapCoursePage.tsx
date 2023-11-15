@@ -61,11 +61,14 @@ const TabMenuWrapper = styled.div<{ $isAll: boolean }>`
   border-bottom: 1px dotted ${(props) => props.theme.greyColor};
 `;
 
-const TabMenu = styled.button`
+const TabMenu = styled.button<{ $isVideoTap: boolean }>`
   flex-basis: 50%;
   width: 100%;
   height: 40px;
-  border: 1px solid ${(props) => props.theme.greyColor};
+  border: ${(props) =>
+    props.$isVideoTap
+      ? `1px solid ${props.theme.mainColor}`
+      : `1px solid ${props.theme.greyColor}`};
   border-radius: 10px;
   background-color: ${(props) => props.theme.bgColor};
   font-size: 16px;
@@ -171,10 +174,14 @@ function RoadmapCoursePage() {
           }
         >
           {roadmapCourseDetail.data!.courseVideos.length > 0 ? (
-            <TabMenu onClick={onClickedVideoTap}>영상</TabMenu>
+            <TabMenu onClick={onClickedVideoTap} $isVideoTap={isVideoTap}>
+              영상
+            </TabMenu>
           ) : null}
           {roadmapCourseDetail.data!.courseBooks.length > 0 ? (
-            <TabMenu onClick={onClickedBookTap}>책</TabMenu>
+            <TabMenu onClick={onClickedBookTap} $isVideoTap={!isVideoTap}>
+              책
+            </TabMenu>
           ) : null}
         </TabMenuWrapper>
         {!isVideoTap ? (
