@@ -92,6 +92,13 @@ const CoupangPartnersPhrase = styled.span`
   color: ${(props) => props.theme.textGreyColor};
 `;
 
+const CoursePageDescription = styled.span`
+  display: block;
+  padding: 10px;
+  font-size: 13px;
+  color: ${(props) => props.theme.textGreyColor};
+`;
+
 const GridCourses = styled.div`
   display: grid;
   position: relative;
@@ -154,6 +161,9 @@ function RoadmapCoursePage() {
         }}
       >
         <CourseHeader />
+        <CoursePageDescription>
+          {roadmapCourseDetail.data!.courseDetailDescription}
+        </CoursePageDescription>
         <TabMenuWrapper
           $isAll={
             roadmapCourseDetail.data!.courseVideos.length > 0 &&
