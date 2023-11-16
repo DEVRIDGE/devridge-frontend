@@ -6,8 +6,12 @@ import { useEffect, useState } from "react";
 import RoadmapTitle from "../../components/roadmap/roadmapTitle/RoadmapTitle";
 import Road from "../../components/roadmap/road/Road";
 import Footer from "../../components/common/footer/Footer";
-import { getDetailedPositions, getRoadmap } from "../../services/apis";
-import { IRoadmap } from "../../services/types";
+import {
+  getDetailedPositions,
+  getRoadmap,
+  getUserInfo,
+} from "../../services/apis";
+import { IRoadmap, IUserInfo } from "../../services/types";
 import Overlay from "../../components/common/overlay/Overlay";
 import Loader from "../../components/common/loader/Loader";
 import { jobState } from "../../recoil/jobId/atom";
@@ -39,6 +43,7 @@ import {
   IRoadmapStudyStatusCodes,
   roadmapStudyStatusCodesState,
 } from "../../recoil/roadmapStudyStatusCodes/atoms";
+import { userInfoState } from "../../recoil/userInfo/atoms";
 
 interface IParams {
   job: string;
@@ -242,6 +247,7 @@ function RoadmapPage() {
   const setRoadmapStudyStatusCodes = useSetRecoilState(
     roadmapStudyStatusCodesState
   );
+  const setUserInfo = useSetRecoilState(userInfoState);
 
   const onClickedProfileOuter = useOnClickedProfileOuter();
 
@@ -448,6 +454,12 @@ function RoadmapPage() {
         return null;
       } else {
         setAccessToken(newAccessToken);
+        if (newAccessToken !== null) {
+          const userInfo: IUserInfo = await getUserInfo({
+            accessToken: newAccessToken,
+          });
+          setUserInfo(userInfo.data);
+        }
       }
       return newAccessToken;
     };

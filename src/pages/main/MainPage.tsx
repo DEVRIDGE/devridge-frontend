@@ -15,6 +15,9 @@ import { isCompanyDropdownOptionsState } from "../../recoil/isCompanyDropdownOpt
 import useOnClickedProfileOuter from "../../hooks/useOnClickedProfileOuter";
 import { isLoginState } from "../../recoil/isLogin/atoms";
 import ChannelService from "../../services/ChannelService";
+import { IUserInfo } from "../../services/types";
+import { getUserInfo } from "../../services/apis";
+import { userInfoState } from "../../recoil/userInfo/atoms";
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,6 +39,8 @@ function MainPage() {
     isCompanyDropdownOptionsState
   );
   const setIsLogin = useSetRecoilState(isLoginState);
+
+  const setUserInfo = useSetRecoilState(userInfoState);
 
   const onClickedProfileOuter = useOnClickedProfileOuter();
 
@@ -63,6 +68,12 @@ function MainPage() {
         history.push("/");
       } else {
         setAccessToken(newAccessToken);
+        if (newAccessToken !== null) {
+          const userInfo: IUserInfo = await getUserInfo({
+            accessToken: newAccessToken,
+          });
+          setUserInfo(userInfo.data);
+        }
       }
       return;
     };
