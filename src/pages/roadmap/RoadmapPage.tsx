@@ -301,17 +301,17 @@ function RoadmapPage() {
     for (let i = 0; i < roadmapApiData.data!.courseList.length; i++) {
       const course = roadmapApiData.data!.courseList[i];
       if (course?.courses.length === 0) {
-        roadmapStudyStatusCodes[i] = {};
+        roadmapStudyStatusCodes[i] = new Map<string, number>();
       } else {
-        let roadmapColumn: any = {};
+        let roadmapColumn = new Map<string, number>();
         for (let i = 0; i < course!.courses.length; i++) {
           const coursesItem = course!.courses[i];
           if (coursesItem.studyStatus === StudyStatusMessage.STUDYING) {
-            roadmapColumn[coursesItem.id] = 1;
+            roadmapColumn.set(coursesItem.id.toString(), 1);
           } else if (coursesItem.studyStatus === StudyStatusMessage.STUDY_END) {
-            roadmapColumn[coursesItem.id] = 2;
+            roadmapColumn.set(coursesItem.id.toString(), 2);
           } else {
-            roadmapColumn[coursesItem.id] = 0;
+            roadmapColumn.set(coursesItem.id.toString(), 0);
           }
         }
         roadmapStudyStatusCodes[i] = roadmapColumn;

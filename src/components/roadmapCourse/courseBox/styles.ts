@@ -85,11 +85,11 @@ export const CourseLikeBtn = styled.button`
   cursor: pointer;
 `;
 
-export const CourseLikeSvg = styled.svg<{ userLiked: string | null }>`
+export const CourseLikeSvg = styled.svg<{ $userLiked: string | null }>`
   width: 15px;
   height: 15px;
   fill: ${(props) =>
-    props.userLiked === UserLike.YES ? "red" : props.theme.textGreyColor};
+    props.$userLiked === UserLike.YES ? "red" : props.theme.textGreyColor};
 `;
 
 export const CourseLikeLabel = styled.span`

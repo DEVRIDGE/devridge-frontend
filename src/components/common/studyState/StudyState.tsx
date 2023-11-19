@@ -103,9 +103,20 @@ function StudyState() {
       const newRoadmapStudyStatusCodes = JSON.parse(
         JSON.stringify(roadmapStudyStatusCodes)
       );
-      newRoadmapStudyStatusCodes[selectedRoadmapIndex][selectedTechId] =
-        +event.target.value;
+
+      for (const key in newRoadmapStudyStatusCodes) {
+        newRoadmapStudyStatusCodes[+key] = new Map(
+          roadmapStudyStatusCodes[+key].entries()
+        );
+      }
+
+      newRoadmapStudyStatusCodes[selectedRoadmapIndex].set(
+        selectedTechId.toString(),
+        +event.target.value
+      );
+
       setRoadmapStudyStatusCodes(newRoadmapStudyStatusCodes);
+
       return;
     }
   };
@@ -113,9 +124,9 @@ function StudyState() {
   return (
     <StudyStateSelect
       onChange={(event) => onChange({ event, accessToken, recursionCount: 0 })}
-      defaultValue={
-        roadmapStudyStatusCodes[selectedRoadmapIndex][selectedTechId]
-      }
+      defaultValue={roadmapStudyStatusCodes[selectedRoadmapIndex].get(
+        selectedTechId.toString()
+      )}
     >
       <StudyStateOption value={0}>학습 전</StudyStateOption>
       <StudyStateOption value={1}>학습 중</StudyStateOption>

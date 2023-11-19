@@ -214,7 +214,7 @@ function Road({ roadmapApiData }: IRoad) {
             {index === 1 ? (
               <ProgressBar
                 $studyStatusCode={
-                  Object.values(roadmapStudyStatusCode[index])[0]
+                  roadmapStudyStatusCode[index].entries().next().value[1]
                 }
                 $mediaType="normal"
               />
@@ -226,13 +226,15 @@ function Road({ roadmapApiData }: IRoad) {
               <>
                 <ProgressBar
                   $studyStatusCode={
-                    Object.values(roadmapStudyStatusCode[index + 1 - row])[0]
+                    roadmapStudyStatusCode[index + 1 - row].entries().next()
+                      .value[1]
                   }
                   $mediaType="rightTop"
                 />
                 <ProgressBar
                   $studyStatusCode={
-                    Object.values(roadmapStudyStatusCode[index + 1 - row])[0]
+                    roadmapStudyStatusCode[index + 1 - row].entries().next()
+                      .value[1]
                   }
                   $mediaType="rightMid"
                 />
@@ -241,7 +243,8 @@ function Road({ roadmapApiData }: IRoad) {
             {index % (col * 2) === col ? (
               <ProgressBar
                 $studyStatusCode={
-                  Object.values(roadmapStudyStatusCode[index - (row - 1)])[0]
+                  roadmapStudyStatusCode[index - (row - 1)].entries().next()
+                    .value[1]
                 }
                 $mediaType="rightBot"
               />
@@ -253,13 +256,15 @@ function Road({ roadmapApiData }: IRoad) {
               <>
                 <ProgressBar
                   $studyStatusCode={
-                    Object.values(roadmapStudyStatusCode[index - (row - 1)])[0]
+                    roadmapStudyStatusCode[index - (row - 1)].entries().next()
+                      .value[1]
                   }
                   $mediaType="leftTop"
                 />
                 <ProgressBar
                   $studyStatusCode={
-                    Object.values(roadmapStudyStatusCode[index - (row - 1)])[0]
+                    roadmapStudyStatusCode[index - (row - 1)].entries().next()
+                      .value[1]
                   }
                   $mediaType="leftMid"
                 />
@@ -268,7 +273,8 @@ function Road({ roadmapApiData }: IRoad) {
             {index !== 0 && index % (col * 2) === 0 ? (
               <ProgressBar
                 $studyStatusCode={
-                  Object.values(roadmapStudyStatusCode[index - (row - 1)])[0]
+                  roadmapStudyStatusCode[index - (row - 1)].entries().next()
+                    .value[1]
                 }
                 $mediaType="leftBot"
               />
@@ -282,9 +288,9 @@ function Road({ roadmapApiData }: IRoad) {
                 (index - 1) % (col * 2) !== 0 &&
                 row % 2 === 0 ? (
                   <ProgressBar
-                    $studyStatusCode={
-                      Object.values(roadmapStudyStatusCode[courseCol.index])[0]
-                    }
+                    $studyStatusCode={roadmapStudyStatusCode[
+                      courseCol.index
+                    ].get(courseCol.courses[0].id.toString())}
                     $mediaType="normal"
                   />
                 ) : null}
@@ -294,9 +300,9 @@ function Road({ roadmapApiData }: IRoad) {
                 index % (col * row + 1) !== 0 &&
                 row % 2 !== 0 ? (
                   <ProgressBar
-                    $studyStatusCode={
-                      Object.values(roadmapStudyStatusCode[courseCol.index])[0]
-                    }
+                    $studyStatusCode={roadmapStudyStatusCode[
+                      courseCol.index
+                    ].get(courseCol.courses[0].id.toString())}
                     $mediaType="normalReverse"
                   />
                 ) : null}
@@ -318,11 +324,9 @@ function Road({ roadmapApiData }: IRoad) {
                     >
                       <Tech
                         techName={courseCol.courses[0].name}
-                        $studyStatusCode={
-                          Object(roadmapStudyStatusCode[courseCol.index])[
-                            courseCol.courses[0].id
-                          ]
-                        }
+                        $studyStatusCode={roadmapStudyStatusCode[
+                          courseCol.index
+                        ].get(courseCol.courses[0].id.toString())}
                       />
                       {courseCol.courses[0].matchingFlag ===
                       MatchingFlag.YES ? (
@@ -365,9 +369,9 @@ function Road({ roadmapApiData }: IRoad) {
                             }}
                           >
                             <Status
-                              $studyStatusCode={
-                                roadmapStudyStatusCode[courseCol.index][cs.id]
-                              }
+                              $studyStatusCode={roadmapStudyStatusCode[
+                                courseCol.index
+                              ].get(cs.id.toString())}
                               width="15px"
                               height="15px"
                             />
@@ -422,9 +426,9 @@ function Road({ roadmapApiData }: IRoad) {
                             }}
                           >
                             <Status
-                              $studyStatusCode={
-                                roadmapStudyStatusCode[courseCol.index][cs.id]
-                              }
+                              $studyStatusCode={roadmapStudyStatusCode[
+                                courseCol.index
+                              ].get(cs.id.toString())}
                               width="15px"
                               height="15px"
                             />
