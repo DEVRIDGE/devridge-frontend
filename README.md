@@ -8,7 +8,7 @@
 [https://devridge.dev/](https://devridge.dev/)
 </br></br>
 # 주요 기능
-![시스템 아키텍처](https://github.com/DEVRIDGE/devridge-frontend/assets/104720635/72542c5c-f26d-4106-8141-d065f50517fd)
+![시스템 아키텍처](https://github.com/DEVRIDGE/devridge-frontend/assets/104720635/43a0183a-1231-4a9c-83be-f44a4ae0d5f1)
 
 
 ### 로드맵 제시
